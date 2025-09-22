@@ -61,13 +61,13 @@ export const KnowledgeSphere = ({ subjects }: KnowledgeSphereProps) => {
           )`
         }}
       >
-        {/* Center glow effect */}
-        <div className="absolute inset-8 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+        {/* Center display with better contrast */}
+        <div className="absolute inset-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
           <div className="text-center">
-            <div className="text-2xl font-bold text-white">
+            <div className="text-3xl font-bold text-white drop-shadow-lg">
               {Math.round(subjects.reduce((acc, subject) => acc + subject.progress, 0) / subjects.length)}%
             </div>
-            <div className="text-xs text-white/80 font-medium">Complete</div>
+            <div className="text-sm text-white/90 font-semibold drop-shadow-md">Complete</div>
           </div>
         </div>
 
@@ -81,7 +81,7 @@ export const KnowledgeSphere = ({ subjects }: KnowledgeSphereProps) => {
           return (
             <div
               key={subject.name}
-              className="absolute text-xs font-semibold text-gray-700 bg-white/90 px-2 py-1 rounded-full shadow-sm"
+              className="absolute text-sm font-bold text-white bg-gray-900/80 px-3 py-2 rounded-full shadow-lg border border-white/20"
               style={{
                 transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
                 left: '50%',

@@ -56,11 +56,11 @@
     --achievement-silver: 220 9% 69%;
     --achievement-bronze: 25 76% 57%;
 
-    /* Knowledge Sphere Colors */
-    --sphere-physics: 250 84% 70%;
-    --sphere-chemistry: 120 61% 64%;
-    --sphere-math: 45 93% 58%;
-    --sphere-biology: 140 61% 64%;
+    /* Knowledge Sphere Colors - Darker for better contrast */
+    --sphere-physics: 250 84% 55%;    /* Darker blue */
+    --sphere-chemistry: 120 61% 45%;  /* Darker green */
+    --sphere-math: 45 93% 45%;        /* Darker orange */
+    --sphere-biology: 140 61% 45%;    /* Darker teal-green */
 
     /* Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
@@ -108,12 +108,12 @@
 }
 
 @layer components {
-  /* Knowledge Sphere Animation */
+  /* Knowledge Sphere - Static with better contrast */
   .knowledge-sphere {
     @apply relative w-64 h-64 mx-auto rounded-full;
     background: var(--gradient-sphere);
     box-shadow: var(--shadow-sphere);
-    animation: float 6s ease-in-out infinite;
+    /* Removed floating animation */
   }
 
   .knowledge-sphere::before {
@@ -124,7 +124,7 @@
       hsl(var(--sphere-chemistry)) 25% 50%, 
       hsl(var(--sphere-math)) 50% 75%, 
       hsl(var(--sphere-biology)) 75% 100%);
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   /* Progress Cards */
