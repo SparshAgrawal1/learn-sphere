@@ -31,6 +31,10 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -46,6 +50,17 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        chat: {
+          user: "hsl(var(--chat-user))",
+          ai: "hsl(var(--chat-ai))",
+          bg: "hsl(var(--chat-bg))",
+        },
+        sphere: {
+          physics: "hsl(var(--sphere-physics))",
+          chemistry: "hsl(var(--sphere-chemistry))",
+          math: "hsl(var(--sphere-math))",
+          biology: "hsl(var(--sphere-biology))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -84,6 +99,14 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 6s ease-in-out infinite",
+        "pulse-success": "pulse-success 1.5s ease-out",
+        "shake-error": "shake-error 0.5s ease-in-out",
+      },
+      boxShadow: {
+        'card': 'var(--shadow-card)',
+        'sphere': 'var(--shadow-sphere)',
+        'interactive': 'var(--shadow-interactive)',
       },
     },
   },

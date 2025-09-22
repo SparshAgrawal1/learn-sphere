@@ -2,95 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
+/* Agentic Learning Platform Design System */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Main Background Colors */
+    --background: 207 22% 97%; /* #F0F4F8 - bright, inviting background */
+    --foreground: 217 33% 17%; /* dark text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card and Surface Colors */
+    --card: 0 0% 100%; /* white cards */
+    --card-foreground: 217 33% 17%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 217 33% 17%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary Learning Colors */
+    --primary: 173 70% 60%; /* #50E3C2 - vibrant teal accent */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary Progress Colors */
+    --secondary: 37 85% 56%; /* #F5A623 - vibrant orange/yellow accent */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Interface Colors */
+    --muted: 210 20% 94%; /* #E8F0F8 - light background for completed items */
+    --muted-foreground: 217 33% 17%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent & Interactive Colors */
+    --accent: 217 91% 60%; /* vibrant blue for chat bubbles */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status Colors */
+    --destructive: 0 84% 60%; /* coral red */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 173 70% 60%; /* matches primary teal */
+    --success-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    /* Border and Input Colors */
+    --border: 217 20% 88%;
+    --input: 217 20% 88%;
+    --ring: 173 70% 60%;
 
-    --sidebar-background: 0 0% 98%;
+    /* AI Chat Colors */
+    --chat-user: 217 91% 60%; /* vibrant blue for user messages */
+    --chat-ai: 220 9% 86%; /* light gray for AI messages */
+    --chat-bg: 0 0% 100%; /* white chat background */
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Progress & Achievement Colors */
+    --progress-incomplete: 220 9% 86%;
+    --progress-complete: 173 70% 60%;
+    --achievement-gold: 45 93% 58%;
+    --achievement-silver: 220 9% 69%;
+    --achievement-bronze: 25 76% 57%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Knowledge Sphere Colors */
+    --sphere-physics: 250 84% 70%;
+    --sphere-chemistry: 120 61% 64%;
+    --sphere-math: 45 93% 58%;
+    --sphere-biology: 140 61% 64%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    --gradient-sphere: linear-gradient(135deg, hsl(var(--sphere-physics)), hsl(var(--sphere-chemistry)));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(220 20% 98%));
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    /* Shadows */
+    --shadow-card: 0 4px 12px hsl(217 33% 17% / 0.1);
+    --shadow-sphere: 0 8px 32px hsl(217 33% 17% / 0.15);
+    --shadow-interactive: 0 2px 8px hsl(var(--primary) / 0.25);
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    /* Border Radius */
+    --radius: 0.75rem;
 
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    /* Sidebar Navigation Colors */
+    --sidebar-background: 0 0% 100%; /* white sidebar */
+    --sidebar-foreground: 217 33% 17%;
+    --sidebar-primary: 173 70% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 210 20% 94%;
+    --sidebar-accent-foreground: 217 33% 17%;
+    --sidebar-border: 217 20% 88%;
+    --sidebar-ring: 173 70% 60%;
+
+    /* Animation and Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease-out;
   }
 }
 
@@ -101,5 +98,105 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   }
+
+  /* Smooth animations for learning platform */
+  * {
+    transition: var(--transition-fast);
+  }
+}
+
+@layer components {
+  /* Knowledge Sphere Animation */
+  .knowledge-sphere {
+    @apply relative w-64 h-64 mx-auto rounded-full;
+    background: var(--gradient-sphere);
+    box-shadow: var(--shadow-sphere);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .knowledge-sphere::before {
+    content: '';
+    @apply absolute inset-2 rounded-full;
+    background: linear-gradient(135deg, 
+      hsl(var(--sphere-physics)) 0% 25%, 
+      hsl(var(--sphere-chemistry)) 25% 50%, 
+      hsl(var(--sphere-math)) 50% 75%, 
+      hsl(var(--sphere-biology)) 75% 100%);
+    opacity: 0.8;
+  }
+
+  /* Progress Cards */
+  .progress-card {
+    @apply bg-white rounded-xl p-6 shadow-card border border-border;
+    background: var(--gradient-card);
+  }
+
+  /* Achievement Badge */
+  .achievement-badge {
+    @apply inline-flex items-center justify-center w-12 h-12 rounded-full;
+    box-shadow: var(--shadow-interactive);
+  }
+
+  .achievement-badge.gold {
+    background: hsl(var(--achievement-gold));
+  }
+
+  .achievement-badge.silver {
+    background: hsl(var(--achievement-silver));
+  }
+
+  .achievement-badge.bronze {
+    background: hsl(var(--achievement-bronze));
+  }
+
+  /* Chat Bubbles */
+  .chat-bubble-user {
+    @apply bg-accent text-accent-foreground rounded-2xl px-4 py-3 ml-8 mb-3;
+    border-radius: 1.5rem 1.5rem 0.25rem 1.5rem;
+  }
+
+  .chat-bubble-ai {
+    @apply rounded-2xl px-4 py-3 mr-8 mb-3;
+    background: hsl(var(--chat-ai));
+    color: hsl(var(--foreground));
+    border-radius: 1.5rem 1.5rem 1.5rem 0.25rem;
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    @apply h-2 rounded-full overflow-hidden;
+    background: hsl(var(--progress-incomplete));
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500 ease-out;
+    background: hsl(var(--progress-complete));
+  }
+
+  /* Interactive Lesson Frame */
+  .lesson-frame {
+    @apply w-full h-full border border-border rounded-xl overflow-hidden;
+    background: white;
+    box-shadow: var(--shadow-card);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(1deg); }
+  66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+@keyframes pulse-success {
+  0% { box-shadow: 0 0 0 0 hsl(var(--success) / 0.7); }
+  70% { box-shadow: 0 0 0 10px hsl(var(--success) / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--success) / 0); }
+}
+
+@keyframes shake-error {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
