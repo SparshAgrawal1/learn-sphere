@@ -2,92 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Agentic Learning Platform Design System */
+/* Agentic Learning Platform Design System - Spline-Inspired Dark Theme */
 @layer base {
   :root {
-    /* Main Background Colors */
-    --background: 207 22% 97%; /* #F0F4F8 - bright, inviting background */
-    --foreground: 217 33% 17%; /* dark text */
+    /* Main Background Colors - Dark modern aesthetic */
+    --background: 222 20% 8%; /* Deep dark background */
+    --foreground: 210 15% 95%; /* Light text */
 
-    /* Card and Surface Colors */
-    --card: 0 0% 100%; /* white cards */
-    --card-foreground: 217 33% 17%;
+    /* Card and Surface Colors - Glass morphism */
+    --card: 222 15% 12%; /* Dark glass cards */
+    --card-foreground: 210 15% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 217 33% 17%;
+    --popover: 222 15% 12%;
+    --popover-foreground: 210 15% 95%;
 
-    /* Primary Learning Colors */
-    --primary: 173 70% 60%; /* #50E3C2 - vibrant teal accent */
+    /* Primary Colors - Vibrant neon accents */
+    --primary: 280 100% 65%; /* Bright purple/magenta */
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 280 100% 75%; /* Lighter glow variant */
 
-    /* Secondary Progress Colors */
-    --secondary: 37 85% 56%; /* #F5A623 - vibrant orange/yellow accent */
+    /* Secondary Colors - Complementary cyan */
+    --secondary: 180 100% 60%; /* Bright cyan */
     --secondary-foreground: 0 0% 100%;
 
     /* Muted Interface Colors */
-    --muted: 210 20% 94%; /* #E8F0F8 - light background for completed items */
-    --muted-foreground: 217 33% 17%;
+    --muted: 222 15% 15%; /* Slightly lighter dark */
+    --muted-foreground: 210 10% 70%;
 
-    /* Accent & Interactive Colors */
-    --accent: 217 91% 60%; /* vibrant blue for chat bubbles */
+    /* Accent Colors - Electric blue */
+    --accent: 200 100% 60%; /* Electric blue */
     --accent-foreground: 0 0% 100%;
 
     /* Status Colors */
-    --destructive: 0 84% 60%; /* coral red */
+    --destructive: 0 100% 65%; /* Bright red */
     --destructive-foreground: 0 0% 100%;
 
-    --success: 173 70% 60%; /* matches primary teal */
+    --success: 120 100% 60%; /* Bright green */
     --success-foreground: 0 0% 100%;
 
-    /* Border and Input Colors */
-    --border: 217 20% 88%;
-    --input: 217 20% 88%;
-    --ring: 173 70% 60%;
+    /* Border and Input Colors - Subtle glow effects */
+    --border: 222 20% 20%;
+    --input: 222 20% 20%;
+    --ring: 280 100% 65%;
+    --glow: 280 100% 65%; /* Neon glow color */
 
     /* AI Chat Colors */
-    --chat-user: 217 91% 60%; /* vibrant blue for user messages */
-    --chat-ai: 220 9% 86%; /* light gray for AI messages */
-    --chat-bg: 0 0% 100%; /* white chat background */
+    --chat-user: 280 100% 65%; /* Purple for user */
+    --chat-ai: 222 15% 18%; /* Dark for AI */
+    --chat-bg: 222 15% 12%; /* Dark chat background */
 
     /* Progress & Achievement Colors */
-    --progress-incomplete: 220 9% 86%;
-    --progress-complete: 173 70% 60%;
-    --achievement-gold: 45 93% 58%;
-    --achievement-silver: 220 9% 69%;
-    --achievement-bronze: 25 76% 57%;
+    --progress-incomplete: 222 15% 25%;
+    --progress-complete: 280 100% 65%;
+    --achievement-gold: 45 100% 60%;
+    --achievement-silver: 210 15% 65%;
+    --achievement-bronze: 25 100% 55%;
 
-    /* Knowledge Sphere Colors - Darker for better contrast */
-    --sphere-physics: 250 84% 55%;    /* Darker blue */
-    --sphere-chemistry: 120 61% 45%;  /* Darker green */
-    --sphere-math: 45 93% 45%;        /* Darker orange */
-    --sphere-biology: 140 61% 45%;    /* Darker teal-green */
+    /* Knowledge Sphere Colors - Neon spectrum */
+    --sphere-physics: 280 100% 65%;    /* Purple */
+    --sphere-chemistry: 120 100% 60%;  /* Green */
+    --sphere-math: 45 100% 60%;        /* Orange */
+    --sphere-biology: 180 100% 60%;    /* Cyan */
 
-    /* Gradients */
+    /* Glass morphism and effects */
+    --glass: 222 15% 12% / 0.8; /* Semi-transparent glass */
+    --glass-border: 210 15% 30% / 0.3;
+
+    /* Gradients - Neon inspired */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
     --gradient-sphere: linear-gradient(135deg, hsl(var(--sphere-physics)), hsl(var(--sphere-chemistry)));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(220 20% 98%));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(222 15% 15%));
+    --gradient-glow: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--secondary) / 0.2));
 
-    /* Shadows */
-    --shadow-card: 0 4px 12px hsl(217 33% 17% / 0.1);
-    --shadow-sphere: 0 8px 32px hsl(217 33% 17% / 0.15);
-    --shadow-interactive: 0 2px 8px hsl(var(--primary) / 0.25);
+    /* Shadows - Neon glow effects */
+    --shadow-card: 0 8px 32px hsl(222 20% 8% / 0.6);
+    --shadow-spline: 0 0 40px hsl(var(--primary) / 0.3), 0 0 80px hsl(var(--secondary) / 0.2);
+    --shadow-interactive: 0 0 20px hsl(var(--primary) / 0.4);
+    --shadow-glow: 0 0 30px hsl(var(--glow) / 0.5);
 
     /* Border Radius */
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     /* Sidebar Navigation Colors */
-    --sidebar-background: 0 0% 100%; /* white sidebar */
-    --sidebar-foreground: 217 33% 17%;
-    --sidebar-primary: 173 70% 60%;
+    --sidebar-background: 222 15% 10%; /* Dark sidebar */
+    --sidebar-foreground: 210 15% 95%;
+    --sidebar-primary: 280 100% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 20% 94%;
-    --sidebar-accent-foreground: 217 33% 17%;
-    --sidebar-border: 217 20% 88%;
-    --sidebar-ring: 173 70% 60%;
+    --sidebar-accent: 222 15% 15%;
+    --sidebar-accent-foreground: 210 15% 95%;
+    --sidebar-border: 222 20% 20%;
+    --sidebar-ring: 280 100% 65%;
 
     /* Animation and Transitions */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.15s ease-out;
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s ease-out;
+    --transition-glow: all 0.3s ease-in-out;
   }
 }
 
@@ -108,78 +117,105 @@
 }
 
 @layer components {
-  /* Knowledge Sphere - Static with better contrast */
-  .knowledge-sphere {
-    @apply relative w-64 h-64 mx-auto rounded-full;
-    background: var(--gradient-sphere);
-    box-shadow: var(--shadow-sphere);
-    /* Removed floating animation */
+  /* Spline Container */
+  .spline-container {
+    @apply relative;
+    box-shadow: var(--shadow-spline);
+    border-radius: var(--radius);
   }
 
-  .knowledge-sphere::before {
-    content: '';
-    @apply absolute inset-2 rounded-full;
-    background: linear-gradient(135deg, 
-      hsl(var(--sphere-physics)) 0% 25%, 
-      hsl(var(--sphere-chemistry)) 25% 50%, 
-      hsl(var(--sphere-math)) 50% 75%, 
-      hsl(var(--sphere-biology)) 75% 100%);
-    opacity: 0.9;
+  /* Glass morphism effects */
+  .bg-glass {
+    background: hsl(var(--glass));
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--glass-border));
   }
 
-  /* Progress Cards */
+  .border-glow {
+    border-color: hsl(var(--glow) / 0.3);
+    box-shadow: 0 0 15px hsl(var(--glow) / 0.2);
+  }
+
+  /* Progress Cards - Glass morphism */
   .progress-card {
-    @apply bg-white rounded-xl p-6 shadow-card border border-border;
-    background: var(--gradient-card);
+    @apply bg-glass backdrop-blur-md rounded-2xl p-6 border border-glow/30;
+    background: hsl(var(--card));
+    box-shadow: var(--shadow-card), 0 0 20px hsl(var(--primary) / 0.1);
   }
 
-  /* Achievement Badge */
+  /* Achievement Badge - Neon glow */
   .achievement-badge {
     @apply inline-flex items-center justify-center w-12 h-12 rounded-full;
     box-shadow: var(--shadow-interactive);
+    transition: var(--transition-glow);
+  }
+
+  .achievement-badge:hover {
+    box-shadow: var(--shadow-glow);
+    transform: scale(1.05);
   }
 
   .achievement-badge.gold {
     background: hsl(var(--achievement-gold));
+    box-shadow: 0 0 20px hsl(var(--achievement-gold) / 0.4);
   }
 
   .achievement-badge.silver {
     background: hsl(var(--achievement-silver));
+    box-shadow: 0 0 20px hsl(var(--achievement-silver) / 0.4);
   }
 
   .achievement-badge.bronze {
     background: hsl(var(--achievement-bronze));
+    box-shadow: 0 0 20px hsl(var(--achievement-bronze) / 0.4);
   }
 
-  /* Chat Bubbles */
+  /* Chat Bubbles - Dark theme */
   .chat-bubble-user {
-    @apply bg-accent text-accent-foreground rounded-2xl px-4 py-3 ml-8 mb-3;
+    @apply rounded-2xl px-4 py-3 ml-8 mb-3;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
     border-radius: 1.5rem 1.5rem 0.25rem 1.5rem;
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.3);
   }
 
   .chat-bubble-ai {
     @apply rounded-2xl px-4 py-3 mr-8 mb-3;
     background: hsl(var(--chat-ai));
     color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--border));
     border-radius: 1.5rem 1.5rem 1.5rem 0.25rem;
   }
 
-  /* Progress Bar */
+  /* Progress Bar - Neon style */
   .progress-bar {
-    @apply h-2 rounded-full overflow-hidden;
+    @apply h-3 rounded-full overflow-hidden;
     background: hsl(var(--progress-incomplete));
+    border: 1px solid hsl(var(--border));
   }
 
   .progress-fill {
     @apply h-full rounded-full transition-all duration-500 ease-out;
-    background: hsl(var(--progress-complete));
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
   }
 
-  /* Interactive Lesson Frame */
+  /* Interactive Lesson Frame - Dark theme */
   .lesson-frame {
-    @apply w-full h-full border border-border rounded-xl overflow-hidden;
-    background: white;
+    @apply w-full h-full border rounded-2xl overflow-hidden;
+    background: hsl(var(--card));
+    border-color: hsl(var(--border));
     box-shadow: var(--shadow-card);
+  }
+
+  /* Button hover effects */
+  .btn-glow {
+    transition: var(--transition-glow);
+  }
+
+  .btn-glow:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+    transform: translateY(-2px);
   }
 }
 

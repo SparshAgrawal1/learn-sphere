@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react';
-
 interface Subject {
   name: string;
   progress: number;
@@ -11,93 +9,55 @@ interface KnowledgeSphereProps {
 }
 
 export const KnowledgeSphere = ({ subjects }: KnowledgeSphereProps) => {
-  const sphereRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Add subtle mouse interaction
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!sphereRef.current) return;
-      
-      const rect = sphereRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const deltaX = (e.clientX - centerX) / 20;
-      const deltaY = (e.clientY - centerY) / 20;
-      
-      sphereRef.current.style.transform = `translateX(${deltaX}px) translateY(${deltaY}px) rotateY(${deltaX}deg) rotateX(${-deltaY}deg)`;
-    };
-
-    const handleMouseLeave = () => {
-      if (!sphereRef.current) return;
-      sphereRef.current.style.transform = 'translateX(0) translateY(0) rotateY(0) rotateX(0)';
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
+  // Calculate overall progress
+  const overallProgress = Math.round(
+    subjects.reduce((acc, subject) => acc + subject.progress, 0) / subjects.length
+  );
 
   return (
     <div className="relative flex flex-col items-center">
-      <div
-        ref={sphereRef}
-        className="knowledge-sphere relative cursor-pointer transition-transform duration-200 ease-out"
-        style={{ 
-          background: `conic-gradient(
-            from 0deg,
-            hsl(var(--sphere-physics)) 0deg ${subjects[0]?.progress * 3.6 || 0}deg,
-            hsl(var(--progress-incomplete)) ${subjects[0]?.progress * 3.6 || 0}deg 90deg,
-            hsl(var(--sphere-chemistry)) 90deg ${90 + (subjects[1]?.progress * 3.6 || 0)}deg,
-            hsl(var(--progress-incomplete)) ${90 + (subjects[1]?.progress * 3.6 || 0)}deg 180deg,
-            hsl(var(--sphere-math)) 180deg ${180 + (subjects[2]?.progress * 3.6 || 0)}deg,
-            hsl(var(--progress-incomplete)) ${180 + (subjects[2]?.progress * 3.6 || 0)}deg 270deg,
-            hsl(var(--sphere-biology)) 270deg ${270 + (subjects[3]?.progress * 3.6 || 0)}deg,
-            hsl(var(--progress-incomplete)) ${270 + (subjects[3]?.progress * 3.6 || 0)}deg 360deg
-          )`
-        }}
-      >
-        {/* Center display with better contrast */}
-        <div className="absolute inset-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
+      {/* Spline 3D Element */}
+      <div className="spline-container relative">
+        <iframe 
+          src='https://my.spline.design/r4xbot-wG0D4Zm6eCKUTE99uf4n3VYp/' 
+          frameBorder='0' 
+          width='400' 
+          height='400'
+          className="rounded-2xl shadow-spline"
+        />
+        
+        {/* Overlay Progress Display */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-glass backdrop-blur-md border border-glow rounded-2xl px-6 py-3">
           <div className="text-center">
-            <div className="text-3xl font-bold text-white drop-shadow-lg">
-              {Math.round(subjects.reduce((acc, subject) => acc + subject.progress, 0) / subjects.length)}%
+            <div className="text-2xl font-bold text-primary-glow">
+              {overallProgress}%
             </div>
-            <div className="text-sm text-white/90 font-semibold drop-shadow-md">Complete</div>
+            <div className="text-sm text-muted-foreground font-medium">Complete</div>
           </div>
         </div>
 
-        {/* Subject labels */}
-        {subjects.map((subject, index) => {
-          const angle = (index * 90) - 45; // Position labels between segments
-          const radius = 140;
-          const x = Math.cos((angle * Math.PI) / 180) * radius;
-          const y = Math.sin((angle * Math.PI) / 180) * radius;
-          
-          return (
+        {/* Subject Progress Indicators */}
+        <div className="absolute top-4 right-4 space-y-2">
+          {subjects.map((subject, index) => (
             <div
               key={subject.name}
-              className="absolute text-sm font-bold text-white bg-gray-900/80 px-3 py-2 rounded-full shadow-lg border border-white/20"
-              style={{
-                transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
-                left: '50%',
-                top: '50%',
-              }}
+              className="flex items-center space-x-2 bg-glass backdrop-blur-sm border border-glow/50 rounded-lg px-3 py-2"
             >
-              {subject.name}
+              <div 
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: subject.color }}
+              />
+              <span className="text-xs font-medium text-foreground">{subject.name}</span>
+              <span className="text-xs text-primary-glow">{subject.progress}%</span>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
       
       <div className="mt-6 text-center">
-        <h3 className="text-xl font-bold text-foreground">Your Learning Universe</h3>
-        <p className="text-sm text-muted-foreground mt-1">
-          Interactive knowledge across {subjects.length} subjects
+        <h3 className="text-2xl font-bold text-foreground">Your Learning Universe</h3>
+        <p className="text-muted-foreground mt-1">
+          Interactive 3D knowledge across {subjects.length} subjects
         </p>
       </div>
     </div>
