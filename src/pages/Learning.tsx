@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { NavigationTree } from '@/components/learning/NavigationTree';
-import { AITutor } from '@/components/learning/AITutor';
-import { LessonFrame } from '@/components/learning/LessonFrame';
+import { ModernNavigationTree } from '@/components/learning/ModernNavigationTree';
+import AITutorPanel from '@/components/learning/AITutorPanel';
+import ContentFrame from '@/components/learning/ContentFrame';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -32,6 +32,29 @@ const mockCurriculum = {
         ]
       }
     ]
+  },
+  hindi: {
+    id: 'hindi',
+    name: 'Hindi',
+    chapters: [
+      {
+        id: 'grammar',
+        title: 'Grammar',
+        subtopics: [
+          { id: 'prefixes-suffixes', title: 'Prefixes and Suffixes', progress: 75, completed: false },
+          { id: 'tenses', title: 'Tenses in Hindi', progress: 0, completed: false },
+          { id: 'pronouns', title: 'Pronouns and Their Usage', progress: 0, completed: false }
+        ]
+      },
+      {
+        id: 'vocabulary',
+        title: 'Vocabulary',
+        subtopics: [
+          { id: 'common-words', title: 'Common Words and Phrases', progress: 0, completed: false },
+          { id: 'idioms', title: 'Hindi Idioms and Expressions', progress: 0, completed: false }
+        ]
+      }
+    ]
   }
 };
 
@@ -40,11 +63,15 @@ const lessonUrls = {
   motion: '/lessons/gravity-physics.html', // Using same lesson for demo
   energy: '/lessons/gravity-physics.html',
   heat: '/lessons/gravity-physics.html',
+  'prefixes-suffixes': '/lessons/hindi-prefixes-suffixes.html',
 };
 
 const Learning = () => {
   const { subject = 'physics', topic = 'gravity' } = useParams();
   const [currentSubtopic, setCurrentSubtopic] = useState(topic);
+  const [aiMessages, setAiMessages] = useState<Array<{id: string, content: string, isAi: boolean, timestamp: Date}>>([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [isAiTyping, setIsAiTyping] = useState(false);
   
   const curriculum = mockCurriculum[subject as keyof typeof mockCurriculum];
   
@@ -56,17 +83,39 @@ const Learning = () => {
     .flatMap(chapter => chapter.subtopics)
     .find(subtopic => subtopic.id === currentSubtopic);
 
-  const handleAskQuestion = async (question: string): Promise<string> => {
-    // Simulate AI response - in real app, this would call your AI service
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
-    
-    const responses = [
-      `Great question about ${currentSubtopicData?.title}! ${question.includes('gravity') ? 'Gravity is a fundamental force that attracts objects with mass toward each other.' : 'Let me help you understand this concept better.'}`,
-      `That's an excellent point. In the context of ${currentSubtopicData?.title}, we need to consider the underlying principles and how they apply to real-world scenarios.`,
-      `I can see you're thinking critically about this topic. Let me break this down for you step by step...`,
-    ];
-    
-    return responses[Math.floor(Math.random() * responses.length)];
+  const handleSendMessage = async () => {
+    if (!newMessage.trim()) return;
+
+    // Add user message
+    const userMessage = {
+      id: Date.now().toString(),
+      content: newMessage,
+      isAi: false,
+      timestamp: new Date()
+    };
+
+    setAiMessages(prev => [...prev, userMessage]);
+    setNewMessage('');
+    setIsAiTyping(true);
+
+    // Simulate AI response
+    setTimeout(() => {
+      const responses = [
+        `Great question about ${currentSubtopicData?.title}! ${newMessage.includes('gravity') ? 'Gravity is a fundamental force that attracts objects with mass toward each other.' : 'Let me help you understand this concept better.'}`,
+        `That's an excellent point. In the context of ${currentSubtopicData?.title}, we need to consider the underlying principles and how they apply to real-world scenarios.`,
+        `I can see you're thinking critically about this topic. Let me break this down for you step by step...`,
+      ];
+
+      const aiMessage = {
+        id: (Date.now() + 1).toString(),
+        content: responses[Math.floor(Math.random() * responses.length)],
+        isAi: true,
+        timestamp: new Date()
+      };
+
+      setAiMessages(prev => [...prev, aiMessage]);
+      setIsAiTyping(false);
+    }, 1000 + Math.random() * 2000);
   };
 
   const handleProgress = (progress: number) => {
@@ -75,39 +124,43 @@ const Learning = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-background">
-      {/* Header */}
-      <header className="bg-white/90 backdrop-blur-sm border-b border-border px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/">
-              <ArrowLeft className="h-4 w-4 mr-2" />
+    <div className="h-screen flex flex-col" style={{ background: 'var(--bg-primary)' }}>
+      {/* Glassmorphic Header */}
+      <header className="glass-header sticky top-0 z-50">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <Link to="/" className="glass-button flex items-center gap-2 text-sm">
+              <ArrowLeft className="h-4 w-4" />
               Dashboard
             </Link>
-          </Button>
-          <div>
-            <h1 className="font-bold text-lg text-foreground">
-              {curriculum.name} - {currentSubtopicData?.title}
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Interactive learning with AI assistance
-            </p>
+            <div className="h-6 w-px" style={{ background: 'var(--border-subtle)' }}></div>
+            <div>
+              <h1 className="glass-text-primary text-xl font-semibold tracking-tight">
+                {curriculum.name}
+              </h1>
+              <p className="glass-text-orange text-sm font-medium">
+                {currentSubtopicData?.title}
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <div className="glass-badge-orange">
+              Progress: {currentSubtopicData?.progress}%
+            </div>
+            <Link to="/" className="glass-button flex items-center gap-2 text-sm">
+              <Home className="h-4 w-4" />
+              Home
+            </Link>
           </div>
         </div>
-        
-        <Button asChild variant="outline" size="sm">
-          <Link to="/">
-            <Home className="h-4 w-4 mr-2" />
-            Home
-          </Link>
-        </Button>
       </header>
 
       {/* Main Learning Interface */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Left Panel - Navigation Tree */}
-        <div className="w-80 flex-shrink-0 border-r border-border">
-          <NavigationTree
+      <div className="flex-1 flex overflow-hidden gap-4 p-4">
+        {/* Left Panel - Navigation */}
+        <div className="w-72 flex-shrink-0 glass-card p-0 overflow-hidden">
+          <ModernNavigationTree
             subject={curriculum}
             currentSubtopic={currentSubtopic}
             onSubtopicSelect={setCurrentSubtopic}
@@ -115,18 +168,33 @@ const Learning = () => {
         </div>
 
         {/* Center Panel - Learning Content */}
-        <div className="flex-1 overflow-hidden">
-          <LessonFrame
-            lessonUrl={lessonUrls[currentSubtopic as keyof typeof lessonUrls] || lessonUrls.gravity}
-            onProgress={handleProgress}
+        <div className="flex-1 overflow-hidden glass-card p-0">
+          <ContentFrame
+            subtopicId={currentSubtopic}
+            title={currentSubtopicData?.title || 'Select a subtopic'}
+            progress={currentSubtopicData?.progress || 0}
+            subjectColor="#06B6D4"
+            contentUrl={lessonUrls[currentSubtopic as keyof typeof lessonUrls] || lessonUrls.gravity}
+            isPdfMode={false}
+            onToggleMode={() => {}}
+            onNavigateSubtopic={() => {}}
+            onShowAssessment={() => handleProgress(10)}
           />
         </div>
 
         {/* Right Panel - AI Tutor */}
-        <div className="w-80 flex-shrink-0 border-l border-border">
-          <AITutor
-            currentTopic={currentSubtopicData?.title || 'Physics'}
-            onAskQuestion={handleAskQuestion}
+        <div className="w-80 flex-shrink-0 glass-card p-0 overflow-hidden">
+          <AITutorPanel
+            messages={aiMessages}
+            newMessage={newMessage}
+            isAiTyping={isAiTyping}
+            onSendMessage={handleSendMessage}
+            onMessageChange={setNewMessage}
+            subtopicTitle={currentSubtopicData?.title || 'Physics'}
+            themeColor={{
+              accent: '#06B6D4',
+              bg: '#155e75'
+            }}
           />
         </div>
       </div>

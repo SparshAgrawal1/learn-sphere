@@ -1,0 +1,499 @@
+/* Enhanced Glassmorphism Dashboard Styles with Increased Roundness */
+/* Merged and optimized from data-visualization.css and spline-overrides.css */
+
+/* Data Visualization Styles */
+/* Animated Background Grid */
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.15; }
+}
+
+.data-viz-grid {
+  animation: grid-pulse 4s ease-in-out infinite;
+}
+
+/* Glowing Data Points */
+@keyframes data-point-glow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 4px currentColor);
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 12px currentColor);
+    transform: scale(1.1);
+  }
+}
+
+.data-point {
+  animation: data-point-glow 3s ease-in-out infinite;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.data-point:hover {
+  animation-play-state: paused;
+  filter: drop-shadow(0 0 16px currentColor) !important;
+  transform: scale(1.3) !important;
+}
+
+/* Progress Ring Animations */
+@keyframes ring-rotate {
+  from { transform: rotate(-90deg); }
+  to { transform: rotate(270deg); }
+}
+
+.progress-ring {
+  transform-origin: center;
+  transition: all 0.5s ease;
+}
+
+.progress-ring:hover {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Dark Theme Variables */
+.dark-viz-theme {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --text-tertiary: rgba(255, 255, 255, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent-orange: #ff8c00;
+  --accent-green: #00ff88;
+  --accent-red: #ff4444;
+  --accent-blue: #4488ff;
+  --accent-purple: #8844ff;
+}
+
+.spline-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.spline-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+/* Remove Spline watermark */
+.spline-watermark {
+  display: none !important;
+}
+
+/* Ensure the 3D model is centered and visible */
+.spline-container canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Enhanced Glassmorphism Card Styles with Increased Roundness */
+.glassmorphism-card {
+  backdrop-filter: blur(20px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06), transparent);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1.5rem; /* Increased from 1rem */
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 4px 20px rgba(255, 255, 255, 0.08) inset;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glassmorphism-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  backdrop-filter: blur(24px);
+  box-shadow: 
+    0 16px 50px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 6px 25px rgba(255, 255, 255, 0.1) inset;
+}
+
+/* Enhanced Subject Card Styles */
+.subject-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  border-radius: 1.5rem; /* Increased roundness */
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), transparent, rgba(255, 255, 255, 0.15));
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.subject-card:hover::before {
+  opacity: 1;
+}
+
+.subject-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  backdrop-filter: blur(24px);
+}
+
+/* Enhanced Progress Bars */
+.micro-progress {
+  height: 3px; /* Increased from 2px */
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+.micro-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.micro-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Enhanced Visual Chart Elements */
+.micro-chart {
+  display: flex;
+  align-items: end;
+  gap: 2px; /* Increased from 1px */
+  height: 16px; /* Increased from 12px */
+}
+
+.micro-chart-bar {
+  width: 3px; /* Increased from 2px */
+  border-radius: 2px; /* Increased from 1px */
+  transition: height 0.3s ease;
+  opacity: 0.7;
+}
+
+.micro-chart-bar:hover {
+  opacity: 1;
+}
+
+/* Enhanced Trend Indicators */
+.trend-indicator {
+  width: 6px; /* Increased from 4px */
+  height: 6px; /* Increased from 4px */
+  border-radius: 50%;
+  position: relative;
+}
+
+.trend-indicator.up {
+  background: #10B981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5); /* Increased glow */
+}
+
+.trend-indicator.down {
+  background: #EF4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5); /* Increased glow */
+}
+
+.trend-indicator.stable {
+  background: #6B7280;
+  box-shadow: 0 0 12px rgba(107, 114, 128, 0.5); /* Increased glow */
+}
+
+/* Enhanced Scrollbars */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Enhanced scrollbar for timeline */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 140, 0, 0.3);
+  border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 140, 0, 0.5);
+}
+
+/* Timeline scroll container */
+.timeline-scroll-container {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 140, 0, 0.3) transparent;
+}
+
+.timeline-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.timeline-scroll-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.timeline-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 140, 0, 0.4);
+  border-radius: 3px;
+}
+
+.timeline-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 140, 0, 0.6);
+}
+
+/* Single card timeline scrolling */
+.learning-path-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.learning-path-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 140, 0, 0.4) transparent;
+}
+
+.learning-path-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.learning-path-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.learning-path-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 140, 0, 0.4);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.learning-path-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 140, 0, 0.6);
+}
+
+/* Enhanced Glassmorphism Button Styles */
+.glassmorphism-button {
+  backdrop-filter: blur(20px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 1.5rem; /* Increased roundness */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glassmorphism-button:hover {
+  transform: translateY(-4px) scale(1.05);
+  backdrop-filter: blur(24px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Enhanced Floating Orb Backgrounds */
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px); /* Increased blur */
+  opacity: 0.15; /* Increased opacity */
+  pointer-events: none;
+}
+
+.floating-orb-1 {
+  width: 80px; /* Increased from 60px */
+  height: 80px; /* Increased from 60px */
+  top: -40px; /* Adjusted for new size */
+  right: -40px; /* Adjusted for new size */
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-orb-2 {
+  width: 60px; /* Increased from 40px */
+  height: 60px; /* Increased from 40px */
+  bottom: -30px; /* Adjusted for new size */
+  left: -30px; /* Adjusted for new size */
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+/* Enhanced Animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(180deg); /* Increased movement */
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.7; /* Increased from 0.6 */
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08); /* Increased from 1.05 */
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Enhanced Layout Optimizations */
+.compact-grid {
+  display: grid;
+  gap: 0.75rem; /* Increased from 0.5rem */
+  padding: 0.75rem; /* Increased from 0.5rem */
+}
+
+.compact-card {
+  padding: 1rem; /* Increased from 0.75rem */
+  margin: 0.375rem; /* Increased from 0.25rem */
+  border-radius: 1.5rem; /* Increased roundness */
+}
+
+.compact-text {
+  font-size: 0.75rem; /* Increased from 0.625rem */
+  line-height: 1rem; /* Increased from 0.875rem */
+}
+
+.micro-text {
+  font-size: 0.625rem; /* Increased from 0.5rem */
+  line-height: 0.875rem; /* Increased from 0.75rem */
+}
+
+/* Enhanced Focus States */
+.glassmorphism-card:focus,
+.subject-card:focus,
+.glassmorphism-button:focus {
+  outline: 3px solid rgba(139, 92, 246, 0.6); /* Increased from 2px */
+  outline-offset: 3px; /* Increased from 2px */
+}
+
+/* Enhanced Loading States */
+.loading-shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.15) 25%, /* Increased opacity */
+    rgba(255, 255, 255, 0.25) 50%, /* Increased opacity */
+    rgba(255, 255, 255, 0.15) 75% /* Increased opacity */
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Enhanced Responsive Adjustments */
+@media (max-width: 768px) {
+  .subject-card {
+    width: 8rem; /* Increased from 7rem */
+    height: 6rem; /* Increased from 5rem */
+    padding: 0.75rem; /* Increased from 0.5rem */
+    border-radius: 1.25rem; /* Increased roundness */
+  }
+  
+  .glassmorphism-card {
+    padding: 0.75rem; /* Increased from 0.5rem */
+    border-radius: 1.25rem; /* Increased roundness */
+  }
+  
+  .compact-grid {
+    gap: 0.5rem; /* Increased from 0.25rem */
+    padding: 0.5rem; /* Increased from 0.25rem */
+  }
+}
+
+@media (max-width: 480px) {
+  .subject-card {
+    width: 7rem; /* Increased from 6rem */
+    height: 5rem; /* Increased from 4rem */
+    padding: 0.5rem; /* Increased from 0.375rem */
+  }
+  
+  .micro-text {
+    font-size: 0.55rem; /* Increased from 0.45rem */
+  }
+}
+
+/* Enhanced High DPI Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .glassmorphism-card {
+    backdrop-filter: blur(20px); /* Increased from 16px */
+  }
+  
+  .subject-card {
+    backdrop-filter: blur(20px); /* Increased from 16px */
+  }
+}
+
+/* Enhanced Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .glassmorphism-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04), transparent);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .subject-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06), transparent);
+  }
+}
+
+/* Enhanced Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .subject-card,
+  .glassmorphism-card,
+  .glassmorphism-button {
+    transition: none;
+    animation: none;
+  }
+  
+  .floating-orb-1,
+  .floating-orb-2 {
+    animation: none;
+  }
+}
+
+/* Typography styles moved to unified-theme.css */

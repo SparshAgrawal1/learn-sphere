@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hindi Prefixes and Suffixes - Learn Sphere Vista</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: transparent;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #06B6D4, #0EA5E9, #38BDF8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Interactive Learning Area */
+        .learning-stage {
+            background: linear-gradient(to bottom, 
+                #06283D 0%,
+                #1A374D 40%,
+                #406882 80%,
+                #6998AB 100%);
+            border-radius: 16px;
+            height: 400px;
+            position: relative;
+            margin: 30px 0;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            border: 4px solid rgba(6, 182, 212, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Word Builder */
+        .word-builder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .word-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            height: 80px;
+        }
+
+        .word-part {
+            padding: 12px 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 12px;
+            margin: 0 5px;
+            min-width: 80px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .prefix {
+            background: linear-gradient(135deg, #06B6D4, #0891B2);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        .root {
+            background: linear-gradient(135deg, #f3f4f6, #d1d5db);
+            color: #1e293b;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .suffix {
+            background: linear-gradient(135deg, #06B6D4, #0891B2);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        .word-meaning {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 60px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .word-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #06B6D4, #0891B2);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(6, 182, 212, 0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .control-btn.active {
+            background: linear-gradient(135deg, #0EA5E9, #0284C7);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #06B6D4;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .section-content {
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        /* Tables */
+        .prefix-table, .suffix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .prefix-table th, .prefix-table td,
+        .suffix-table th, .suffix-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .prefix-table th, .suffix-table th {
+            background: rgba(6, 182, 212, 0.2);
+            color: #06B6D4;
+            font-weight: 600;
+        }
+
+        .prefix-table tr:hover, .suffix-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Examples */
+        .example-box {
+            background: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06B6D4;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: #06B6D4;
+            margin-bottom: 8px;
+        }
+
+        .example-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example-word {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Practice Section */
+        .practice-section {
+            margin-top: 30px;
+        }
+
+        .practice-title {
+            font-size: 1.5rem;
+            color: #06B6D4;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .practice-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .practice-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .practice-card:hover {
+            transform: translateY(-5px);
+            background: rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .practice-card.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        .practice-card.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        .practice-word {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .practice-hint {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .learning-stage {
+                height: 350px;
+            }
+            
+            .word-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .practice-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .practice-card {
+                width: 90%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes highlight {
+            0%, 100% { box-shadow: 0 0 5px rgba(6, 182, 212, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.8); }
+        }
+
+        .highlight {
+            animation: highlight 2s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>उपसर्ग और प्रत्यय (Prefixes and Suffixes) - Updated!</h1>
+            <p>Learn how prefixes and suffixes modify Hindi words to create new meanings and expand your vocabulary. This interactive lesson will help you master Hindi word formation.</p>
+        </div>
+
+        <!-- Interactive Word Builder -->
+        <div class="learning-stage" id="wordBuilder">
+            <div class="word-builder">
+                <div class="word-display">
+                    <div class="word-part prefix" id="prefixDisplay" style="transform: scale(1.1); box-shadow: 0 0 20px rgba(6, 182, 212, 0.8);">अ</div>
+                    <div class="word-part root" id="rootDisplay" style="transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);">विद्या</div>
+                    <div class="word-part suffix" id="suffixDisplay"></div>
+                </div>
+                
+                <div class="word-meaning" id="meaningDisplay">
+                    अविद्या (avidyā) - Ignorance or lack of knowledge
+                </div>
+
+                <div class="word-controls">
+                    <button class="control-btn" onclick="changePrefix()">Change Prefix</button>
+                    <button class="control-btn" onclick="changeRoot()">Change Root Word</button>
+                    <button class="control-btn" onclick="changeSuffix()">Change Suffix</button>
+                    <button class="control-btn" onclick="generateRandom()">Random Word</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prefixes Section -->
+        <div class="content-section">
+            <h2 class="section-title">Common Hindi Prefixes (उपसर्ग)</h2>
+            <div class="section-content">
+                <p>
+                    Prefixes in Hindi are called "उपसर्ग" (upsarg). They are added before a word to modify its meaning.
+                    Hindi has prefixes from both Sanskrit (तत्सम) and native Hindi (तद्भव) origins.
+                </p>
+                
+                <table class="prefix-table">
+                    <thead>
+                        <tr>
+                            <th>Prefix</th>
+                            <th>Meaning</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>अ / अन्</td>
+                            <td>Negation, without, not</td>
+                            <td>अशुद्ध (impure), अनंत (endless)</td>
+                        </tr>
+                        <tr>
+                            <td>सु</td>
+                            <td>Good, well, nice</td>
+                            <td>सुगंध (fragrance), सुविधा (convenience)</td>
+                        </tr>
+                        <tr>
+                            <td>दुर् / दु</td>
+                            <td>Bad, difficult</td>
+                            <td>दुर्गंध (bad smell), दुर्घटना (accident)</td>
+                        </tr>
+                        <tr>
+                            <td>प्र</td>
+                            <td>Forward, forth, very</td>
+                            <td>प्रगति (progress), प्रसिद्ध (famous)</td>
+                        </tr>
+                        <tr>
+                            <td>अधि</td>
+                            <td>Over, above, superior</td>
+                            <td>अधिकार (authority), अधिपति (lord)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">More Examples:</div>
+                    <div class="example-content">
+                        <span class="example-word">निर्दोष (faultless)</span>
+                        <span class="example-word">परिवार (family)</span>
+                        <span class="example-word">विदेश (foreign country)</span>
+                        <span class="example-word">उपवन (garden)</span>
+                        <span class="example-word">संयोग (coincidence)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Suffixes Section -->
+        <div class="content-section">
+            <h2 class="section-title">Common Hindi Suffixes (प्रत्यय)</h2>
+            <div class="section-content">
+                <p>
+                    Suffixes in Hindi are called "प्रत्यय" (pratyay). They are added after a word to modify its meaning or grammatical function.
+                    Suffixes can change nouns to adjectives, create abstract nouns, or modify verbs.
+                </p>
+                
+                <table class="suffix-table">
+                    <thead>
+                        <tr>
+                            <th>Suffix</th>
+                            <th>Function</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-ता / -त्व</td>
+                            <td>Forms abstract nouns</td>
+                            <td>सुंदरता (beauty), मानवत्व (humanity)</td>
+                        </tr>
+                        <tr>
+                            <td>-वाला</td>
+                            <td>Indicates possession or profession</td>
+                            <td>दूधवाला (milkman), दिल्लीवाला (person from Delhi)</td>
+                        </tr>
+                        <tr>
+                            <td>-कर</td>
+                            <td>Forms adverbs</td>
+                            <td>धीरेकर (slowly), जोरकर (forcefully)</td>
+                        </tr>
+                        <tr>
+                            <td>-इक</td>
+                            <td>Forms adjectives</td>
+                            <td>ऐतिहासिक (historical), वैज्ञानिक (scientific)</td>
+                        </tr>
+                        <tr>
+                            <td>-ई</td>
+                            <td>Forms feminine nouns or adjectives</td>
+                            <td>लड़की (girl), भारतीय (Indian)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <div class="example-title">More Examples:</div>
+                    <div class="example-content">
+                        <span class="example-word">मिठाई (sweet)</span>
+                        <span class="example-word">बचपन (childhood)</span>
+                        <span class="example-word">लिखावट (handwriting)</span>
+                        <span class="example-word">चालाक (clever)</span>
+                        <span class="example-word">गरीबी (poverty)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Word Formation Rules -->
+        <div class="content-section">
+            <h2 class="section-title">Word Formation Rules</h2>
+            <div class="section-content">
+                <p>
+                    When adding prefixes and suffixes to Hindi words, certain phonological changes may occur:
+                </p>
+                
+                <ol style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>When a prefix ending in a consonant meets a root beginning with a vowel, a sandhi (sound change) may occur.</li>
+                    <li>Some prefixes change form slightly depending on the first letter of the root word.</li>
+                    <li>Adding certain suffixes may cause the final vowel of the root word to change.</li>
+                </ol>
+
+                <div class="example-box">
+                    <div class="example-title">Sandhi Examples:</div>
+                    <div class="example-content">
+                        <span class="example-word">उत् + आहार = उदाहरण (example)</span>
+                        <span class="example-word">सम् + आचार = सदाचार (good conduct)</span>
+                        <span class="example-word">निर् + अर्थ = निरर्थक (meaningless)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div class="practice-section">
+            <h2 class="practice-title">Practice Identifying Prefixes and Suffixes</h2>
+            
+            <div class="practice-container" id="practiceContainer">
+                <div class="practice-card" onclick="checkAnswer(this, 'prefix')">
+                    <div class="practice-word">अनुचित</div>
+                    <div class="practice-hint">Improper/inappropriate</div>
+                </div>
+                <div class="practice-card" onclick="checkAnswer(this, 'suffix')">
+                    <div class="practice-word">सुंदरता</div>
+                    <div class="practice-hint">Beauty</div>
+                </div>
+                <div class="practice-card" onclick="checkAnswer(this, 'both')">
+                    <div class="practice-word">अपरिचित</div>
+                    <div class="practice-hint">Unfamiliar/stranger</div>
+                </div>
+                <div class="practice-card" onclick="checkAnswer(this, 'none')">
+                    <div class="practice-word">कमल</div>
+                    <div class="practice-hint">Lotus</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data for interactive word builder
+        const prefixes = [
+            { text: "अ", meaning: "not, without" },
+            { text: "सु", meaning: "good, well" },
+            { text: "दुर्", meaning: "bad, difficult" },
+            { text: "प्र", meaning: "forward, forth" },
+            { text: "अधि", meaning: "over, above" },
+            { text: "अनु", meaning: "after, according to" },
+            { text: "अप", meaning: "away, down" },
+            { text: "उप", meaning: "near, sub" },
+            { text: "निर्", meaning: "without, out" },
+            { text: "परि", meaning: "around, about" }
+        ];
+
+        const roots = [
+            { text: "विद्या", meaning: "knowledge" },
+            { text: "गति", meaning: "movement" },
+            { text: "काश", meaning: "light" },
+            { text: "मान", meaning: "respect" },
+            { text: "भाग्य", meaning: "fortune" },
+            { text: "चित", meaning: "mind, thought" },
+            { text: "कार", meaning: "doer" },
+            { text: "जय", meaning: "victory" },
+            { text: "नयन", meaning: "eye" },
+            { text: "वाद", meaning: "doctrine" }
+        ];
+
+        const suffixes = [
+            { text: "", meaning: "" },
+            { text: "ता", meaning: "abstract quality" },
+            { text: "त्व", meaning: "state of being" },
+            { text: "वान", meaning: "possessing" },
+            { text: "कर", meaning: "doing" },
+            { text: "इक", meaning: "related to" },
+            { text: "ई", meaning: "feminine form" },
+            { text: "शाली", meaning: "having quality" }
+        ];
+
+        // Word combinations with meanings
+        const wordMeanings = {
+            "अविद्या": "Ignorance or lack of knowledge",
+            "सुविद्या": "Good knowledge or education",
+            "प्रगति": "Progress or advancement",
+            "अनुमान": "Inference or estimation",
+            "परिवार": "Family (those surrounding)",
+            "अधिकार": "Authority or right",
+            "निर्मल": "Pure or clean",
+            "दुर्भाग्य": "Misfortune or bad luck",
+            "उपवन": "Garden (near-forest)",
+            "प्रकाश": "Light or illumination",
+            "सुंदरता": "Beauty (state of being beautiful)",
+            "मानवत्व": "Humanity (state of being human)",
+            "बुद्धिमान": "Intelligent (possessing intelligence)",
+            "शक्तिशाली": "Powerful (having power)"
+        };
+
+        // Current state
+        let currentPrefix = 0;
+        let currentRoot = 0;
+        let currentSuffix = 0;
+
+        // DOM elements
+        const prefixDisplay = document.getElementById('prefixDisplay');
+        const rootDisplay = document.getElementById('rootDisplay');
+        const suffixDisplay = document.getElementById('suffixDisplay');
+        const meaningDisplay = document.getElementById('meaningDisplay');
+
+        // Update display
+        function updateDisplay() {
+            prefixDisplay.textContent = prefixes[currentPrefix].text;
+            rootDisplay.textContent = roots[currentRoot].text;
+            suffixDisplay.textContent = suffixes[currentSuffix].text;
+            
+            const fullWord = prefixes[currentPrefix].text + roots[currentRoot].text + suffixes[currentSuffix].text;
+            
+            // Display meaning if available, otherwise generate a generic one
+            if (wordMeanings[fullWord]) {
+                meaningDisplay.textContent = `${fullWord} - ${wordMeanings[fullWord]}`;
+            } else {
+                const prefixMeaning = prefixes[currentPrefix].meaning ? `${prefixes[currentPrefix].meaning} ` : "";
+                const rootMeaning = roots[currentRoot].meaning;
+                const suffixMeaning = suffixes[currentSuffix].meaning ? ` (${suffixes[currentSuffix].meaning})` : "";
+                
+                meaningDisplay.textContent = `${fullWord} - ${prefixMeaning}${rootMeaning}${suffixMeaning}`;
+            }
+
+            // Add highlight animation
+            prefixDisplay.classList.remove('highlight');
+            rootDisplay.classList.remove('highlight');
+            suffixDisplay.classList.remove('highlight');
+            
+            setTimeout(() => {
+                prefixDisplay.classList.add('highlight');
+                rootDisplay.classList.add('highlight');
+                if (suffixes[currentSuffix].text) {
+                    suffixDisplay.classList.add('highlight');
+                }
+            }, 50);
+        }
+
+        // Change functions
+        function changePrefix() {
+            currentPrefix = (currentPrefix + 1) % prefixes.length;
+            updateDisplay();
+        }
+
+        function changeRoot() {
+            currentRoot = (currentRoot + 1) % roots.length;
+            updateDisplay();
+        }
+
+        function changeSuffix() {
+            currentSuffix = (currentSuffix + 1) % suffixes.length;
+            updateDisplay();
+        }
+
+        function generateRandom() {
+            currentPrefix = Math.floor(Math.random() * prefixes.length);
+            currentRoot = Math.floor(Math.random() * roots.length);
+            currentSuffix = Math.floor(Math.random() * suffixes.length);
+            updateDisplay();
+        }
+
+        // Practice section
+        function checkAnswer(card, type) {
+            const word = card.querySelector('.practice-word').textContent;
+            let isCorrect = false;
+            
+            // Simple logic for demo purposes
+            if (type === 'prefix' && (word.startsWith('अ') || word.startsWith('सु'))) {
+                isCorrect = true;
+            } else if (type === 'suffix' && word.endsWith('ता')) {
+                isCorrect = true;
+            } else if (type === 'both' && word.startsWith('अ') && word.includes('चित')) {
+                isCorrect = true;
+            } else if (type === 'none' && word === 'कमल') {
+                isCorrect = true;
+            }
+            
+            card.classList.remove('correct', 'incorrect');
+            card.classList.add(isCorrect ? 'correct' : 'incorrect');
+            
+            // Reset after a delay
+            setTimeout(() => {
+                card.classList.remove('correct', 'incorrect');
+            }, 2000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDisplay();
+            
+            // Notify parent frame when content is loaded
+            window.parent.postMessage({ type: 'CONTENT_LOADED', progress: 75 }, '*');
+            
+            // Update progress when user interacts with the word builder
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    window.parent.postMessage({ type: 'PROGRESS_UPDATE', progress: 80 }, '*');
+                });
+            });
+            
+            // Update progress when user practices
+            document.querySelectorAll('.practice-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    window.parent.postMessage({ type: 'PROGRESS_UPDATE', progress: 85 }, '*');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

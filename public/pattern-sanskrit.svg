@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sanskrit pattern with ancient scripts and symbols -->
+  
+  <!-- Background grid -->
+  <g stroke="#EC4899" stroke-width="0.5" opacity="0.2">
+    <line x1="0" y1="40" x2="400" y2="40" />
+    <line x1="0" y1="80" x2="400" y2="80" />
+    <line x1="0" y1="120" x2="400" y2="120" />
+    <line x1="0" y1="160" x2="400" y2="160" />
+    <line x1="0" y1="200" x2="400" y2="200" />
+    <line x1="0" y1="240" x2="400" y2="240" />
+    <line x1="0" y1="280" x2="400" y2="280" />
+    <line x1="0" y1="320" x2="400" y2="320" />
+    <line x1="0" y1="360" x2="400" y2="360" />
+    
+    <line x1="40" y1="0" x2="40" y2="400" />
+    <line x1="80" y1="0" x2="80" y2="400" />
+    <line x1="120" y1="0" x2="120" y2="400" />
+    <line x1="160" y1="0" x2="160" y2="400" />
+    <line x1="200" y1="0" x2="200" y2="400" />
+    <line x1="240" y1="0" x2="240" y2="400" />
+    <line x1="280" y1="0" x2="280" y2="400" />
+    <line x1="320" y1="0" x2="320" y2="400" />
+    <line x1="360" y1="0" x2="360" y2="400" />
+  </g>
+  
+  <!-- Sanskrit Script -->
+  <text x="100" y="60" font-family="Arial" font-size="24" fill="#EC4899" opacity="0.6">संस्कृतम्</text>
+  
+  <text x="80" y="100" font-family="Arial" font-size="20" fill="#EC4899" opacity="0.6">अ</text>
+  <text x="120" y="100" font-family="Arial" font-size="20" fill="#EC4899" opacity="0.6">आ</text>
+  <text x="160" y="100" font-family="Arial" font-size="20" fill="#EC4899" opacity="0.6">इ</text>
+  <text x="200" y="100" font-family="Arial" font-size="20" fill="#EC4899" opacity="0.6">ई</text>
+  <text x="240" y="100" font-family="Arial" font-size="20" fill="#EC4899" opacity="0.6">उ</text>
+  <text x="280" y="100" font-family="Arial" font-size="20" fill="#EC4899" opacity="0.6">ऊ</text>
+  
+  <!-- Decorative Borders -->
+  <path d="M50,150 L100,150 L100,200 L150,200 L150,250 L200,250" stroke="#EC4899" stroke-width="1.5" fill="none" opacity="0.6" />
+  <path d="M350,150 L300,150 L300,200 L250,200 L250,250 L200,250" stroke="#EC4899" stroke-width="1.5" fill="none" opacity="0.6" />
+  
+  <!-- Mandala Elements -->
+  <circle cx="200" cy="320" r="50" stroke="#EC4899" stroke-width="1.5" fill="none" opacity="0.6" />
+  <circle cx="200" cy="320" r="40" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+  <circle cx="200" cy="320" r="30" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+  <circle cx="200" cy="320" r="20" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+  <path d="M150 320 L250 320" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  <path d="M200 270 L200 370" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  <path d="M165 285 L235 355" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  <path d="M165 355 L235 285" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  
+  <!-- Ancient Symbols -->
+  <rect x="50" y="50" width="30" height="30" stroke="#EC4899" stroke-width="1.5" fill="none" opacity="0.6" />
+  <path d="M50 50 L80 80" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  <path d="M80 50 L50 80" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  
+  <rect x="320" y="50" width="30" height="30" stroke="#EC4899" stroke-width="1.5" fill="none" opacity="0.6" />
+  <circle cx="335" cy="65" r="10" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+  
+  <path d="M320,200 L350,200 L350,230 L320,230 Z" stroke="#EC4899" stroke-width="1.5" fill="none" opacity="0.6" />
+  <path d="M320,200 L350,230" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  <path d="M350,200 L320,230" stroke="#EC4899" stroke-width="1" opacity="0.6" />
+  
+  <!-- Decorative Corners -->
+  <path d="M40,40 C60,60 80,20 100,40" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+  <path d="M300,40 C320,60 340,20 360,40" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+  <path d="M40,360 C60,340 80,380 100,360" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+  <path d="M300,360 C320,340 340,380 360,360" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6" />
+</svg>
+
+
+
+

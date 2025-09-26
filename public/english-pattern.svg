@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="english-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M5 5L15 5M5 10L15 10M5 15L15 15" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+      <path d="M5 7L7 7M5 12L9 12M5 17L8 17" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="100" height="100" fill="url(#english-pattern)"/>
+</svg>
+

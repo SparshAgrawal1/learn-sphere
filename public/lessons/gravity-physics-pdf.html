@@ -3,119 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics: Gravity and Universal Gravitation - PDF View</title>
+    <title>Gravity - Physics in Motion (PDF Version)</title>
     <style>
-        body {
-            font-family: 'Times New Roman', serif;
-            background: #f8f9fa;
+        * {
             margin: 0;
-            padding: 20px;
-            line-height: 1.6;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
         
-        .pdf-container {
+        body {
+            background-color: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+            padding: 2rem;
             max-width: 800px;
             margin: 0 auto;
-            background: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .pdf-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .pdf-header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .pdf-icon {
+            background-color: #f59e0b;
+            color: white;
+            width: 40px;
+            height: 40px;
             border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .pdf-page {
-            padding: 60px;
-            min-height: 1000px;
-        }
-        
-        .header {
-            text-align: center;
-            border-bottom: 2px solid #333;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            color: #333;
-            margin: 0 0 10px 0;
-        }
-        
-        .header .subtitle {
-            font-size: 16px;
-            color: #666;
-            font-style: italic;
-        }
-        
-        .section {
-            margin-bottom: 30px;
-        }
-        
-        .section h2 {
-            font-size: 18px;
-            color: #333;
-            border-left: 4px solid #007bff;
-            padding-left: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .section h3 {
-            font-size: 16px;
-            color: #444;
-            margin-bottom: 10px;
-        }
-        
-        .formula-box {
-            background: #f0f8ff;
-            border: 1px solid #b3d9ff;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .formula {
-            font-size: 18px;
-            font-weight: bold;
-            font-family: 'Times New Roman', serif;
-        }
-        
-        .example-box {
-            background: #f9f9f9;
-            border-left: 4px solid #28a745;
-            padding: 15px;
-            margin: 15px 0;
-        }
-        
-        .diagram-placeholder {
-            background: #e9ecef;
-            border: 2px dashed #6c757d;
-            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 20px 0;
-            color: #6c757d;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            color: #374151;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .pdf-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .formula {
+            background-color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+        }
+        
+        .note {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .figure img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .figure-caption {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
             font-style: italic;
         }
         
-        .page-number {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            color: #666;
-            font-size: 12px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #e5e7eb;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9fafb;
         }
         
         ul, ol {
-            padding-left: 25px;
+            margin: 1rem 0 1rem 1.5rem;
         }
         
         li {
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
 <body>
+    <div class="pdf-header">
+        <div class="pdf-header-left">
+            <div class="pdf-icon">G</div>
+            <div>
+                <h1>Gravitation</h1>
+                <p>Physics - PDF Version</p>
+            </div>
+        </div>
+        <div>
+            <p>9th Grade Science</p>
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2>1. Introduction to Gravity</h2>
+        <p>Gravity is one of the fundamental forces of nature. It is the force that attracts two objects with mass toward each other. The more massive an object is, the stronger its gravitational pull.</p>
+        
+        <p>Sir Isaac Newton was the first to formulate the theory of gravity in his work "Philosophiæ Naturalis Principia Mathematica" published in 1687. His theory remained the definitive description of gravity until Albert Einstein's theory of general relativity in the early 20th century.</p>
+        
+        <div class="note">
+            <strong>Historical Note:</strong> Legend has it that Newton was inspired to formulate his theory of gravity when he saw an apple fall from a tree. While this story may be apocryphal, it illustrates how everyday observations can lead to profound scientific discoveries.
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2>2. Newton's Law of Universal Gravitation</h2>
+        <p>Newton's Law of Universal Gravitation states that every particle attracts every other particle in the universe with a force that is directly proportional to the product of their masses and inversely proportional to the square of the distance between their centers.</p>
+        
+        <div class="formula">
+            F = G × (m₁ × m₂) / r²
+        </div>
+        
+        <p>Where:</p>
+        <ul>
+            <li><strong>F</strong> is the gravitational force between the masses</li>
+            <li><strong>G</strong> is the gravitational constant (6.67430 × 10⁻¹¹ m³ kg⁻¹ s⁻²)</li>
+            <li><strong>m₁</strong> and <strong>m₂</strong> are the masses of the objects</li>
+            <li><strong>r</strong> is the distance between the centers of the masses</li>
+        </ul>
+        
+        <h3>2.1 Characteristics of Gravitational Force</h3>
+        <ul>
+            <li>It is always attractive in nature</li>
+            <li>It is a central force, acting along the line joining the centers of two masses</li>
+            <li>It is a conservative force, meaning work done by gravity is independent of the path taken</li>
+            <li>It follows the inverse square law</li>
+        </ul>
+        
+        <div class="figure">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Inverse_square_law.svg/500px-Inverse_square_law.svg.png" alt="Inverse Square Law Illustration">
+            <p class="figure-caption">Fig 1: Illustration of the inverse square law. As distance increases, the force decreases by the square of that distance.</p>
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2>3. Acceleration Due to Gravity</h2>
+        <p>The acceleration due to gravity (g) is the acceleration experienced by an object due to the gravitational force. Near the Earth's surface, this acceleration is approximately 9.8 m/s² directed toward the center of the Earth.</p>
+        
+        <div class="formula">
+            g = G × M / r²
+        </div>
+        
+        <p>Where:</p>
+        <ul>
+            <li><strong>g</strong> is the acceleration due to gravity</li>
+            <li><strong>G</strong> is the gravitational constant</li>
+            <li><strong>M</strong> is the mass of the Earth (or other celestial body)</li>
+            <li><strong>r</strong> is the distance from the center of the Earth</li>
+        </ul>
+        
+        <h3>3.1 Variation of g with Altitude</h3>
+        <p>The value of g decreases with increasing altitude because the distance from the Earth's center increases.</p>
+        
+        <h3>3.2 Variation of g with Depth</h3>
+        <p>When moving below the Earth's surface, g decreases linearly with depth, becoming zero at the center of the Earth.</p>
+        
+        <table>
+            <tr>
+                <th>Location</th>
+                <th>Value of g (m/s²)</th>
+            </tr>
+            <tr>
+                <td>Earth's surface (sea level)</td>
+                <td>9.80665</td>
+            </tr>
+            <tr>
+                <td>Mount Everest (8,848 m)</td>
+                <td>9.7644</td>
+            </tr>
+            <tr>
+                <td>International Space Station (400 km)</td>
+                <td>8.7</td>
+            </tr>
+            <tr>
+                <td>Moon's surface</td>
+                <td>1.62</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pdf-section">
+        <h2>4. Gravitational Field</h2>
+        <p>A gravitational field is a model used to explain the influence that a massive body extends into the space around itself, producing a force on another massive body.</p>
+        
+        <div class="formula">
+            E = G × M / r²
+        </div>
+        
+        <p>Where E is the gravitational field strength, which is equal to the acceleration due to gravity.</p>
+        
+        <p>The gravitational field strength at a point is defined as the force per unit mass experienced by a small test mass placed at that point.</p>
+    </div>
+
+    <div class="pdf-section">
+        <h2>5. Gravitational Potential Energy</h2>
+        <p>Gravitational potential energy is the energy an object possesses due to its position in a gravitational field.</p>
+        
+        <div class="formula">
+            U = m × g × h
+        </div>
+        
+        <p>Where:</p>
+        <ul>
+            <li><strong>U</strong> is the gravitational potential energy</li>
+            <li><strong>m</strong> is the mass of the object</li>
+            <li><strong>g</strong> is the acceleration due to gravity</li>
+            <li><strong>h</strong> is the height above a reference point</li>
+        </ul>
+        
+        <p>This formula is valid near the Earth's surface where g is approximately constant. For larger distances, the more general formula is:</p>
+        
+        <div class="formula">
+            U = -G × (m₁ × m₂) / r
+        </div>
+        
+        <p>The negative sign indicates that the gravitational force is attractive, and work must be done to separate the masses.</p>
+    </div>
+
+    <div class="pdf-section">
+        <h2>6. Orbital Motion</h2>
+        <p>Orbital motion occurs when an object moves around another object under the influence of gravity. Planets orbit the Sun, and satellites orbit the Earth due to gravitational forces.</p>
+        
+        <h3>6.1 Kepler's Laws of Planetary Motion</h3>
+        <ol>
+            <li><strong>Law of Ellipses:</strong> All planets move in elliptical orbits with the Sun at one focus.</li>
+            <li><strong>Law of Equal Areas:</strong> A line joining a planet to the Sun sweeps out equal areas in equal times.</li>
+            <li><strong>Law of Periods:</strong> The square of the orbital period of a planet is directly proportional to the cube of the semi-major axis of its orbit.</li>
+        </ol>
+        
+        <div class="formula">
+            T² ∝ a³
+        </div>
+        
+        <p>Where T is the orbital period and a is the semi-major axis of the orbit.</p>
+        
+        <div class="figure">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Kepler_laws_diagram.svg/500px-Kepler_laws_diagram.svg.png" alt="Kepler's Laws Illustration">
+            <p class="figure-caption">Fig 2: Illustration of Kepler's laws of planetary motion.</p>
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2>7. Weight and Weightlessness</h2>
+        <p>Weight is the force exerted on an object due to gravity. It is calculated as:</p>
+        
+        <div class="formula">
+            W = m × g
+        </div>
+        
+        <p>Where W is the weight, m is the mass, and g is the acceleration due to gravity.</p>
+        
+        <p>Weightlessness is a condition in which an object or person appears to be free from the effects of gravity. It occurs when an object is in free fall or in orbit. In these situations, the object is still under the influence of gravity but does not feel its effects because it is in a state of continuous free fall.</p>
+        
+        <div class="note">
+            <strong>Note:</strong> Astronauts in the International Space Station experience weightlessness not because they are beyond the reach of Earth's gravity, but because they are in a continuous state of free fall around the Earth.
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2>8. Gravitational Anomalies</h2>
+        <p>Gravitational anomalies are differences between the observed gravitational field and the theoretical gravitational field that would be expected for a perfectly smooth Earth. These anomalies can be caused by variations in the density of the Earth's crust and mantle.</p>
+        
+        <p>Scientists use gravitational anomalies to study the internal structure of the Earth and to locate resources such as oil and minerals.</p>
+    </div>
+
+    <div class="pdf-section">
+        <h2>9. Einstein's Theory of General Relativity</h2>
+        <p>Albert Einstein's theory of general relativity, published in 1915, provides a more comprehensive explanation of gravity than Newton's law. According to this theory, gravity is not a force but a consequence of the curvature of spacetime caused by mass and energy.</p>
+        
+        <p>The theory has been confirmed by various observations, including:</p>
+        <ul>
+            <li>The bending of light around massive objects</li>
+            <li>The precession of Mercury's orbit</li>
+            <li>Gravitational time dilation</li>
+            <li>The existence of gravitational waves</li>
+        </ul>
+        
+        <div class="figure">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/GPB_circling_earth.jpg/500px-GPB_circling_earth.jpg" alt="Spacetime Curvature Illustration">
+            <p class="figure-caption">Fig 3: Illustration of how mass curves spacetime according to Einstein's theory of general relativity.</p>
+        </div>
+    </div>
+
+    <div class="pdf-section">
+        <h2>10. Summary</h2>
+        <p>Gravity is one of the fundamental forces of nature that governs the motion of planets, stars, and galaxies. Newton's law of universal gravitation provides a mathematical description of gravity that works well for most everyday situations. Einstein's theory of general relativity offers a more complete understanding of gravity as the curvature of spacetime caused by mass and energy.</p>
+        
+        <p>Key concepts covered:</p>
+        <ul>
+            <li>Newton's Law of Universal Gravitation</li>
+            <li>Acceleration due to gravity and its variations</li>
+            <li>Gravitational field and potential energy</li>
+            <li>Orbital motion and Kepler's laws</li>
+            <li>Weight and weightlessness</li>
+            <li>Einstein's theory of general relativity</li>
+        </ul>
+    </div>
+</body>
+</html>
     <div class="pdf-container">
         <div class="pdf-page">
             <div class="header">
@@ -229,4 +484,6 @@
         </div>
     </div>
 </body>
+</html></html>
+
 </html>
