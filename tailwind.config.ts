@@ -27,6 +27,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -73,6 +74,8 @@ export default {
           ai: "hsl(var(--chat-ai))",
           bg: "hsl(var(--chat-bg))",
         },
+        glass: "hsl(var(--glass))",
+        glow: "hsl(var(--glow))",
         sphere: {
           physics: "hsl(var(--sphere-physics))",
           chemistry: "hsl(var(--sphere-chemistry))",
@@ -188,6 +191,9 @@ export default {
         'neo-pressed': 'var(--neo-pressed)',
         'neo-hover': 'var(--neo-hover)',
         'neo-active': 'var(--neo-active)',
+        'card': 'var(--shadow-card)',
+        'spline': 'var(--shadow-spline)',
+        'interactive': 'var(--shadow-interactive)',
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
