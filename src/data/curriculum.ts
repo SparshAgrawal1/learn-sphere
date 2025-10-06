@@ -850,20 +850,20 @@ export const curriculum: ClassContent = {
   '10th': [
     {
       id: 'Science',
-      name: 'Science',
-      icon: Microscope,
-      color: '#F59E0B',
-      themeColor: 'amber',
-      progress: 70,
-      natureElement: 'flower',
-      description: 'Discover the natural world through observation and experimentation',
-      position: { x: 25, y: 0, z: 0 },
+    name: 'Science', 
+    icon: Microscope,
+    color: '#F59E0B',
+    themeColor: 'amber',
+    progress: 70,
+    natureElement: 'flower',
+    description: 'Discover the natural world through observation and experimentation',
+    position: { x: 25, y: 0, z: 0 },
     chapters: [
       {
           id: 'Physics',
-          name: 'Physics',
-          icon: Flame,
-          color: '#F59E0B',
+        name: 'Physics',
+        icon: Flame,
+        color: '#F59E0B',
         topics: [
             {
               id: 'Light Refraction',
@@ -1001,9 +1001,9 @@ export const curriculum: ClassContent = {
         },
         {
           id: 'Chemistry',
-          name: 'Chemistry',
-          icon: Atom,
-          color: '#F59E0B',
+        name: 'Chemistry',
+        icon: Atom,
+        color: '#F59E0B',
         topics: [
             {
               id: 'Carbon and its Compound',
@@ -1053,9 +1053,9 @@ export const curriculum: ClassContent = {
         },
         {
           id: 'Biology',
-          name: 'Biology',
-          icon: Dna,
-          color: '#F59E0B',
+        name: 'Biology',
+        icon: Dna,
+        color: '#F59E0B',
         topics: [
             {
               id: 'Life Processes',
@@ -1175,13 +1175,13 @@ export const curriculum: ClassContent = {
                   contentPath: '/FinalContent/Class 10th/Science/Biology/Life Processes/excretion_regulation_exhibit.html',
                   progress: 0,
                   completed: false
-                }
-              ]
-            },
-            {
+      }
+    ]
+  },
+  { 
               id: 'Control and Coordination',
               name: 'Control and Coordination',
-              progress: 60,
+    progress: 60,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Biology/Control and Coordination/index.html',
               subtopics: [
@@ -1513,7 +1513,7 @@ export const curriculum: ClassContent = {
         {
           id: 'Footprints Without Feet – Supplementary reader (short stories)',
           name: 'Footprints Without Feet – Supplementary reader (short stories)',
-          icon: BookCopy,
+        icon: BookCopy,
         color: '#8B5CF6',
           topics: []
         }
@@ -1611,7 +1611,148 @@ export const curriculum: ClassContent = {
       natureElement: 'leaf',
       description: 'Explore the world of numbers, patterns, and problem-solving',
       position: { x: 0, y: -25, z: 0 },
-      chapters: []
+      chapters: [
+        {
+          id: 'Mathematics Topics',
+          name: 'Mathematics Topics',
+          icon: Calculator,
+          color: '#10B981',
+          topics: [
+            {
+              id: 'Arithmetic Progression',
+              name: 'Arithmetic Progression',
+              progress: 60,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_fundamentals (3).html',
+              subtopics: [
+                {
+                  id: 'ap_patterns_intro',
+                  name: 'Introduction to Patterns',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_patterns_intro.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'ap_fundamentals',
+                  name: 'AP Fundamentals',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_fundamentals (3).html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'ap_nth_term',
+                  name: 'nth Term of AP',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_nth_term.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'ap_sum_terms',
+                  name: 'Sum of Terms in AP',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_sum_terms.html',
+                  progress: 55,
+                  completed: false
+                },
+                {
+                  id: 'ap_advanced_applications',
+                  name: 'Advanced Applications',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_advanced_applications.html',
+                  progress: 50,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Linear Equations in 2 variables',
+              name: 'Linear Equations in Two Variables',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/1-linear-equations-preview.html',
+              subtopics: [
+                {
+                  id: '1-linear-equations-preview',
+                  name: 'Linear Equations Preview',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/1-linear-equations-preview.html',
+                  progress: 80,
+                  completed: true
+                },
+                {
+                  id: '2-linear-equations-graphical',
+                  name: 'Graphical Method',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/2-linear-equations-graphical (1).html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: '3-substitution-method',
+                  name: 'Substitution Method',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/3-substitution-method.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: '4-elimination-method',
+                  name: 'Elimination Method',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/4-elimination-method.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: '5-chapter-summary',
+                  name: 'Chapter Summary',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/5-chapter-summary.html',
+                  progress: 60,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Quadratic Equations',
+              name: 'Quadratic Equations',
+              progress: 65,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/quadratic_equations_learning.html',
+              subtopics: [
+                {
+                  id: 'quadratic_equations_learning',
+                  name: 'Quadratic Equations Learning',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/quadratic_equations_learning.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'fixed_quadratic_timeline',
+                  name: 'Quadratic Timeline',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/fixed_quadratic_timeline.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'factorization_quadratic_solver',
+                  name: 'Factorization Method',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/factorization_quadratic_solver.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'nature_of_roots_explorer',
+                  name: 'Nature of Roots Explorer',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/nature_of_roots_explorer.html',
+                  progress: 60,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Coordinate Geometry',
+              name: 'Coordinate Geometry',
+              progress: 0,
+              completed: false,
+              description: 'Coming soon - Coordinate geometry concepts and applications'
+            }
+          ]
+        }
+      ]
     }
   ]
 };
