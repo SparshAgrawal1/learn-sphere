@@ -71,7 +71,7 @@ const ModernLandingPage: React.FC = () => {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/dashboard');
+      navigate('/class-selection');
     }, 1500);
   };
 
@@ -333,7 +333,7 @@ const ModernLandingPage: React.FC = () => {
               {/* CTA Button */}
               <Button 
                 className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white flex items-center justify-center gap-2"
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/class-selection')}
               >
                 <span>Explore Platform</span>
                 <ChevronRight size={16} />

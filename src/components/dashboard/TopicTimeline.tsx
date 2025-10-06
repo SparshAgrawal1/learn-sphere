@@ -94,6 +94,47 @@ const TopicTimeline: React.FC<TopicTimelineProps> = ({
     };
   }, [activeChapter]);
 
+  // If subject has no chapters, show a coming soon message
+  if (!subject.chapters || subject.chapters.length === 0) {
+    return (
+      <div className="space-y-3">
+        {/* Compact Learning Path Header */}
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="backdrop-blur-xl bg-black/40 rounded-full px-4 py-2 border border-white/20 flex items-center gap-3"
+        >
+          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center">
+            <BookOpen size={12} className="text-white" />
+          </div>
+          <span className="text-white text-sm font-medium">{subject.name}</span>
+          <div className="flex items-center gap-1 ml-auto text-xs text-white/60">
+            <span>Coming Soon</span>
+          </div>
+        </motion.div>
+
+        {/* Coming Soon Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="backdrop-blur-xl bg-black/40 rounded-xl p-6 border border-white/20 text-center"
+        >
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center">
+            <subject.icon size={24} className="text-white" />
+          </div>
+          <h3 className="text-white text-lg font-semibold mb-2">{subject.name} Content</h3>
+          <p className="text-white/70 text-sm mb-4">
+            Exciting {subject.name.toLowerCase()} lessons are being prepared for you!
+          </p>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/20 border border-orange-500/30">
+            <Clock size={14} className="text-orange-400" />
+            <span className="text-orange-400 text-sm font-medium">Coming Soon</span>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-3">
       {/* Compact Learning Path Header */}
@@ -278,7 +319,7 @@ const TopicTimeline: React.FC<TopicTimelineProps> = ({
                       </div>
                       
                       <Link 
-                        to={`/learn/${subject.id}/${topic.id}`}
+                        to={`/learn/${encodeURIComponent(subject.id)}/${encodeURIComponent(activeChapter.id)}/${encodeURIComponent(topic.id)}`}
                         className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/10 border border-orange-500/30 text-orange-300 text-xs font-medium hover:from-orange-500/30 hover:to-red-500/20 transition-all duration-300 group-hover:scale-105"
                       >
                         <span>{isCompleted ? 'Review' : 'Start'}</span>

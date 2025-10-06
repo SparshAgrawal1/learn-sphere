@@ -10,7 +10,9 @@ interface HeaderProps {
   showBackButton?: boolean;
   backButtonPath?: string;
   backButtonText?: string;
-  currentPage?: 'dashboard' | 'subject' | 'topic' | 'landing';
+  currentPage?: 'dashboard' | 'subject' | 'topic' | 'landing' | 'class-selection';
+  selectedClass?: string | null;
+  showClassSelector?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -18,7 +20,9 @@ const Header: React.FC<HeaderProps> = ({
   showBackButton = false,
   backButtonPath = '/dashboard',
   backButtonText = 'Back to Dashboard',
-  currentPage = 'dashboard'
+  currentPage = 'dashboard',
+  selectedClass = null,
+  showClassSelector = false
 }) => {
   const navigate = useNavigate();
 
@@ -34,13 +38,44 @@ const Header: React.FC<HeaderProps> = ({
               className="text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-2"
               onClick={() => navigate(backButtonPath)}
             >
-              <span className="i-lucide-arrow-left text-lg" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m12 19-7-7 7-7"/>
+                <path d="M19 12H5"/>
+              </svg>
               {backButtonText}
+            </Button>
+          )}
+          
+          {showClassSelector && (
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-2"
+              onClick={() => {
+                // Clear any existing class selection to force re-selection
+                sessionStorage.removeItem('selectedClass');
+                navigate('/class-selection');
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+              Change Class
             </Button>
           )}
         </div>
         
         <div className="flex items-center gap-4">
+          {selectedClass && currentPage !== 'landing' && currentPage !== 'class-selection' && (
+            <div className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-500/30 to-blue-500/30 border border-white/20 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+              <span className="text-white font-medium">{selectedClass} Grade</span>
+            </div>
+          )}
+          
           {userName && currentPage !== 'landing' && (
             <div className="text-white/70 text-base">
               Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500 font-medium">{userName}</span>

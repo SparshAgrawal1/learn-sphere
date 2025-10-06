@@ -3,14 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   ChevronRight,
-  ArrowLeft
+  ArrowLeft,
+  GraduationCap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import EnhancedBackground from '@/components/landing/EnhancedBackground';
 import Enhanced3DFloor from '@/components/landing/Enhanced3DFloor';
 import Header from '@/components/ui/Header';
 import SubjectBackgroundElements from '@/components/dashboard/SubjectBackgroundElements';
-import { curriculum } from '@/data/curriculum';
+import curriculum, { getClassCurriculum } from '@/data/curriculum';
 
 const Interactive3DDashboard: React.FC = () => {
   const location = useLocation();
@@ -18,18 +19,32 @@ const Interactive3DDashboard: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeSubject, setActiveSubject] = useState('default');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [selectedClass, setSelectedClass] = useState<string | null>(null);
+  const [classCurriculum, setClassCurriculum] = useState(curriculum['9th']);
   
   // Refs for animation
   const splineContainerRef = useRef<HTMLDivElement>(null);
   
-  // Parse query params to set initial subject
+  // Parse query params to set initial subject and get selected class from session storage
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const subjectParam = params.get('subject');
     if (subjectParam) {
       handleSubjectHover(subjectParam);
     }
-  }, [location]);
+    
+    // Get selected class from session storage
+    const classFromStorage = sessionStorage.getItem('selectedClass');
+    if (classFromStorage) {
+      setSelectedClass(classFromStorage);
+      // Update curriculum based on selected class
+      const classSpecificCurriculum = getClassCurriculum(classFromStorage);
+      setClassCurriculum(classSpecificCurriculum);
+    } else {
+      // If no class is selected, redirect to class selection page
+      navigate('/class-selection');
+    }
+  }, [location, navigate]);
   
   useEffect(() => {
     // Set a timeout as fallback in case onLoad doesn't fire
@@ -86,8 +101,12 @@ const Interactive3DDashboard: React.FC = () => {
       {/* Enhanced 3D Floor */}
       <Enhanced3DFloor activeSubject={activeSubject} />
 
-      {/* Consistent Header */}
-      <Header currentPage="dashboard" />
+      {/* Consistent Header with Class Selector */}
+      <Header 
+        currentPage="dashboard" 
+        selectedClass={selectedClass}
+        showClassSelector={true}
+      />
 
       {/* Spline 3D Model - Centered and Unobstructed */}
       <div 
@@ -123,9 +142,9 @@ const Interactive3DDashboard: React.FC = () => {
             >
               {/* Subject Cards - Larger and Further from Center */}
               <div className="absolute inset-0">
-                {curriculum.map((subject, index) => {
+                {classCurriculum.map((subject, index) => {
                   // Calculate position to form a circle around the center - increased radius and size
-                  const angle = (index * (360 / curriculum.length)) * (Math.PI / 180);
+                  const angle = (index * (360 / classCurriculum.length)) * (Math.PI / 180);
                   const radius = 18; // Increased from 14 to 18 for more distance
                   const xPos = Math.cos(angle) * radius;
                   const yPos = Math.sin(angle) * radius;

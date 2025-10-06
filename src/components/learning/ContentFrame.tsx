@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Play, ChevronLeft, ChevronRight, FileText, Layers } from 'lucide-react';
+import ContentLoader from './ContentLoader';
 
 interface SubTopic {
   id: string;
@@ -313,30 +314,12 @@ const ContentFrame: React.FC<ContentFrameProps> = ({
         }}
       >
         {isPdfMode ? (
-          <iframe 
-            ref={iframeRef}
-            src={pdfUrl || contentUrl.replace('.html', '-pdf.html')} 
-            className="w-full h-full border-none"
-            title={`${title} (PDF)`}
-            style={{ 
-              maxHeight: "100%",
-              height: "calc(100vh - 60px)", // Adjusted to account for header height
-              display: "block",
-              backgroundColor: "transparent"
-            }}
+          <ContentLoader
+            contentPath={pdfUrl || contentUrl.replace('.html', '-pdf.html')}
           />
         ) : (
-          <iframe 
-            ref={iframeRef}
-            src={contentUrl} 
-            className="w-full h-full border-none"
-            title={title}
-            style={{ 
-              maxHeight: "100%",
-              height: "calc(100vh - 60px)", // Adjusted to account for header height
-              display: "block",
-              backgroundColor: "transparent"
-            }}
+          <ContentLoader
+            contentPath={contentUrl}
           />
         )}
       </div>

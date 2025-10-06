@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ChevronRight, ArrowLeft, BookOpen, Zap, Brain } from 'lucide-react';
+import { ChevronRight, ArrowLeft, BookOpen, Zap, Brain, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/ui/Header';
 import TopicTimeline from '@/components/dashboard/TopicTimeline';
 import AIInsightsPanel from '@/components/dashboard/AIInsightsPanel';
 import SubjectBackgroundElements from '@/components/dashboard/SubjectBackgroundElements';
-import { curriculum, getSubjectById } from '@/data/curriculum';
+import curriculum, { getSubjectById, getClassSubjectById, getClassCurriculum } from '@/data/curriculum';
+import { resolveContentPath } from '@/utils/content-path-resolver';
 
 const SubjectDashboard: React.FC = () => {
   const location = useLocation();
@@ -17,9 +18,10 @@ const SubjectDashboard: React.FC = () => {
   const [activeSubject, setActiveSubject] = useState(subjectId || 'default');
   const [activeChapterId, setActiveChapterId] = useState<string | undefined>(undefined);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [selectedClass, setSelectedClass] = useState<string | null>(null);
   
-  // Find the subject data
-  const subject = getSubjectById(subjectId || 'default') || curriculum[0];
+  // Find the subject data based on selected class
+  const [classSpecificSubject, setClassSpecificSubject] = useState(getSubjectById(subjectId || 'default') || curriculum['9th'][0]);
   
   // Refs for animation
   const splineContainerRef = useRef<HTMLDivElement>(null);
@@ -40,13 +42,28 @@ const SubjectDashboard: React.FC = () => {
       splineViewer.addEventListener('load', handleSplineLoad);
     }
     
+    // Get selected class from session storage
+    const classFromStorage = sessionStorage.getItem('selectedClass');
+    if (classFromStorage) {
+      setSelectedClass(classFromStorage);
+      
+      // Update subject data based on selected class
+      const classSubject = getClassSubjectById(classFromStorage, subjectId || 'default');
+      if (classSubject) {
+        setClassSpecificSubject(classSubject);
+      }
+    } else {
+      // If no class is selected, redirect to class selection page
+      navigate('/class-selection');
+    }
+    
     return () => {
       clearTimeout(timer);
       if (splineViewer) {
         splineViewer.removeEventListener('load', handleSplineLoad);
       }
     };
-  }, [isLoaded]);
+  }, [isLoaded, navigate]);
 
   const handleBackToDashboard = () => {
     navigate('/dashboard');
@@ -87,11 +104,11 @@ const SubjectDashboard: React.FC = () => {
     };
     
     generateParticles();
-  }, [subject.id]);
+  }, [classSpecificSubject.id]);
 
   // Get background gradient based on subject
   const getBackgroundGradient = () => {
-    switch (subject.id) {
+    switch (classSpecificSubject.id) {
       case 'mathematics':
         return 'from-emerald-950 via-teal-900 to-emerald-900';
       case 'science':
@@ -111,7 +128,7 @@ const SubjectDashboard: React.FC = () => {
 
   // Get accent color based on subject
   const getAccentColor = () => {
-    switch (subject.id) {
+    switch (classSpecificSubject.id) {
       case 'mathematics': return 'rgba(16, 185, 129, 0.6)'; // emerald-500
       case 'science': return 'rgba(245, 158, 11, 0.6)'; // amber-500
       case 'english': return 'rgba(139, 92, 246, 0.6)'; // violet-500
@@ -124,7 +141,7 @@ const SubjectDashboard: React.FC = () => {
   
   // Get SVG illustration based on subject
   const getSubjectIllustration = () => {
-    switch (subject.id) {
+    switch (classSpecificSubject.id) {
       case 'mathematics':
         return (
           <svg className="absolute h-full w-full opacity-10" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -326,7 +343,7 @@ const SubjectDashboard: React.FC = () => {
       </div>
       
       {/* Subject-specific Background Elements */}
-      <SubjectBackgroundElements subjectId={subject.id} />
+      <SubjectBackgroundElements subjectId={classSpecificSubject.id} />
       
       {/* Subtle Accent Light Effect */}
       <div 
@@ -387,12 +404,14 @@ const SubjectDashboard: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
       <div className="absolute inset-0 bg-gradient-to-l from-black/20 to-transparent"></div>
 
-      {/* Consistent Header */}
+      {/* Consistent Header with Class Selector */}
       <Header 
         currentPage="subject"
         showBackButton={true}
         backButtonPath="/dashboard"
         backButtonText="Dashboard"
+        selectedClass={selectedClass}
+        showClassSelector={true}
       />
 
       {/* 3D Floor and Environmental Effects */}
@@ -628,7 +647,7 @@ const SubjectDashboard: React.FC = () => {
                       boxShadow: `0 4px 12px #FF8C0030`
                     }}
                   >
-                    <subject.icon size={18} className="text-white" />
+                    <classSpecificSubject.icon size={18} className="text-white" />
                     {/* Animated glow effect */}
                     <motion.div 
                       className="absolute inset-0 rounded-xl"
@@ -653,10 +672,10 @@ const SubjectDashboard: React.FC = () => {
                 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-lg font-bold text-white truncate">{subject.name}</h2>
+                    <h2 className="text-lg font-bold text-white truncate">{classSpecificSubject.name}</h2>
                     <div className="flex items-center gap-2">
                       <div className="px-3 py-1 rounded-full bg-orange-500/30 text-orange-400 text-sm font-bold">
-                        {subject.progress || 60}%
+                        {classSpecificSubject.progress || 60}%
                       </div>
                     </div>
                   </div>
@@ -664,8 +683,8 @@ const SubjectDashboard: React.FC = () => {
                   {/* Enhanced Progress Visualization */}
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs text-white/60">
-                      <span>{subject.chapters.length} chapters</span>
-                      <span>{subject.chapters.reduce((acc, ch) => acc + ch.topics.length, 0)} topics</span>
+                      <span>{classSpecificSubject.chapters?.length || 0} chapters</span>
+                      <span>{classSpecificSubject.chapters?.reduce((acc, ch) => acc + (ch.topics?.length || 0), 0) || 0} topics</span>
                     </div>
                     
                     <div className="h-3 bg-white/10 rounded-full overflow-hidden relative">
@@ -675,7 +694,7 @@ const SubjectDashboard: React.FC = () => {
                           background: `linear-gradient(90deg, #FF8C00, #FF8C0080)`
                         }}
                         initial={{ width: 0 }}
-                        animate={{ width: `${subject.progress || 60}%` }}
+                        animate={{ width: `${classSpecificSubject.progress || 60}%` }}
                         transition={{ duration: 1.5, delay: 0.3 }}
                       >
                         {/* Animated shine effect */}
@@ -702,7 +721,7 @@ const SubjectDashboard: React.FC = () => {
             
             {/* Compact AI Insights Panel */}
             <div className="flex-grow overflow-hidden">
-              <AIInsightsPanel subject={subject} />
+              <AIInsightsPanel subject={classSpecificSubject} />
             </div>
             
             {/* AI Insights Card */}
@@ -721,15 +740,15 @@ const SubjectDashboard: React.FC = () => {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                  <span className="text-white/80 text-xs">Strong progress in {subject.chapters[0].name}</span>
+                  <span className="text-white/80 text-xs">Strong progress in {classSpecificSubject.chapters[0]?.name || 'foundational concepts'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
-                  <span className="text-white/80 text-xs">Focus more on {subject.chapters[subject.chapters.length-1].name}</span>
+                  <span className="text-white/80 text-xs">Focus more on {classSpecificSubject.chapters[classSpecificSubject.chapters.length-1]?.name || 'advanced topics'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-                  <span className="text-white/80 text-xs">Next recommended: {subject.chapters[1].topics[0].name}</span>
+                  <span className="text-white/80 text-xs">Next recommended: {classSpecificSubject.chapters[1]?.topics?.[0]?.name || 'upcoming lessons'}</span>
                 </div>
               </div>
             </motion.div>
@@ -743,7 +762,7 @@ const SubjectDashboard: React.FC = () => {
               className="absolute right-8 top-32 w-80 space-y-3"
             >
             <TopicTimeline 
-              subject={subject}
+              subject={classSpecificSubject}
               activeChapterId={activeChapterId}
               setActiveChapterId={setActiveChapterId}
             />
