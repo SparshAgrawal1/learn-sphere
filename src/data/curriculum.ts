@@ -46,6 +46,7 @@ export interface Topic {
   icon?: any;
   color?: string;
   contentPath?: string;
+  contentType?: 'html' | 'video' | 'url';
 }
 
 export interface Chapter {
@@ -811,14 +812,93 @@ export const curriculum: ClassContent = {
           name: 'Economics',
           icon: Coins,
           color: '#EF4444',
-          topics: []
+        topics: [
+            {
+              id: 'The Story of Village Palampur',
+              name: 'The Story of Village Palampur',
+              progress: 80,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Social Science/Economics/The Story of Village Palampur/index.html',
+              description: 'Understanding rural economy through the story of a village'
+            },
+            {
+              id: 'People as Resource',
+              name: 'People as Resource',
+              progress: 75,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Social Science/Economics/People as Resource/index.html',
+              description: 'How human capital contributes to economic development'
+            },
+            {
+              id: 'Poverty as a Challenge',
+              name: 'Poverty as a Challenge',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Social Science/Economics/Poverty as a Challenge/index.html',
+              description: 'Understanding poverty and its dimensions in India'
+            },
+            {
+              id: 'Food Security in India',
+              name: 'Food Security in India',
+              progress: 65,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Social Science/Economics/Food Security in India/index.html',
+              description: 'Exploring food security challenges and solutions'
+            }
+          ]
         },
         {
           id: 'History',
         name: 'History',
         icon: Landmark,
         color: '#EF4444',
-          topics: []
+          topics: [
+            {
+              id: 'French Revolution',
+              name: 'French Revolution',
+              progress: 90,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=YzmihBfspcM',
+              contentType: 'video',
+              description: 'The causes, events, and impact of the French Revolution'
+            },
+            {
+              id: 'Socialism in Europe and the Russian Revolution',
+              name: 'Socialism in Europe and the Russian Revolution',
+              progress: 85,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=Ux_kZkHao8g',
+              contentType: 'video',
+              description: 'Rise of socialism and the Russian Revolution of 1917'
+            },
+            {
+              id: 'The Making of a Global World',
+              name: 'The Making of a Global World',
+              progress: 80,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=oYQiGozr7d8',
+              contentType: 'video',
+              description: 'Globalization and interconnectedness in the modern world'
+            },
+            {
+              id: 'Forest Society and Colonialism',
+              name: 'Forest Society and Colonialism',
+              progress: 75,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=PLVWrfzEnr4',
+              contentType: 'video',
+              description: 'Impact of colonial rule on forest communities and environment'
+            },
+            {
+              id: 'Pastoralists in the Modern World',
+              name: 'Pastoralists in the Modern World',
+              progress: 70,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=_Nfs-bJpNJ8',
+              contentType: 'video',
+              description: 'Changes in pastoral communities in the modern era'
+            }
+        ]
       }
     ]
   },
@@ -832,7 +912,48 @@ export const curriculum: ClassContent = {
     natureElement: 'river',
     description: 'Explore the richness of Hindi language and literature',
     position: { x: -17.5, y: 17.5, z: 0 },
-      chapters: []
+    chapters: [
+      {
+        id: 'स्पर्श भाग 1',
+        name: 'स्पर्श भाग 1',
+        icon: BookText,
+        color: '#06B6D4',
+        topics: [
+          {
+            id: 'अग्नि पथ',
+            name: 'अग्नि पथ',
+            progress: 85,
+            completed: true,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/अग्नि पथ/agni-path-lesson/index.html',
+            description: 'हरिवंशराय बच्चन की प्रेरणादायक कविता'
+          },
+          {
+            id: 'नए इलाके में - खुशबू रचते हैं हाथ',
+            name: 'नए इलाके में - खुशबू रचते हैं हाथ',
+            progress: 80,
+            completed: true,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/नए इलाके में - खुशबू रचते हैं हाथ/index.html',
+            description: 'आधुनिक जीवन और परंपरा पर आधारित कविता'
+          },
+          {
+            id: 'रहीम के दोहे',
+            name: 'रहीम के दोहे',
+            progress: 75,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रहीम के दोहे/index.html',
+            description: 'रहीम के नीति और ज्ञान से भरपूर दोहे'
+          },
+          {
+            id: 'भारत का संविधान',
+            name: 'भारत का संविधान',
+            progress: 70,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/भारत का संविधान/index.html',
+            description: 'भारतीय संविधान की महत्ता और विशेषताएं'
+          }
+        ]
+      }
+    ]
     },
     {
       id: 'Mathematics',
@@ -1585,7 +1706,44 @@ export const curriculum: ClassContent = {
           name: 'History',
           icon: Landmark,
           color: '#EF4444',
-          topics: []
+        topics: [
+            {
+              id: 'The Rise of Nationalism in Europe',
+              name: 'The Rise of Nationalism in Europe',
+              progress: 85,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=3DPXXlCMLx8',
+              contentType: 'video',
+              description: 'Understanding the emergence of nationalism in 19th century Europe'
+            },
+            {
+              id: 'Nationalism in India',
+              name: 'Nationalism in India',
+              progress: 80,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=DlNrnWc1BVQ',
+              contentType: 'video',
+              description: 'The Indian independence movement and nationalist struggles'
+            },
+            {
+              id: 'The Age of Industrialisation',
+              name: 'The Age of Industrialisation',
+              progress: 75,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=cZsYhzubOcI',
+              contentType: 'video',
+              description: 'Industrial revolution and its impact on society and economy'
+            },
+            {
+              id: 'Print Culture and the Modern World',
+              name: 'Print Culture and the Modern World',
+              progress: 70,
+              completed: false,
+              contentPath: 'https://www.youtube.com/watch?v=RXHbXcyeZf4',
+              contentType: 'video',
+              description: 'How print culture transformed society and spread ideas'
+            }
+        ]
       }
     ]
   },
@@ -1599,7 +1757,104 @@ export const curriculum: ClassContent = {
     natureElement: 'river',
     description: 'Explore the richness of Hindi language and literature',
     position: { x: -17.5, y: 17.5, z: 0 },
-      chapters: []
+    chapters: [
+      {
+        id: 'स्पर्श भाग 2',
+        name: 'स्पर्श भाग 2',
+        icon: BookText,
+        color: '#06B6D4',
+        topics: [
+          {
+            id: 'बड़े भाई साहब',
+            name: 'बड़े भाई साहब',
+            progress: 90,
+            completed: true,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/बड़े भाई साहब/index.html',
+            description: 'प्रेमचंद की प्रसिद्ध कहानी - भाई-बहन के रिश्ते और शिक्षा पर व्यंग्य'
+          },
+          {
+            id: 'साखी',
+            name: 'साखी',
+            progress: 85,
+            completed: true,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/साखी/index.html',
+            description: 'कबीर के दोहे - आध्यात्मिक और सामाजिक संदेश'
+          },
+          {
+            id: 'पर्वत प्रदेश में पावस',
+            name: 'पर्वत प्रदेश में पावस',
+            progress: 80,
+            completed: true,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/पर्वत प्रदेश में पावस/index.html',
+            description: 'सुमित्रानंदन पंत की प्रकृति प्रेम की कविता'
+          },
+          {
+            id: 'तोप',
+            name: 'तोप',
+            progress: 75,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तोप/index.html',
+            description: 'वीर रस की कविता - 1857 के विद्रोह पर आधारित'
+          },
+          {
+            id: 'कारतूस',
+            name: 'कारतूस',
+            progress: 70,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/कारतूस/index.html',
+            description: 'हबीब तनवीर का नाटक - वीर गाथा और बलिदान'
+          },
+          {
+            id: 'कर चले हम फ़िदा',
+            name: 'कर चले हम फ़िदा',
+            progress: 65,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/कर चले हम फ़िदा/kar-chale-hum-fida/index.html',
+            description: 'देशभक्ति की भावना से भरपूर गीत'
+          },
+          {
+            id: 'अब कहाँ दूसरे के दुख से दुखी होने वाले',
+            name: 'अब कहाँ दूसरे के दुख से दुखी होने वाले',
+            progress: 60,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/अब कहाँ दूसरे के दुख से दुखी होने वाले/index.html',
+            description: 'निदा फाज़ली का निबंध - मानवीय संवेदना पर'
+          },
+          {
+            id: 'तताँरा-वामीरो कथा',
+            name: 'तताँरा-वामीरो कथा',
+            progress: 55,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तताँरा-वामीरो कथा/index.html',
+            description: 'अंडमान निकोबार की लोक कथा - प्रेम और बलिदान'
+          },
+          {
+            id: 'मीरा के पद',
+            name: 'मीरा के पद',
+            progress: 50,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/मीरा के पद/index.html',
+            description: 'मीराबाई के भक्ति पद - कृष्ण प्रेम की अभिव्यक्ति'
+          },
+          {
+            id: 'गिन्नी का सोना और झेन की देन',
+            name: 'गिन्नी का सोना और झेन की देन',
+            progress: 45,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/ गिन्नी का सोना और झेन की देन/index.html',
+            description: 'जापानी संस्कृति और मानवीय मूल्यों पर आधारित कहानी'
+          },
+          {
+            id: 'रवींद्रनाथ ठाकुर की आत्मत्राण',
+            name: 'रवींद्रनाथ ठाकुर की आत्मत्राण',
+            progress: 40,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/रवींद्रनाथ ठाकुर की आत्मत्राण/index.html',
+            description: 'रवींद्रनाथ ठाकुर की आध्यात्मिक कविता'
+          }
+        ]
+      }
+    ]
     },
     {
       id: 'Mathematics',
@@ -1611,13 +1866,13 @@ export const curriculum: ClassContent = {
       natureElement: 'leaf',
       description: 'Explore the world of numbers, patterns, and problem-solving',
       position: { x: 0, y: -25, z: 0 },
-      chapters: [
-        {
+    chapters: [
+      {
           id: 'Mathematics Topics',
           name: 'Mathematics Topics',
           icon: Calculator,
           color: '#10B981',
-          topics: [
+        topics: [
             {
               id: 'Arithmetic Progression',
               name: 'Arithmetic Progression',
@@ -1650,7 +1905,7 @@ export const curriculum: ClassContent = {
                   id: 'ap_sum_terms',
                   name: 'Sum of Terms in AP',
                   contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_sum_terms.html',
-                  progress: 55,
+    progress: 55,
                   completed: false
                 },
                 {
@@ -1712,7 +1967,7 @@ export const curriculum: ClassContent = {
               progress: 65,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/quadratic_equations_learning.html',
-              subtopics: [
+            subtopics: [
                 {
                   id: 'quadratic_equations_learning',
                   name: 'Quadratic Equations Learning',

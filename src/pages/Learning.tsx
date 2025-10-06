@@ -7,8 +7,10 @@ import { getLessonContentPath } from '@/utils/content-path-resolver';
 import curriculum, { getClassCurriculum } from '@/data/curriculum';
 import ClassBasedContentRenderer from '@/components/learning/ClassBasedContentRenderer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Home } from 'lucide-react';
+import { ArrowLeft, Home, ChevronLeft, ChevronRight, PanelLeft, PanelRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { YouTubeEmbed } from '../components/ui/YouTubeEmbed';
+import { isYouTubeURL } from '../utils/youtube-utils';
 
 // Mock curriculum data
 const mockCurriculum = {
@@ -73,12 +75,15 @@ const Learning = () => {
   const { subject, chapter, topic } = useParams();
   const navigate = useNavigate();
   
-  console.log('Learning component params:', { subject, chapter, topic });
   const [aiMessages, setAiMessages] = useState<Array<{id: string, content: string, isAi: boolean, timestamp: Date}>>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isAiTyping, setIsAiTyping] = useState(false);
   const [selectedClass, setSelectedClass] = useState<string | null>(null);
   const [currentContent, setCurrentContent] = useState<any>(null);
+  
+  // Panel visibility states
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
+  const [isRightPanelOpen, setIsRightPanelOpen] = useState(true);
   
   // Get selected class from session storage
   useEffect(() => {
@@ -87,20 +92,12 @@ const Learning = () => {
       setSelectedClass(classFromStorage);
     } else {
       // If no class is selected, redirect to class selection page
-      console.log('No class selected, redirecting to class selection');
       navigate('/class-selection');
     }
   }, [navigate]);
   
   const handleContentLoad = (content: any) => {
-    console.log('=== LEARNING CONTENT LOAD ===');
-    console.log('Previous content path:', currentContent?.contentPath);
-    console.log('New content path:', content?.contentPath);
-    console.log('Selected subtopic:', content?.selectedSubtopic?.name);
-    console.log('Path changed:', currentContent?.contentPath !== content?.contentPath);
-    console.log('Full content object:', content);
     setCurrentContent(content);
-    console.log('=== END LEARNING CONTENT LOAD ===');
   };
 
   // Add early return if no class is selected
@@ -152,8 +149,32 @@ const Learning = () => {
   };
 
   const handleProgress = (progress: number) => {
-    console.log('Lesson progress:', progress);
     // In a real app, you'd save this progress to your backend
+  };
+
+  // Get the appropriate back navigation URL
+  const getBackUrl = () => {
+    if (topic && chapter && subject) {
+      // If viewing a topic, go back to chapter/subject view (the Science page with chapters)
+      return `/subject/${subject}`;
+    } else if (chapter && subject) {
+      // If viewing a chapter, go back to subject view  
+      return `/subject/${subject}`;
+    } else if (subject) {
+      // If viewing a subject, go back to dashboard
+      return '/dashboard';
+    }
+    // Default fallback
+    return '/dashboard';
+  };
+
+  const getBackLabel = () => {
+    if (topic || chapter) {
+      return 'Back to Chapters';
+    } else if (subject) {
+      return 'Back to Dashboard';
+    }
+    return 'Dashboard';
   };
 
   return (
@@ -162,9 +183,12 @@ const Learning = () => {
       <header className="glass-header sticky top-0 z-50">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link to="/" className="glass-button flex items-center gap-2 text-sm">
+            <Link 
+              to={getBackUrl()} 
+              className="glass-button flex items-center gap-2 text-sm"
+            >
               <ArrowLeft className="h-4 w-4" />
-              Dashboard
+              {getBackLabel()}
             </Link>
             <div className="h-6 w-px" style={{ background: 'var(--border-subtle)' }}></div>
             <div>
@@ -190,9 +214,11 @@ const Learning = () => {
       </header>
 
       {/* Main Learning Interface */}
-      <div className="flex-1 flex overflow-hidden gap-4 p-4">
+      <div className="flex-1 flex overflow-hidden gap-4 p-4 relative">
         {/* Left Panel - Navigation */}
-        <div className="w-72 flex-shrink-0 glass-card p-0 overflow-hidden">
+        <div className={`flex-shrink-0 glass-card p-0 overflow-hidden transition-all duration-300 ease-in-out relative ${
+          isLeftPanelOpen ? 'w-72' : 'w-0 opacity-0 pointer-events-none'
+        }`}>
           <ClassBasedContentRenderer
             selectedClass={selectedClass}
             subjectId={subject}
@@ -200,20 +226,57 @@ const Learning = () => {
             topicId={topic}
             onContentLoad={handleContentLoad}
           />
+          
+          {/* Left Panel Toggle Button - positioned on the right side */}
+          {isLeftPanelOpen && (
+            <button
+              onClick={() => setIsLeftPanelOpen(false)}
+              className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 z-10 border-2 border-white/20"
+              title="Collapse navigation panel"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+          )}
         </div>
 
+        {/* Left Panel Collapsed Toggle Button */}
+        {!isLeftPanelOpen && (
+          <button
+            onClick={() => setIsLeftPanelOpen(true)}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg transition-all duration-200 z-20 border-2 border-white/20"
+            title="Expand navigation panel"
+          >
+            <PanelLeft className="h-5 w-5" />
+          </button>
+        )}
+
         {/* Center Panel - Learning Content */}
-        <div className="flex-1 overflow-hidden glass-card p-0">
+        <div className={`flex-1 overflow-hidden glass-card p-0 transition-all duration-300 ease-in-out ${
+          !isLeftPanelOpen && !isRightPanelOpen ? 'mx-16' : 
+          !isLeftPanelOpen ? 'ml-16' : 
+          !isRightPanelOpen ? 'mr-16' : ''
+        }`}>
           {currentContent?.contentPath ? (
-            <iframe 
-              key={currentContent.contentPath} // Force reload when path changes
-              src={currentContent.contentPath}
-              className="w-full h-full border-none"
-              title={`${currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Learning Content'} - ${selectedClass} Grade`}
-              sandbox="allow-same-origin allow-scripts allow-forms"
-              onLoad={() => console.log('Iframe loaded:', currentContent.contentPath)}
-              onError={() => console.error('Iframe error loading:', currentContent.contentPath)}
-            />
+            // Check if it's a YouTube video
+            (currentContent.contentType === 'video' || isYouTubeURL(currentContent.contentPath)) ? (
+              <YouTubeEmbed
+                url={currentContent.contentPath}
+                title={`${currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Learning Content'} - ${selectedClass} Grade`}
+                className="w-full h-full"
+                showThumbnail={false}
+                autoplay={false}
+              />
+            ) : (
+              <iframe 
+                key={currentContent.contentPath} // Force reload when path changes
+                src={currentContent.contentPath}
+                className="w-full h-full border-none"
+                title={`${currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Learning Content'} - ${selectedClass} Grade`}
+                sandbox="allow-same-origin allow-scripts allow-forms"
+                onLoad={() => {/* Content loaded */}}
+                onError={() => console.error('Error loading content:', currentContent.contentPath)}
+              />
+            )
           ) : (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
@@ -225,7 +288,9 @@ const Learning = () => {
         </div>
 
         {/* Right Panel - AI Tutor */}
-        <div className="w-80 flex-shrink-0 glass-card p-0 overflow-hidden">
+        <div className={`flex-shrink-0 glass-card p-0 overflow-hidden transition-all duration-300 ease-in-out relative ${
+          isRightPanelOpen ? 'w-80' : 'w-0 opacity-0 pointer-events-none'
+        }`}>
           <AITutorPanel
             messages={aiMessages}
             newMessage={newMessage}
@@ -238,7 +303,29 @@ const Learning = () => {
               bg: '#155e75'
             }}
           />
+          
+          {/* Right Panel Toggle Button - positioned on the left side */}
+          {isRightPanelOpen && (
+            <button
+              onClick={() => setIsRightPanelOpen(false)}
+              className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-cyan-600 hover:bg-cyan-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 z-10 border-2 border-white/20"
+              title="Collapse AI assistant panel"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          )}
         </div>
+
+        {/* Right Panel Collapsed Toggle Button */}
+        {!isRightPanelOpen && (
+          <button
+            onClick={() => setIsRightPanelOpen(true)}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-600 hover:bg-cyan-700 text-white p-3 rounded-full shadow-lg transition-all duration-200 z-20 border-2 border-white/20"
+            title="Expand AI assistant panel"
+          >
+            <PanelRight className="h-5 w-5" />
+          </button>
+        )}
       </div>
     </div>
   );

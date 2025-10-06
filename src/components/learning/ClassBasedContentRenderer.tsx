@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import curriculum, { getClassCurriculum, getClassSubjectById } from '@/data/curriculum';
 import { Subject, Chapter, Topic, Subtopic } from '@/data/curriculum';
@@ -18,6 +18,7 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
   topicId,
   onContentLoad
 }) => {
+  // ALL HOOKS MUST BE CALLED BEFORE ANY CONDITIONAL LOGIC OR EARLY RETURNS
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,16 +28,49 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
     topic?: Topic;
     contentPath?: string;
     selectedSubtopic?: Subtopic;
+    curriculum?: Subject[];
   }>({});
   const [selectedSubtopicId, setSelectedSubtopicId] = useState<string | null>(null);
   const [hasAutoSelected, setHasAutoSelected] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
+  
+  // Ref to prevent multiple simultaneous loads
+  const isLoadingRef = useRef(false);
+
+  // Handle subtopic selection - MUST be defined before any conditional returns
+  const handleSubtopicSelect = useCallback((subtopic: Subtopic) => {
+    // Directly set the selected subtopic ID
+    setSelectedSubtopicId(subtopic.id);
+    setHasAutoSelected(true); // Mark as manually selected
+    
+    if (onContentLoad) {
+      const contentToLoad = {
+        ...currentContent,
+        contentPath: subtopic.contentPath,
+        selectedSubtopic: subtopic
+      };
+      
+      // Use requestAnimationFrame to ensure proper timing and prevent loops
+      requestAnimationFrame(() => {
+        onContentLoad(contentToLoad);
+      });
+    }
+  }, [currentContent, onContentLoad]);
+
+  // Debug: Log state changes (reduced logging)
+  useEffect(() => {
+    console.log('Selected subtopic changed:', selectedSubtopicId);
+  }, [selectedSubtopicId]);
+
+  // Debug: Track hasAutoSelected changes
+  useEffect(() => {
+    console.log('hasAutoSelected changed:', hasAutoSelected);
+  }, [hasAutoSelected]);
 
   // Fallback to ensure initializing doesn't get stuck
   useEffect(() => {
     if (isInitializing) {
       const timeout = setTimeout(() => {
-        console.log('Fallback: Setting isInitializing to false after timeout');
         setIsInitializing(false);
       }, 2000); // 2 second fallback
       
@@ -46,18 +80,23 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
 
   useEffect(() => {
     const loadContent = async () => {
+      // Prevent multiple simultaneous loads
+      if (isLoadingRef.current) {
+        return;
+      }
+      
       try {
+        isLoadingRef.current = true;
         setLoading(true);
         setError(null);
 
         if (!selectedClass) {
-          console.log('ClassBasedContentRenderer: No selectedClass, redirecting to class selection');
           navigate('/class-selection');
           return;
         }
 
-        console.log('ClassBasedContentRenderer loading:', { selectedClass, subjectId, chapterId, topicId });
-        console.log('URL-decoded topicId:', decodeURIComponent(topicId || ''));
+        // Only log essential information to reduce console spam
+        // console.log('Loading content for:', { selectedClass, subjectId, chapterId, topicId });
 
         // Get the curriculum for the selected class
         const classCurriculum = getClassCurriculum(selectedClass);
@@ -78,8 +117,6 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
           const decodedChapterId = chapterId ? decodeURIComponent(chapterId) : undefined;
           const decodedTopicId = topicId ? decodeURIComponent(topicId) : undefined;
           
-          console.log('Decoded IDs:', { decodedSubjectId, decodedChapterId, decodedTopicId });
-          
           // Try exact match first
           subject = getClassSubjectById(selectedClass, decodedSubjectId) || getClassSubjectById(selectedClass, subjectId);
           
@@ -97,11 +134,9 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
           }
           
           if (!subject) {
-            console.error(`Available subjects for class ${selectedClass}:`, getClassCurriculum(selectedClass).map(s => s.id));
+            console.error(`Subject not found: ${subjectId}`);
             throw new Error(`Subject ${subjectId} not found for class ${selectedClass}`);
           }
-          
-          console.log('Found subject:', subject.id, subject.name);
 
           // Find the chapter
           if (decodedChapterId && subject.chapters) {
@@ -141,7 +176,6 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
               }
               
               if (foundTopic && foundChapter) {
-                console.log(`Found "${chapterId}" as a topic in chapter "${foundChapter.id}". Redirecting...`);
                 // Redirect to the correct URL structure
                 navigate(`/learn/${subjectId}/${foundChapter.id}/${foundTopic.id}`);
                 return;
@@ -150,7 +184,7 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
               throw new Error(`Chapter ${chapterId} not found in subject ${subjectId}`);
             }
             
-            console.log('Found chapter:', chapter.id, chapter.name);
+            // Found chapter, continuing...
 
             // Find the topic
             if (decodedTopicId && chapter.topics) {
@@ -172,19 +206,14 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                 throw new Error(`Topic ${topicId} not found in chapter ${chapterId}`);
               }
               
-              console.log('Found topic:', topic.id, topic.name);
-              console.log('Topic has subtopics:', topic.subtopics?.length || 0);
-              if (topic.subtopics && topic.subtopics.length > 0) {
-                console.log('First subtopic:', topic.subtopics[0]);
-              }
+              // Topic found, processing subtopics...
               
               // If topic has subtopics, don't set contentPath yet (will be set when subtopic is selected)
               // If no subtopics, set the topic's contentPath directly
               if (!topic.subtopics || topic.subtopics.length === 0) {
                 contentPath = topic.contentPath;
-                console.log('Topic has no subtopics, setting contentPath:', contentPath);
               } else {
-                console.log('Topic has subtopics, will auto-select first one');
+                // Topic has subtopics, will auto-select first one
               }
             }
           }
@@ -200,72 +229,74 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
 
         setCurrentContent(content);
         
-        // Reset auto-selection flag when topic changes
+        // Reset auto-selection state when topic changes
         setHasAutoSelected(false);
         setSelectedSubtopicId(null);
-        setIsInitializing(true);
+        // Only set initializing if we have subtopics that need auto-selection
+        if (topic && topic.subtopics && topic.subtopics.length > 0) {
+          setIsInitializing(true);
+        } else {
+          setIsInitializing(false);
+        }
         
         // Don't call onContentLoad here - let the auto-selection useEffect handle it
         // This prevents double content loading and flickering
 
         setLoading(false);
+        isLoadingRef.current = false; // Reset loading ref
       } catch (err) {
         console.error('Error loading content:', err);
         setError(err instanceof Error ? err.message : 'Unknown error loading content');
         setLoading(false);
+        isLoadingRef.current = false; // Reset loading ref
       }
     };
 
     loadContent();
-  }, [selectedClass, subjectId, chapterId, topicId, navigate, onContentLoad]);
+  }, [selectedClass, subjectId, chapterId, topicId, navigate]); // Remove onContentLoad to prevent unnecessary reloads
 
   // Auto-load content based on topic structure
   useEffect(() => {
-    console.log('Auto-load useEffect triggered:', { 
-      hasTopic: !!currentContent.topic, 
-      hasAutoSelected, 
-      topicName: currentContent.topic?.name,
-      subtopicsCount: currentContent.topic?.subtopics?.length || 0
-    });
-    
-    if (currentContent.topic && !hasAutoSelected) {
+    // Only auto-select if we have a topic, haven't auto-selected yet, and no subtopic is currently selected
+    if (currentContent.topic && !hasAutoSelected && !selectedSubtopicId) {
       if (currentContent.topic.subtopics && currentContent.topic.subtopics.length > 0) {
         // Auto-select the first subtopic only on initial load
         const firstSubtopic = currentContent.topic.subtopics[0];
-        console.log('Auto-selecting first subtopic:', firstSubtopic.name, firstSubtopic.contentPath);
+        
         setSelectedSubtopicId(firstSubtopic.id);
         setHasAutoSelected(true);
         setIsInitializing(false); // Set immediately to show subtopics list
         
-        // Use setTimeout to prevent flickering by batching the content load
-        setTimeout(() => {
+        // Use requestAnimationFrame to prevent loops and ensure proper timing
+        requestAnimationFrame(() => {
           if (onContentLoad) {
-            console.log('Calling onContentLoad with first subtopic');
             onContentLoad({
               ...currentContent,
               contentPath: firstSubtopic.contentPath,
               selectedSubtopic: firstSubtopic
             });
           }
-        }, 0);
-      } else {
+        });
+      } else if (currentContent.topic.contentPath) {
         // If no subtopics, load the topic content directly
         setHasAutoSelected(true);
         setIsInitializing(false); // Set immediately
-        setTimeout(() => {
-          if (onContentLoad && currentContent.topic.contentPath) {
+        requestAnimationFrame(() => {
+          if (onContentLoad) {
             onContentLoad({
               ...currentContent,
               contentPath: currentContent.topic.contentPath
             });
           }
-        }, 0);
+        });
       }
-    } else if (currentContent.topic && hasAutoSelected) {
-      // Ensure initializing is false if we already auto-selected
+    }
+    
+    // Ensure initializing is false if we have a topic but conditions aren't met for auto-selection
+    if (currentContent.topic && isInitializing && (hasAutoSelected || selectedSubtopicId)) {
       setIsInitializing(false);
     }
-  }, [currentContent.topic, hasAutoSelected]); // Removed onContentLoad from dependencies
+  }, [currentContent.topic?.id]); // Remove onContentLoad from dependencies to prevent re-runs
 
   if (loading) {
     return (
@@ -291,120 +322,122 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
     );
   }
 
-  // Handle subtopic selection
-  const handleSubtopicSelect = (subtopic: Subtopic) => {
-    console.log('=== SUBTOPIC SELECTION ===');
-    console.log('Subtopic selected:', subtopic.name);
-    console.log('Subtopic ID:', subtopic.id);
-    console.log('Content Path:', subtopic.contentPath);
-    console.log('onContentLoad available:', !!onContentLoad);
-    
-    setSelectedSubtopicId(subtopic.id);
-    // Mark that user has made a manual selection, so we don't auto-select again
-    setHasAutoSelected(true);
-    
-    if (onContentLoad) {
-      const contentToLoad = {
-        ...currentContent,
-        contentPath: subtopic.contentPath,
-        selectedSubtopic: subtopic
-      };
-      console.log('Calling onContentLoad with:', contentToLoad);
-      onContentLoad(contentToLoad);
-    } else {
-      console.error('onContentLoad is not available!');
-    }
-    console.log('=== END SUBTOPIC SELECTION ===');
-  };
-
   // Render content based on what's available
   if (currentContent.topic) {
     // If topic has subtopics, show them as a list on the left
     if (currentContent.topic.subtopics && currentContent.topic.subtopics.length > 0) {
       return (
-        <div className="p-6">
-          <h2 className="text-2xl font-bold text-white mb-2">
-            {currentContent.topic.name}
-          </h2>
-          <p className="text-white/70 mb-6">
-            {selectedSubtopicId ? 'Select a different subtopic or view the overview' : 'Select a subtopic to view the content'}
-          </p>
+        <div className="h-full flex flex-col">
+          {/* Fixed header section */}
+          <div className="p-6 pb-0 flex-shrink-0">
+            <h2 className="text-2xl font-bold text-white mb-2">
+              {currentContent.topic.name}
+            </h2>
+            <p className="text-white/70 mb-6">
+              {selectedSubtopicId ? 'Select a different subtopic or view the overview' : 'Select a subtopic to view the content'}
+            </p>
+          </div>
           
-          {isInitializing ? (
-            <div className="flex items-center justify-center py-8">
-              <div className="w-6 h-6 border-2 border-t-purple-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-              <span className="ml-3 text-white/70">Loading subtopics...</span>
-            </div>
-          ) : (
-            <div className="grid gap-3">
-            {currentContent.topic.subtopics.map((subtopic) => (
-              <div 
-                key={subtopic.id}
-                className={`p-3 rounded-lg cursor-pointer transition-colors border ${
-                  selectedSubtopicId === subtopic.id 
-                    ? 'bg-purple-600/30 border-purple-500' 
-                    : 'bg-white/10 border-white/10 hover:bg-white/20'
-                }`}
-                onClick={() => handleSubtopicSelect(subtopic)}
-              >
-                <div className="flex items-center justify-between">
-                  <h4 className="text-white font-medium">{subtopic.name}</h4>
-                  {selectedSubtopicId === subtopic.id && (
-                    <span className="text-xs bg-purple-500 text-white px-2 py-1 rounded-full">
-                      Current
-                    </span>
-                  )}
+          {/* Scrollable content area */}
+          <div className="flex-1 overflow-hidden">
+            <div className="h-full px-6 pb-6 overflow-y-auto scrollbar-hide">
+              {isInitializing ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="w-6 h-6 border-2 border-t-purple-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                  <span className="ml-3 text-white/70">Loading subtopics...</span>
                 </div>
-                <div className="flex items-center justify-between mt-2">
-                  <p className="text-white/60 text-sm">Interactive content</p>
-                  {subtopic.progress !== undefined && (
-                    <div className="flex items-center">
-                      <div className="w-12 h-1 bg-white/20 rounded-full mr-2">
-                        <div 
-                          className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
-                          style={{ width: `${subtopic.progress}%` }}
-                        />
+              ) : (
+                <>
+                  <div className="grid gap-3 pb-4">
+                  {currentContent.topic.subtopics.map((subtopic) => (
+                    <div 
+                      key={subtopic.id}
+                      className={`p-3 rounded-lg cursor-pointer transition-all duration-200 border ${
+                        selectedSubtopicId === subtopic.id 
+                          ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-purple-400 shadow-lg transform scale-[1.02]' 
+                          : 'bg-white/10 border-white/10 hover:bg-white/20 hover:border-white/20'
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleSubtopicSelect(subtopic);
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-white font-medium">{subtopic.name}</h4>
+                        {selectedSubtopicId === subtopic.id && (
+                          <span className="text-xs bg-white/20 text-white px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                            <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                            Current
+                          </span>
+                        )}
                       </div>
-                      <span className="text-white/70 text-xs">{subtopic.progress}%</span>
+                      <div className="flex items-center justify-between mt-2">
+                        <p className="text-white/60 text-sm">Interactive content</p>
+                        {subtopic.progress !== undefined && (
+                          <div className="flex items-center">
+                            <div className="w-12 h-1 bg-white/20 rounded-full mr-2">
+                              <div 
+                                className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                                style={{ width: `${subtopic.progress}%` }}
+                              />
+                            </div>
+                            <span className="text-white/70 text-xs">{subtopic.progress}%</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  </div>
+                  
+                  {/* Show main topic content option if available */}
+                  {!isInitializing && currentContent.topic.contentPath && (
+                    <div className="pb-4">
+                      <button 
+                        className={`w-full p-3 rounded-lg transition-colors flex items-center justify-between ${
+                          selectedSubtopicId === null 
+                            ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white' 
+                            : 'bg-white/10 text-white/70 hover:bg-white/20'
+                        }`}
+                        onClick={() => {
+                          // Use state updater to prevent stale closures
+                          setSelectedSubtopicId(currentSelectedId => {
+                            // Prevent duplicate selections
+                            if (currentSelectedId === null) {
+                              return currentSelectedId;
+                            }
+                            
+                            // Mark that user has made a manual selection
+                            setHasAutoSelected(true);
+                            
+                            if (onContentLoad && currentContent.topic?.contentPath) {
+                              // Use requestAnimationFrame to ensure proper timing
+                              requestAnimationFrame(() => {
+                                onContentLoad({
+                                  ...currentContent,
+                                  contentPath: currentContent.topic?.contentPath,
+                                  selectedSubtopic: undefined
+                                });
+                              });
+                            }
+                            
+                            return null; // Set to null for main topic
+                          });
+                        }}
+                      >
+                        <span>View Main Topic Overview</span>
+                        {selectedSubtopicId === null && (
+                          <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full">
+                            Current
+                          </span>
+                        )}
+                      </button>
                     </div>
                   )}
-                </div>
-              </div>
-            ))}
+                </>
+              )}
             </div>
-          )}
-          
-          {/* Show main topic content option if available */}
-          {!isInitializing && currentContent.topic.contentPath && (
-            <div className="mt-6">
-              <button 
-                className={`w-full p-3 rounded-lg transition-colors flex items-center justify-between ${
-                  selectedSubtopicId === null 
-                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white' 
-                    : 'bg-white/10 text-white/70 hover:bg-white/20'
-                }`}
-                onClick={() => {
-                  setSelectedSubtopicId(null);
-                  // Mark that user has made a manual selection
-                  setHasAutoSelected(true);
-                  if (onContentLoad) {
-                    onContentLoad({
-                      ...currentContent,
-                      contentPath: currentContent.topic?.contentPath,
-                      selectedSubtopic: undefined
-                    });
-                  }
-                }}
-              >
-                <span>View Main Topic Overview</span>
-                {selectedSubtopicId === null && (
-                  <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full">
-                    Current
-                  </span>
-                )}
-              </button>
-            </div>
-          )}
+          </div>
         </div>
       );
     }

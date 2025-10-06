@@ -27,15 +27,15 @@ const Header: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-10 px-8 py-3 backdrop-blur-md bg-gradient-to-b from-black/40 to-transparent border-b border-white/10">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+    <header className="absolute top-0 left-0 right-0 z-50 px-8 py-3 backdrop-blur-md bg-gradient-to-b from-black/40 to-transparent border-b border-white/10">
+      <div className="max-w-7xl mx-auto flex justify-between items-center relative z-50">
         <div className="flex items-center gap-6">
           <Logo size="md" />
           
           {showBackButton && (
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-2"
+              className="text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-2 pointer-events-auto cursor-pointer"
               onClick={() => navigate(backButtonPath)}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({
           {showClassSelector && (
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-2"
+              className="text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-2 pointer-events-auto cursor-pointer"
               onClick={() => {
                 // Clear any existing class selection to force re-selection
                 sessionStorage.removeItem('selectedClass');
@@ -87,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors pointer-events-auto cursor-pointer"
               >
                 <Bell size={18} className="text-white/70" />
               </motion.button>
@@ -95,7 +95,7 @@ const Header: React.FC<HeaderProps> = ({
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors pointer-events-auto cursor-pointer"
               >
                 <Settings size={18} className="text-white/70" />
               </motion.button>
@@ -103,7 +103,7 @@ const Header: React.FC<HeaderProps> = ({
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-gradient-to-br from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500 transition-colors"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-gradient-to-br from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500 transition-colors pointer-events-auto cursor-pointer"
               >
                 <User size={18} className="text-white" />
               </motion.button>

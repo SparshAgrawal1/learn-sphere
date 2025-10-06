@@ -400,11 +400,11 @@ const SubjectDashboard: React.FC = () => {
         ))}
       </div>
       
-      {/* Light Effects */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-      <div className="absolute inset-0 bg-gradient-to-l from-black/20 to-transparent"></div>
+      {/* Light Effects - moved to lower z-index */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-l from-black/20 to-transparent z-0"></div>
 
-      {/* Consistent Header with Class Selector */}
+      {/* Consistent Header with Class Selector - higher z-index */}
       <Header 
         currentPage="subject"
         showBackButton={true}
