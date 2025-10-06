@@ -6,21 +6,38 @@ interface SubjectBackgroundElementsProps {
 }
 
 const SubjectBackgroundElements: React.FC<SubjectBackgroundElementsProps> = ({ subjectId }) => {
+  // Get subject color
+  const getSubjectColor = () => {
+    switch (subjectId) {
+      case 'Mathematics': return '#10B981'; // emerald
+      case 'Science': return '#F59E0B'; // amber
+      case 'English': return '#8B5CF6'; // violet
+      case 'Social Science': return '#EF4444'; // red
+      case 'Hindi': return '#06B6D4'; // cyan
+      case 'Sanskrit': return '#EC4899'; // pink
+      default: return '#3B82F6'; // blue
+    }
+  };
+
+  const subjectColor = getSubjectColor();
+
   const getBackgroundElements = () => {
     switch (subjectId) {
-      case 'mathematics':
+      case 'Mathematics':
         return (
           <>
             {/* Mathematical symbols */}
             <motion.div
-              className="absolute top-20 left-20 text-orange-500/10 text-6xl font-bold select-none"
+              className="absolute top-20 left-20 text-6xl font-bold select-none"
+              style={{ color: `${subjectColor}20` }}
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             >
               π
             </motion.div>
             <motion.div
-              className="absolute top-40 right-32 text-orange-400/15 text-4xl font-bold select-none"
+              className="absolute top-40 right-32 text-4xl font-bold select-none"
+              style={{ color: `${subjectColor}30` }}
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
@@ -50,7 +67,7 @@ const SubjectBackgroundElements: React.FC<SubjectBackgroundElementsProps> = ({ s
           </>
         );
 
-      case 'science':
+      case 'Science':
         return (
           <>
             {/* Science symbols */}
@@ -92,7 +109,7 @@ const SubjectBackgroundElements: React.FC<SubjectBackgroundElementsProps> = ({ s
           </>
         );
 
-      case 'english':
+      case 'English':
         return (
           <>
             {/* English/Literature symbols */}
@@ -134,12 +151,13 @@ const SubjectBackgroundElements: React.FC<SubjectBackgroundElementsProps> = ({ s
           </>
         );
 
-      case 'hindi':
+      case 'Hindi':
         return (
           <>
             {/* Hindi/Sanskrit symbols */}
             <motion.div
-              className="absolute top-32 left-20 text-orange-500/12 text-4xl font-bold select-none"
+              className="absolute top-32 left-20 text-4xl font-bold select-none"
+              style={{ color: `${subjectColor}25` }}
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             >
@@ -176,7 +194,7 @@ const SubjectBackgroundElements: React.FC<SubjectBackgroundElementsProps> = ({ s
           </>
         );
 
-      case 'sanskrit':
+      case 'Sanskrit':
         return (
           <>
             {/* Sanskrit symbols */}
@@ -218,7 +236,7 @@ const SubjectBackgroundElements: React.FC<SubjectBackgroundElementsProps> = ({ s
           </>
         );
 
-      case 'social-science':
+      case 'Social Science':
         return (
           <>
             {/* Social Science symbols */}
@@ -284,7 +302,7 @@ const SubjectBackgroundElements: React.FC<SubjectBackgroundElementsProps> = ({ s
   };
 
   return (
-    <div className="absolute inset-0 z-1 pointer-events-none overflow-hidden">
+    <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
       {getBackgroundElements()}
     </div>
   );

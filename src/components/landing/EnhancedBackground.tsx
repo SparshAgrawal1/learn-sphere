@@ -17,17 +17,17 @@ const EnhancedBackground: React.FC<EnhancedBackgroundProps> = ({
   // Get background gradient classes based on theme - to match SubjectDashboard exactly
   const getBackgroundGradient = (subjectId: string) => {
     switch (subjectId) {
-      case 'mathematics':
+      case 'Mathematics':
         return 'bg-gradient-to-br from-emerald-950 via-teal-900 to-emerald-900';
-      case 'science':
+      case 'Science':
         return 'bg-gradient-to-br from-amber-950 via-orange-900 to-yellow-900';
-      case 'english':
+      case 'English':
         return 'bg-gradient-to-br from-violet-950 via-purple-900 to-indigo-900';
-      case 'social':
+      case 'Social Science':
         return 'bg-gradient-to-br from-red-950 via-rose-900 to-pink-900';
-      case 'hindi':
+      case 'Hindi':
         return 'bg-gradient-to-br from-cyan-950 via-blue-900 to-sky-900';
-      case 'sanskrit':
+      case 'Sanskrit':
         return 'bg-gradient-to-br from-pink-950 via-fuchsia-900 to-rose-900';
       default:
         return 'bg-gradient-to-br from-gray-950 via-slate-900 to-gray-900';
@@ -37,12 +37,12 @@ const EnhancedBackground: React.FC<EnhancedBackgroundProps> = ({
   // Get the appropriate accent color based on theme - match exactly with SubjectDashboard
   const getAccentColor = () => {
     switch (theme) {
-      case 'mathematics': return 'rgba(16, 185, 129, 0.6)'; // emerald-500
-      case 'science': return 'rgba(245, 158, 11, 0.6)'; // amber-500
-      case 'english': return 'rgba(139, 92, 246, 0.6)'; // violet-500
-      case 'social': return 'rgba(239, 68, 68, 0.6)'; // red-500
-      case 'hindi': return 'rgba(6, 182, 212, 0.6)'; // cyan-500
-      case 'sanskrit': return 'rgba(236, 72, 153, 0.6)'; // pink-500
+      case 'Mathematics': return 'rgba(16, 185, 129, 0.6)'; // emerald-500
+      case 'Science': return 'rgba(245, 158, 11, 0.6)'; // amber-500
+      case 'English': return 'rgba(139, 92, 246, 0.6)'; // violet-500
+      case 'Social Science': return 'rgba(239, 68, 68, 0.6)'; // red-500
+      case 'Hindi': return 'rgba(6, 182, 212, 0.6)'; // cyan-500
+      case 'Sanskrit': return 'rgba(236, 72, 153, 0.6)'; // pink-500
       default: return 'rgba(59, 130, 246, 0.6)'; // default blue
     }
   };
@@ -79,12 +79,12 @@ const EnhancedBackground: React.FC<EnhancedBackgroundProps> = ({
   // For particles, use the hex color of the accent
   const getHexColor = () => {
     switch (theme) {
-      case 'mathematics': return '#10B981'; // emerald
-      case 'science': return '#F59E0B'; // amber
-      case 'english': return '#8B5CF6'; // violet
-      case 'social': return '#EF4444'; // red
-      case 'hindi': return '#06B6D4'; // cyan
-      case 'sanskrit': return '#EC4899'; // pink
+      case 'Mathematics': return '#10B981'; // emerald
+      case 'Science': return '#F59E0B'; // amber
+      case 'English': return '#8B5CF6'; // violet
+      case 'Social Science': return '#EF4444'; // red
+      case 'Hindi': return '#06B6D4'; // cyan
+      case 'Sanskrit': return '#EC4899'; // pink
       default: return accentColor;
     }
   };

@@ -17,12 +17,12 @@ const Enhanced3DFloor: React.FC<Enhanced3DFloorProps> = ({
   // Get the appropriate accent color based on theme
   const getThemeColor = () => {
     switch (activeSubject) {
-      case 'mathematics': return '#10B981'; // emerald
-      case 'science': return '#F59E0B'; // amber
-      case 'english': return '#8B5CF6'; // violet
-      case 'social': return '#EF4444'; // red
-      case 'hindi': return '#06B6D4'; // cyan
-      case 'sanskrit': return '#EC4899'; // pink
+      case 'Mathematics': return '#10B981'; // emerald
+      case 'Science': return '#F59E0B'; // amber
+      case 'English': return '#8B5CF6'; // violet
+      case 'Social Science': return '#EF4444'; // red
+      case 'Hindi': return '#06B6D4'; // cyan
+      case 'Sanskrit': return '#EC4899'; // pink
       default: return accentColor;
     }
   };
