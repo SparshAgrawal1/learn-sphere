@@ -94,11 +94,61 @@ const Learning = () => {
       // If no class is selected, redirect to class selection page
       navigate('/class-selection');
     }
+
+    // Cleanup function to stop any ongoing narrations when component unmounts or navigates
+    return () => {
+      // Stop any speech synthesis
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      
+      // Stop any audio elements
+      const audioElements = document.querySelectorAll('audio');
+      audioElements.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      
+      // Call any global narration stop functions that might exist
+      if (typeof window.stopNarration === 'function') {
+        window.stopNarration();
+      }
+      
+      // Stop any story narration
+      if (typeof window.stopStoryNarration === 'function') {
+        window.stopStoryNarration();
+      }
+    };
   }, [navigate]);
   
   const handleContentLoad = (content: any) => {
     setCurrentContent(content);
   };
+
+  // Cleanup narrations when content changes
+  useEffect(() => {
+    // Stop any ongoing narrations when content changes
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    
+    // Stop any audio elements
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+    
+    // Call any global narration stop functions that might exist
+    if (typeof window.stopNarration === 'function') {
+      window.stopNarration();
+    }
+    
+    // Stop any story narration
+    if (typeof window.stopStoryNarration === 'function') {
+      window.stopStoryNarration();
+    }
+  }, [currentContent?.contentPath]);
 
   // Add early return if no class is selected
   if (!selectedClass) {

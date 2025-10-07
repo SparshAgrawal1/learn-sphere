@@ -23,6 +23,28 @@ const ContentLoader: React.FC<ContentLoaderProps> = ({
       try {
         setLoading(true);
         
+        // Stop any ongoing narrations before loading new content
+        if (window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+        }
+        
+        // Stop any audio elements
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => {
+          audio.pause();
+          audio.currentTime = 0;
+        });
+        
+        // Call any global narration stop functions that might exist
+        if (typeof window.stopNarration === 'function') {
+          window.stopNarration();
+        }
+        
+        // Stop any story narration
+        if (typeof window.stopStoryNarration === 'function') {
+          window.stopStoryNarration();
+        }
+        
         // Get selected class from session storage
         const selectedClass = sessionStorage.getItem('selectedClass');
         
@@ -66,6 +88,31 @@ const ContentLoader: React.FC<ContentLoaderProps> = ({
     };
 
     loadContent();
+
+    // Cleanup function to stop narrations when component unmounts
+    return () => {
+      // Stop any speech synthesis
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      
+      // Stop any audio elements
+      const audioElements = document.querySelectorAll('audio');
+      audioElements.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      
+      // Call any global narration stop functions that might exist
+      if (typeof window.stopNarration === 'function') {
+        window.stopNarration();
+      }
+      
+      // Stop any story narration
+      if (typeof window.stopStoryNarration === 'function') {
+        window.stopStoryNarration();
+      }
+    };
   }, [subjectId, topicId, lessonId, contentPath, navigate]);
 
   if (error) {
