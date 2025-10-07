@@ -2001,9 +2001,26 @@ export const curriculum: ClassContent = {
             {
               id: 'Coordinate Geometry',
               name: 'Coordinate Geometry',
-              progress: 0,
+              progress: 55,
               completed: false,
-              description: 'Coming soon - Coordinate geometry concepts and applications'
+              contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/coordinate-geometry-intro (1).html',
+              description: 'Understanding coordinate systems, distance formula, and geometric applications',
+              subtopics: [
+                {
+                  id: 'coordinate-geometry-intro',
+                  name: 'Introduction to Coordinate Geometry',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/coordinate-geometry-intro (1).html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'distance-formula-lesson',
+                  name: 'Distance Formula and Applications',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/distance-formula-lesson.html',
+                  progress: 50,
+                  completed: false
+                }
+              ]
             }
           ]
         }
