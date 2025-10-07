@@ -47,6 +47,7 @@ export interface Topic {
   color?: string;
   contentPath?: string;
   contentType?: 'html' | 'video' | 'url';
+  pdfPath?: string;
 }
 
 export interface Chapter {
@@ -99,6 +100,7 @@ export const curriculum: ClassContent = {
               progress: 95,
               completed: true,
               contentPath: '/FinalContent/Class 9th/Science/Physics/Motion/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Physics/Motion/Motion.pdf',
               subtopics: [
                 {
                   id: '7.1_motion',
@@ -150,6 +152,7 @@ export const curriculum: ClassContent = {
               progress: 90,
               completed: true,
               contentPath: '/FinalContent/Class 9th/Science/Physics/Force and Laws of Motion/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Physics/Force and Laws of Motion/Force and laws of motion.pdf',
               subtopics: [
                 {
                   id: '8.1_balanced_and_unbalanced_forces',
@@ -201,6 +204,7 @@ export const curriculum: ClassContent = {
               progress: 85,
               completed: true,
               contentPath: '/FinalContent/Class 9th/Science/Physics/Gravitation/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Physics/Gravitation/Gravitation.pdf',
               subtopics: [
                 {
                   id: '9.1_Gravitation',
@@ -245,6 +249,7 @@ export const curriculum: ClassContent = {
               progress: 75,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Physics/Work and Energy/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Physics/Work and Energy/Work and Energy.pdf',
               subtopics: [
                 {
                   id: '10.1_work',
@@ -275,6 +280,7 @@ export const curriculum: ClassContent = {
     progress: 70,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Physics/Sound/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Physics/Sound/Sound.pdf',
               subtopics: [
                 {
                   id: '11.1_Production_of_Sound',
@@ -327,6 +333,7 @@ export const curriculum: ClassContent = {
               progress: 65,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Chemistry/Matter In Our Surroundings/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Chemistry/Matter In Our Surroundings/Matter In Our Surroundings.pdf',
               subtopics: [
                 {
                   id: '1_Physical_Nature_of_Matter',
@@ -371,6 +378,7 @@ export const curriculum: ClassContent = {
               progress: 60,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Chemistry/IS MATTER AROUND US PURE_/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Chemistry/IS MATTER AROUND US PURE_/IS MATTER AROUND US PURE_.pdf',
               subtopics: [
                 {
                   id: 'mixtures-interactive',
@@ -387,6 +395,7 @@ export const curriculum: ClassContent = {
               progress: 55,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/Atoms and Molecules.pdf',
               subtopics: [
                 {
                   id: '3.1_Laws_of_Chemical_Combination',
@@ -445,6 +454,7 @@ export const curriculum: ClassContent = {
               progress: 50,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Chemistry/Structure of an atom/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Chemistry/Structure of an atom/Structure of the atom.pdf',
               subtopics: [
                 {
                   id: '4.1_charged_particles',
@@ -504,6 +514,7 @@ export const curriculum: ClassContent = {
               progress: 45,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/The fundamental unit of life.pdf',
               subtopics: [
                 {
                   id: 'cell_discovery_interactive',
@@ -562,6 +573,7 @@ export const curriculum: ClassContent = {
               progress: 40,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Biology/Tissues/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Biology/Tissues/Tissues.pdf',
               subtopics: [
                 {
                   id: 'complex_tissues_protection',
@@ -613,6 +625,7 @@ export const curriculum: ClassContent = {
               progress: 30,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Biology/Improvement in Food Resources/index.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Biology/Improvement in Food Resources/Improvement in food resources.pdf',
               subtopics: [
                 {
                   id: 'animal_husbandry_exhibit',
@@ -684,63 +697,72 @@ export const curriculum: ClassContent = {
               name: 'The Fun they Had',
               progress: 95,
               completed: true,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Fun they Had/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Fun they Had/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Fun they Had/The fun they had.pdf'
             },
             {
               id: 'The Sound of Music',
               name: 'The Sound of Music',
               progress: 90,
               completed: true,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Sound of Music/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Sound of Music/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Sound of Music/The sound of music.pdf'
             },
             {
               id: 'The little girl',
               name: 'The Little Girl',
               progress: 85,
               completed: true,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The little girl/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The little girl/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The little girl/The little girl.pdf'
             },
             {
               id: 'A Truly Beautiful mind',
               name: 'A Truly Beautiful Mind',
               progress: 80,
               completed: true,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/A Truly Beautiful mind/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/A Truly Beautiful mind/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/A Truly Beautiful mind/A truely beautiful mind.pdf'
             },
             {
               id: 'The Snake and the Mirror',
               name: 'The Snake and the Mirror',
               progress: 75,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Snake and the Mirror/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Snake and the Mirror/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/The Snake and the Mirror/The snake and the mirror.pdf'
             },
             {
               id: 'My Childhood',
               name: 'My Childhood',
               progress: 70,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/My Childhood/my-childhood-lesson/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/My Childhood/my-childhood-lesson/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/My Childhood/My childhood.pdf'
             },
             {
               id: 'Reach for the Top',
               name: 'Reach for the Top',
               progress: 65,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/Reach for the Top/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/Reach for the Top/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/Reach for the Top/Reach for the top.pdf'
             },
             {
               id: 'Kathmandu',
               name: 'Kathmandu',
               progress: 60,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/Kathmandu/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/Kathmandu/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/Kathmandu/Kathmandu.pdf'
             },
             {
               id: 'If I were you',
               name: 'If I Were You',
               progress: 55,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/If I were you/index.html'
+              contentPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/If I were you/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Beehive – Main textbook (prose and poetry)/If I were you/If I were you.pdf'
             }
           ]
         },
@@ -775,35 +797,40 @@ export const curriculum: ClassContent = {
               name: 'What is Democracy? Why Democracy?',
               progress: 40,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/What is Democracy Why Democracy/index.html'
+              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/What is Democracy Why Democracy/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/What is Democracy Why Democracy/What is democracy why democracy.pdf'
             },
             {
               id: 'Constitutional Design',
               name: 'Constitutional Design',
               progress: 35,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Constitutional Design/index.html'
+              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Constitutional Design/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Constitutional Design/Costitutional Design.pdf'
             },
             {
               id: 'Electoral Politics',
               name: 'Electoral Politics',
               progress: 30,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Electoral Politics/index.html'
+              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Electoral Politics/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Electoral Politics/Electoral Politics.pdf'
             },
             {
               id: 'Working of Institutions',
               name: 'Working of Institutions',
               progress: 25,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Working of Institutions/index.html'
+              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Working of Institutions/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Working of Institutions/Working of Institutions.pdf'
             },
             {
               id: 'Demoratic Rights',
               name: 'Democratic Rights',
               progress: 20,
               completed: false,
-              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Demoratic Rights/index.html'
+              contentPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Demoratic Rights/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Democratic Politics/Demoratic Rights/Democratic Rights.pdf'
             }
           ]
         },
@@ -819,6 +846,7 @@ export const curriculum: ClassContent = {
               progress: 80,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Social Science/Economics/The Story of Village Palampur/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Economics/The Story of Village Palampur/The Story of Village Palampur.pdf',
               description: 'Understanding rural economy through the story of a village'
             },
             {
@@ -827,6 +855,7 @@ export const curriculum: ClassContent = {
               progress: 75,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Social Science/Economics/People as Resource/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Economics/People as Resource/People as Resource.pdf',
               description: 'How human capital contributes to economic development'
             },
             {
@@ -835,6 +864,7 @@ export const curriculum: ClassContent = {
               progress: 70,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Social Science/Economics/Poverty as a Challenge/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Economics/Poverty as a Challenge/Poverty as a Challenge.pdf',
               description: 'Understanding poverty and its dimensions in India'
             },
             {
@@ -843,6 +873,7 @@ export const curriculum: ClassContent = {
               progress: 65,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Social Science/Economics/Food Security in India/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Economics/Food Security in India/Food Security in India.pdf',
               description: 'Exploring food security challenges and solutions'
             }
           ]
@@ -860,6 +891,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=YzmihBfspcM',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 9th/Social Science/History/The french revolution.pdf',
               description: 'The causes, events, and impact of the French Revolution'
             },
             {
@@ -869,6 +901,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=Ux_kZkHao8g',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 9th/Social Science/History/Socialism in Europe and the Russian Revolution.pdf',
               description: 'Rise of socialism and the Russian Revolution of 1917'
             },
             {
@@ -887,6 +920,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=PLVWrfzEnr4',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 9th/Social Science/History/Forest Society and Colonialism.pdf',
               description: 'Impact of colonial rule on forest communities and environment'
             },
             {
@@ -896,6 +930,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=_Nfs-bJpNJ8',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 9th/Social Science/History/Pastoralists in the Modern World.pdf',
               description: 'Changes in pastoral communities in the modern era'
             }
         ]
@@ -924,7 +959,8 @@ export const curriculum: ClassContent = {
             name: 'अग्नि पथ',
             progress: 85,
             completed: true,
-            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/अग्नि पथ/agni-path-lesson/index.html',
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/अग्नि पथ/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/अग्नि पथ/agni path.pdf',
             description: 'हरिवंशराय बच्चन की प्रेरणादायक कविता'
           },
           {
@@ -933,6 +969,7 @@ export const curriculum: ClassContent = {
             progress: 80,
             completed: true,
             contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/नए इलाके में - खुशबू रचते हैं हाथ/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/नए इलाके में - खुशबू रचते हैं हाथ/naye ilake me.pdf',
             description: 'आधुनिक जीवन और परंपरा पर आधारित कविता'
           },
           {
@@ -941,6 +978,7 @@ export const curriculum: ClassContent = {
             progress: 75,
             completed: false,
             contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रहीम के दोहे/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रहीम के दोहे/Rahim ke dohe.pdf',
             description: 'रहीम के नीति और ज्ञान से भरपूर दोहे'
           },
           {
@@ -992,6 +1030,7 @@ export const curriculum: ClassContent = {
               progress: 95,
               completed: true,
               contentPath: '/FinalContent/Class 10th/Science/Physics/Light Refraction/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Physics/Light Refraction/Light – Reflection and Refraction.pdf',
               subtopics: [
                 {
                   id: '1_reflection-of-light',
@@ -1029,6 +1068,7 @@ export const curriculum: ClassContent = {
               progress: 90,
               completed: true,
               contentPath: '/FinalContent/Class 10th/Science/Physics/Human Eye and the Colourful World/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Physics/Human Eye and the Colourful World/The Human Eye and the Colourful World.pdf',
               subtopics: [
                 {
                   id: '1_The_Human_Eye',
@@ -1080,6 +1120,7 @@ export const curriculum: ClassContent = {
               progress: 85,
               completed: true,
               contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity.pdf',
               subtopics: [
                 {
                   id: 'Electricity_Part_1_latest',
@@ -1116,7 +1157,8 @@ export const curriculum: ClassContent = {
               name: 'Magnetic Effects of Electric Current',
               progress: 80,
               completed: true,
-              contentPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/index.html'
+              contentPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/Magnetic Effects of Electric Current.pdf'
             }
           ]
         },
@@ -1132,6 +1174,7 @@ export const curriculum: ClassContent = {
               progress: 75,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Chemistry/Carbon and its Compound/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Chemistry/Carbon and its Compound/Carbon and its Compounds.pdf',
               subtopics: [
                 {
                   id: 'Versatile_nature_of_Carbon',
@@ -1184,6 +1227,7 @@ export const curriculum: ClassContent = {
               progress: 65,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Biology/Life Processes/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Biology/Life Processes/Life Processes.pdf',
               subtopics: [
                 {
                   id: 'life_processes_exhibit',
@@ -1305,6 +1349,7 @@ export const curriculum: ClassContent = {
     progress: 60,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Biology/Control and Coordination/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Biology/Control and Coordination/Control and Coordination.pdf',
               subtopics: [
                 {
                   id: 'control_coordination_exhibit',
@@ -1377,6 +1422,7 @@ export const curriculum: ClassContent = {
     progress: 55,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Biology/Reproduction/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Biology/Reproduction/How do Organisms Reproduce?.pdf',
               subtopics: [
                 {
                   id: 'reproduction-dna-exhibit',
@@ -1463,6 +1509,7 @@ export const curriculum: ClassContent = {
               progress: 50,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Biology/Hereditary/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Biology/Hereditary/Heredity.pdf',
               subtopics: [
                 {
                   id: 'inherited_traits_exhibit',
@@ -1521,6 +1568,7 @@ export const curriculum: ClassContent = {
               progress: 45,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Biology/Our Environment/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Biology/Our Environment/Our Environment.pdf',
               subtopics: [
                 {
                   id: 'ecosystem_exhibit',
@@ -1578,56 +1626,64 @@ export const curriculum: ClassContent = {
               name: 'A Letter to God',
               progress: 95,
               completed: true,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/A letter to God/index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/A letter to God/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/A letter to God/A letter to god.pdf'
             },
             {
               id: 'Nelson Mandela long Walk to Freedom',
               name: 'Nelson Mandela: Long Walk to Freedom',
               progress: 90,
               completed: true,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Nelson Mandela long Walk to Freedom/index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Nelson Mandela long Walk to Freedom/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Nelson Mandela long Walk to Freedom/Nelson Mandela.pdf'
             },
             {
               id: 'Two Stories about Flying',
               name: 'Two Stories about Flying',
               progress: 85,
               completed: true,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Two Stories about Flying/index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Two Stories about Flying/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Two Stories about Flying/Two stories about flying.pdf'
             },
             {
               id: 'From Diary of Anne Frank',
               name: 'From the Diary of Anne Frank',
               progress: 80,
               completed: true,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/From Diary of Anne Frank/index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/From Diary of Anne Frank/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/From Diary of Anne Frank/From the diary of anne frank.pdf'
             },
             {
               id: 'The Sermon at Benares ',
               name: 'The Sermon at Benares',
               progress: 75,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Sermon at Benares /index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Sermon at Benares /index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Sermon at Benares/The sermon at Benares.pdf'
             },
             {
               id: 'Mijbil the Otter',
               name: 'Mijbil the Otter',
               progress: 70,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Mijbil the Otter/index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Mijbil the Otter/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Mijbil the Otter/Mijbil the otter.pdf'
             },
             {
               id: 'Madam rides the Bus',
               name: 'Madam Rides the Bus',
               progress: 65,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Madam rides the Bus/index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Madam rides the Bus/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/Madam rides the Bus/Madam rides the bus.pdf'
             },
             {
               id: 'The Proposal',
               name: 'The Proposal',
               progress: 60,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Proposal/index.html'
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Proposal/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Proposal/The proposal.pdf'
             }
           ]
         },
@@ -1662,35 +1718,40 @@ export const curriculum: ClassContent = {
               name: 'Development',
               progress: 70,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Development/index.html'
+              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Development/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Economics/Development/Development.pdf'
             },
             {
               id: 'Sectors of the Indian Economy',
               name: 'Sectors of the Indian Economy',
               progress: 65,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Sectors of the Indian Economy/index.html'
+              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Sectors of the Indian Economy/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Economics/Sectors of the Indian Economy/SECTORS OF THE INDIAN ECONOMY.pdf'
             },
             {
               id: 'Money and Credit',
               name: 'Money and Credit',
               progress: 60,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Money and Credit/index.html'
+              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Money and Credit/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Economics/Money and Credit/MONEY AND CREDIT.pdf'
             },
             {
               id: 'Globalization and Indian Economy',
               name: 'Globalization and the Indian Economy',
               progress: 55,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Globalization and Indian Economy/index.html'
+              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Globalization and Indian Economy/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Economics/Globalization and Indian Economy/GLOBALISATION AND THE INDIAN ECONOMY.pdf'
             },
             {
               id: 'Consumer Rights',
               name: 'Consumer Rights',
               progress: 50,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Consumer Rights/index.html'
+              contentPath: '/FinalContent/Class 10th/Social Science/Economics/Consumer Rights/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Economics/Consumer Rights/CONSUMER RIGHTS.pdf'
             }
           ]
         },
@@ -1714,6 +1775,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=3DPXXlCMLx8',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 10th/Social Science/History/The Rise of Nationalism in Europe.pdf',
               description: 'Understanding the emergence of nationalism in 19th century Europe'
             },
             {
@@ -1723,6 +1785,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=DlNrnWc1BVQ',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 10th/Social Science/History/Nationalism in India.pdf',
               description: 'The Indian independence movement and nationalist struggles'
             },
             {
@@ -1732,6 +1795,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=cZsYhzubOcI',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 10th/Social Science/History/The Age of Industrialisation.pdf',
               description: 'Industrial revolution and its impact on society and economy'
             },
             {
@@ -1741,6 +1805,7 @@ export const curriculum: ClassContent = {
               completed: false,
               contentPath: 'https://www.youtube.com/watch?v=RXHbXcyeZf4',
               contentType: 'video',
+              pdfPath: '/FinalContent/Class 10th/Social Science/History/Print Culture and the Modern World.pdf',
               description: 'How print culture transformed society and spread ideas'
             }
         ]
@@ -1770,6 +1835,7 @@ export const curriculum: ClassContent = {
             progress: 90,
             completed: true,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/बड़े भाई साहब/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/बड़े भाई साहब/bade bhai sahab.pdf',
             description: 'प्रेमचंद की प्रसिद्ध कहानी - भाई-बहन के रिश्ते और शिक्षा पर व्यंग्य'
           },
           {
@@ -1778,6 +1844,7 @@ export const curriculum: ClassContent = {
             progress: 85,
             completed: true,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/साखी/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/साखी/saakhi.pdf',
             description: 'कबीर के दोहे - आध्यात्मिक और सामाजिक संदेश'
           },
           {
@@ -1786,6 +1853,7 @@ export const curriculum: ClassContent = {
             progress: 80,
             completed: true,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/पर्वत प्रदेश में पावस/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/पर्वत प्रदेश में पावस/parvat pradesh me pavas.pdf',
             description: 'सुमित्रानंदन पंत की प्रकृति प्रेम की कविता'
           },
           {
@@ -1794,6 +1862,7 @@ export const curriculum: ClassContent = {
             progress: 75,
             completed: false,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तोप/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तोप/tope.pdf',
             description: 'वीर रस की कविता - 1857 के विद्रोह पर आधारित'
           },
           {
@@ -1802,6 +1871,7 @@ export const curriculum: ClassContent = {
             progress: 70,
             completed: false,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/कारतूस/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/कारतूस/kartoos.pdf',
             description: 'हबीब तनवीर का नाटक - वीर गाथा और बलिदान'
           },
           {
@@ -1809,7 +1879,8 @@ export const curriculum: ClassContent = {
             name: 'कर चले हम फ़िदा',
             progress: 65,
             completed: false,
-            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/कर चले हम फ़िदा/kar-chale-hum-fida/index.html',
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/कर चले हम फ़िदा/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/कर चले हम फ़िदा/kar chale ham fida.pdf',
             description: 'देशभक्ति की भावना से भरपूर गीत'
           },
           {
@@ -1818,6 +1889,7 @@ export const curriculum: ClassContent = {
             progress: 60,
             completed: false,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/अब कहाँ दूसरे के दुख से दुखी होने वाले/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/अब कहाँ दूसरे के दुख से दुखी होने वाले/ab kaha dusre ke dukh me.pdf',
             description: 'निदा फाज़ली का निबंध - मानवीय संवेदना पर'
           },
           {
@@ -1826,6 +1898,7 @@ export const curriculum: ClassContent = {
             progress: 55,
             completed: false,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तताँरा-वामीरो कथा/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तताँरा-वामीरो कथा/tantara vamiro katha.pdf',
             description: 'अंडमान निकोबार की लोक कथा - प्रेम और बलिदान'
           },
           {
@@ -1834,6 +1907,7 @@ export const curriculum: ClassContent = {
             progress: 50,
             completed: false,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/मीरा के पद/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/मीरा के पद/meera.pdf',
             description: 'मीराबाई के भक्ति पद - कृष्ण प्रेम की अभिव्यक्ति'
           },
           {
@@ -1850,6 +1924,7 @@ export const curriculum: ClassContent = {
             progress: 40,
             completed: false,
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/रवींद्रनाथ ठाकुर की आत्मत्राण/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/रवींद्रनाथ ठाकुर की आत्मत्राण/atmatrana.pdf',
             description: 'रवींद्रनाथ ठाकुर की आध्यात्मिक कविता'
           }
         ]
@@ -1879,6 +1954,7 @@ export const curriculum: ClassContent = {
               progress: 60,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_fundamentals (3).html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ARITHMETIC PROGRESSIONS.pdf',
               subtopics: [
                 {
                   id: 'ap_patterns_intro',
@@ -1923,6 +1999,7 @@ export const curriculum: ClassContent = {
               progress: 70,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/1-linear-equations-preview.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/ PAIR OF LINEAR EQUATIONS IN TWO VARIABLES.pdf',
               subtopics: [
                 {
                   id: '1-linear-equations-preview',
@@ -1967,6 +2044,7 @@ export const curriculum: ClassContent = {
               progress: 65,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/quadratic_equations_learning.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/QUADRATIC EQUATIONS.pdf',
             subtopics: [
                 {
                   id: 'quadratic_equations_learning',
@@ -2004,6 +2082,7 @@ export const curriculum: ClassContent = {
               progress: 55,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/coordinate-geometry-intro (1).html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/COORDINATE GEOMETRY.pdf',
               description: 'Understanding coordinate systems, distance formula, and geometric applications',
               subtopics: [
                 {

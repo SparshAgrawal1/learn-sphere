@@ -7,7 +7,7 @@ import { getLessonContentPath } from '@/utils/content-path-resolver';
 import curriculum, { getClassCurriculum } from '@/data/curriculum';
 import ClassBasedContentRenderer from '@/components/learning/ClassBasedContentRenderer';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Home, ChevronLeft, ChevronRight, PanelLeft, PanelRight } from 'lucide-react';
+import { ArrowLeft, Home, ChevronLeft, ChevronRight, PanelLeft, PanelRight, FileText, Monitor } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { YouTubeEmbed } from '../components/ui/YouTubeEmbed';
 import { isYouTubeURL } from '../utils/youtube-utils';
@@ -85,6 +85,9 @@ const Learning = () => {
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(true);
   
+  // PDF/Visual content toggle state
+  const [showPdf, setShowPdf] = useState(false);
+  
   // Get selected class from session storage
   useEffect(() => {
     const classFromStorage = sessionStorage.getItem('selectedClass');
@@ -110,24 +113,26 @@ const Learning = () => {
       });
       
       // Call any global narration stop functions that might exist
-      if (typeof window.stopNarration === 'function') {
-        window.stopNarration();
+      if (typeof (window as any).stopNarration === 'function') {
+        (window as any).stopNarration();
       }
       
       // Stop any story narration
-      if (typeof window.stopStoryNarration === 'function') {
-        window.stopStoryNarration();
+      if (typeof (window as any).stopStoryNarration === 'function') {
+        (window as any).stopStoryNarration();
       }
     };
   }, [navigate]);
   
   const handleContentLoad = (content: any) => {
     setCurrentContent(content);
+    // Reset PDF toggle to visual content when new content is loaded
+    setShowPdf(false);
   };
 
-  // Cleanup narrations when content changes
-  useEffect(() => {
-    // Stop any ongoing narrations when content changes
+  // Helper function to stop all narrations
+  const stopAllNarrations = () => {
+    // Stop speech synthesis
     if (window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
@@ -140,14 +145,20 @@ const Learning = () => {
     });
     
     // Call any global narration stop functions that might exist
-    if (typeof window.stopNarration === 'function') {
-      window.stopNarration();
+    if (typeof (window as any).stopNarration === 'function') {
+      (window as any).stopNarration();
     }
     
     // Stop any story narration
-    if (typeof window.stopStoryNarration === 'function') {
-      window.stopStoryNarration();
+    if (typeof (window as any).stopStoryNarration === 'function') {
+      (window as any).stopStoryNarration();
     }
+  };
+
+  // Cleanup narrations when content changes
+  useEffect(() => {
+    // Stop any ongoing narrations when content changes
+    stopAllNarrations();
   }, [currentContent?.contentPath]);
 
   // Add early return if no class is selected
@@ -255,6 +266,32 @@ const Learning = () => {
             <div className="glass-badge-orange">
               Progress: {currentContent?.topic?.progress || currentContent?.subject?.progress || 0}%
             </div>
+            
+            {/* PDF/Visual Toggle Button - only show if topic has PDF */}
+            {currentContent?.topic?.pdfPath && (
+              <div className="flex items-center gap-2 glass-card p-2">
+                <Monitor className={`h-4 w-4 transition-colors ${!showPdf ? 'text-orange-400' : 'text-white/50'}`} />
+                <button
+                  onClick={() => {
+                    // Stop all narrations when switching to PDF
+                    if (!showPdf) {
+                      stopAllNarrations();
+                    }
+                    setShowPdf(!showPdf);
+                  }}
+                  className={`relative w-12 h-6 rounded-full transition-all duration-200 ${
+                    showPdf ? 'bg-orange-500' : 'bg-white/20'
+                  }`}
+                  title={showPdf ? 'Switch to Visual Content' : 'Switch to PDF'}
+                >
+                  <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ${
+                    showPdf ? 'translate-x-7' : 'translate-x-1'
+                  }`} />
+                </button>
+                <FileText className={`h-4 w-4 transition-colors ${showPdf ? 'text-orange-400' : 'text-white/50'}`} />
+              </div>
+            )}
+            
             <Link to="/" className="glass-button flex items-center gap-2 text-sm">
               <Home className="h-4 w-4" />
               Home
@@ -307,6 +344,18 @@ const Learning = () => {
           !isRightPanelOpen ? 'mr-16' : ''
         }`}>
           {currentContent?.contentPath ? (
+            // Check if user wants to view PDF and PDF exists
+            (showPdf && currentContent?.topic?.pdfPath) ? (
+              <iframe 
+                key={currentContent.topic.pdfPath} // Force reload when PDF path changes
+                src={`${currentContent.topic.pdfPath}#toolbar=1&navpanes=1&scrollbar=1`}
+                className="w-full h-full border-none"
+                title={`${currentContent.topic?.name || 'Learning Content'} - PDF Guide - ${selectedClass} Grade`}
+                onLoad={() => {/* PDF loaded successfully */}}
+                onError={() => console.error('Error loading PDF:', currentContent.topic.pdfPath)}
+              />
+              
+            ) : 
             // Check if it's a YouTube video
             (currentContent.contentType === 'video' || isYouTubeURL(currentContent.contentPath)) ? (
               <YouTubeEmbed
