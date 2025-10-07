@@ -21,6 +21,7 @@ const Interactive3DDashboard: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [selectedClass, setSelectedClass] = useState<string | null>(null);
   const [classCurriculum, setClassCurriculum] = useState(curriculum['9th']);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
   // Refs for animation
   const splineContainerRef = useRef<HTMLDivElement>(null);
@@ -69,6 +70,16 @@ const Interactive3DDashboard: React.FC = () => {
       }
     };
   }, [isLoaded]);
+
+  // Handle window resize for responsive positioning
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSubjectHover = (subjectId: string) => {
     if (activeSubject !== subjectId) {
@@ -143,9 +154,19 @@ const Interactive3DDashboard: React.FC = () => {
               {/* Subject Cards - Larger and Further from Center */}
               <div className="absolute inset-0">
                 {classCurriculum.map((subject, index) => {
-                  // Calculate position to form a circle around the center - increased radius and size
+                  // Calculate position to form a circle around the center
                   const angle = (index * (360 / classCurriculum.length)) * (Math.PI / 180);
-                  const radius = 18; // Increased from 14 to 18 for more distance
+                  
+                  // Use responsive radius that maintains 1860px alignment for wider screens
+                  const getResponsiveRadius = () => {
+                    if (windowWidth <= 1200) return 280; // Smaller screens
+                    if (windowWidth <= 1600) return 320; // Medium screens
+                    if (windowWidth <= 1860) return 360; // Large screens up to 1860px
+                    // For screens wider than 1860px, maintain the same radius as 1860px
+                    return 360; // Fixed radius to maintain 1860px alignment
+                  };
+                  
+                  const radius = getResponsiveRadius();
                   const xPos = Math.cos(angle) * radius;
                   const yPos = Math.sin(angle) * radius;
                   
@@ -154,8 +175,8 @@ const Interactive3DDashboard: React.FC = () => {
                       key={subject.id}
                       className="absolute"
                       style={{
-                        left: `calc(50% + ${xPos}vw)`,
-                        top: `calc(50% + ${yPos}vw)`,
+                        left: `calc(50% + ${xPos}px)`,
+                        top: `calc(50% + ${yPos}px)`,
                         transform: `translate(-50%, -50%)`,
                       }}
                     >
