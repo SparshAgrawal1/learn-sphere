@@ -1760,7 +1760,53 @@ export const curriculum: ClassContent = {
           name: 'Democratic Politics',
           icon: Users,
           color: '#EF4444',
-          topics: []
+          topics: [
+            {
+              id: 'Power Sharing',
+              name: 'Power Sharing',
+              progress: 40,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Power Sharing/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Power Sharing/Power Sharing.pdf',
+              description: 'Understanding how power is shared in democratic systems'
+            },
+            {
+              id: 'Federalism',
+              name: 'Federalism',
+              progress: 35,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Federalism/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Federalism/Federalism.pdf',
+              description: 'Exploring federal structure and its importance in democracy'
+            },
+            {
+              id: 'Gender, Religion and Caste',
+              name: 'Gender, Religion and Caste',
+              progress: 30,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Gender, Religion and Caste/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Gender, Religion and Caste/Gender Religion and Caste.pdf',
+              description: 'Understanding social divisions and their impact on democracy'
+            },
+            {
+              id: 'Political Parties',
+              name: 'Political Parties',
+              progress: 25,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Political Parties/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Political Parties/Political Parties.pdf',
+              description: 'Role and importance of political parties in democratic systems'
+            },
+            {
+              id: 'Outcome of Democracy',
+              name: 'Outcome of Democracy',
+              progress: 20,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Outcome of Democracy/index.html',
+              pdfPath: '/FinalContent/Class 10th/Social Science/Democratic Politics/Outcome of Democracy/Outcome of Democracy.pdf',
+              description: 'Analyzing the outcomes and effectiveness of democratic governance'
+            }
+          ]
         },
         {
           id: 'History',
