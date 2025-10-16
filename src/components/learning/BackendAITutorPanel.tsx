@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, BrainCog, Sparkles, ArrowRight, LightbulbIcon, Mic, MicOff, MicIcon } from 'lucide-react';
+import { getSseUrl, getSendUrl } from '@/config/api';
 
 interface Message {
   id: string;
@@ -89,7 +90,7 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
     if (classNumber) urlParams.append('class_number', classNumber);
     if (subjectName) urlParams.append('subject_name', subjectName);
     
-    const sseUrl = `http://localhost:8000/events/${sessionIdRef.current}?${urlParams.toString()}`;
+    const sseUrl = getSseUrl(sessionIdRef.current, urlParams);
     
     eventSourceRef.current = new EventSource(sseUrl);
 
@@ -167,7 +168,7 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
 
   // Send message to server
   const sendMessage = async (message: { mime_type: string; data: string }, isAudioMessage: boolean = false) => {
-    const sendUrl = `http://localhost:8000/send/${sessionIdRef.current}`;
+    const sendUrl = getSendUrl(sessionIdRef.current);
     
     // Build message payload with all parameters
     const messagePayload = {
@@ -333,14 +334,18 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
 
   // Stop audio recording and cleanup
   const stopAudioRecording = () => {
+    console.log("stopAudioRecording called - stopping all audio transmission");
+    
     if (bufferTimerRef.current) {
+      console.log("Clearing audio buffer timer");
       clearInterval(bufferTimerRef.current);
       bufferTimerRef.current = null;
     }
     
-    // Send any remaining buffered audio
+    // Clear any remaining buffered audio instead of sending it
     if (audioBufferRef.current.length > 0) {
-      sendBufferedAudio();
+      console.log("Clearing remaining audio buffer instead of sending");
+      audioBufferRef.current = [];
     }
   };
 
@@ -376,13 +381,48 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
       };
       setMessages(prev => [...prev, systemMessage]);
     } else {
-      // Stop voice input
+      // Stop voice input and cleanup IMMEDIATELY
+      console.log("Stopping voice input and cleaning up - stopping all data transmission");
+      
+      // 1. Stop audio buffer timer FIRST to prevent more data transmission
+      if (bufferTimerRef.current) {
+        console.log("Stopping audio buffer timer");
+        clearInterval(bufferTimerRef.current);
+        bufferTimerRef.current = null;
+      }
+      
+      // 2. Clear any pending audio data in buffer
+      if (audioBufferRef.current.length > 0) {
+        console.log("Clearing pending audio buffer data");
+        audioBufferRef.current = [];
+      }
+      
+      // 3. Stop microphone stream
       if (micStreamRef.current) {
+        console.log("Stopping microphone stream");
         const { stopMicrophone } = await import('@/utils/audio-recorder');
         stopMicrophone(micStreamRef.current);
+        micStreamRef.current = null;
       }
-      stopAudioRecording();
+      
+      // 4. Stop audio player
+      if (audioPlayerNodeRef.current) {
+        console.log("Stopping audio player");
+        audioPlayerNodeRef.current.port.postMessage({ command: "endOfAudio" });
+        audioPlayerNodeRef.current = null;
+      }
+      
+      // 5. Close SSE connection
+      if (eventSourceRef.current) {
+        console.log("Closing SSE connection when stopping voice");
+        eventSourceRef.current.close();
+        eventSourceRef.current = null;
+        setIsConnected(false);
+      }
+      
+      // 6. Reset all states
       setIsVoiceActive(false);
+      setIsPlayingAudio(false);
       setVoiceStatus('🎤 Click to start voice input');
       
       // Add a system message indicating voice mode is deactivated
@@ -393,23 +433,92 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
         timestamp: new Date()
       };
       setMessages(prev => [...prev, systemMessage]);
+      
+      console.log("All audio transmission stopped and connections cleaned up");
     }
+  };
+
+  // Cleanup function for SSE and audio
+  const cleanupConnections = () => {
+    console.log('BackendAITutorPanel - Cleaning up connections');
+    
+    // Close SSE connection
+    if (eventSourceRef.current) {
+      console.log('BackendAITutorPanel - Closing SSE connection');
+      eventSourceRef.current.close();
+      eventSourceRef.current = null;
+    }
+    
+    // Clear audio buffer timer
+    if (bufferTimerRef.current) {
+      clearInterval(bufferTimerRef.current);
+      bufferTimerRef.current = null;
+    }
+    
+    // Stop microphone stream
+    if (micStreamRef.current) {
+      console.log('BackendAITutorPanel - Stopping microphone stream');
+      micStreamRef.current.getTracks().forEach((track: any) => track.stop());
+      micStreamRef.current = null;
+    }
+    
+    // Stop audio player
+    if (audioPlayerNodeRef.current) {
+      console.log('BackendAITutorPanel - Stopping audio player');
+      audioPlayerNodeRef.current.port.postMessage({ command: "endOfAudio" });
+      audioPlayerNodeRef.current = null;
+    }
+    
+    // Disconnect audio contexts
+    if (audioPlayerContextRef.current) {
+      audioPlayerContextRef.current.close();
+      audioPlayerContextRef.current = null;
+    }
+    
+    if (audioRecorderContextRef.current) {
+      audioRecorderContextRef.current.close();
+      audioRecorderContextRef.current = null;
+    }
+    
+    // Reset states
+    setIsConnected(false);
+    setIsVoiceActive(false);
+    setIsPlayingAudio(false);
+    setVoiceStatus('Click to start voice input');
   };
 
   // Initialize connection
   useEffect(() => {
     connectSSE();
     
+    return cleanupConnections;
+  }, []);
+
+  // Cleanup on component unmount
+  useEffect(() => {
     return () => {
-      if (eventSourceRef.current) {
-        eventSourceRef.current.close();
+      cleanupConnections();
+    };
+  }, []);
+
+  // Cleanup on page navigation or refresh
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      cleanupConnections();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        cleanupConnections();
       }
-      if (bufferTimerRef.current) {
-        clearInterval(bufferTimerRef.current);
-      }
-      if (micStreamRef.current) {
-        micStreamRef.current.getTracks().forEach((track: any) => track.stop());
-      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
@@ -441,7 +550,7 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
   return (
     <div className="h-full flex flex-col gap-3 p-3 overflow-auto">
       {/* Orb Animation Styles */}
-      <style jsx>{`
+      <style>{`
         .orb-container {
           position: relative;
           width: 100px;
@@ -613,6 +722,7 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
               className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
+                cleanupConnections();
                 onClose();
               }}
             >
