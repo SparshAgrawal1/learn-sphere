@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCraft AI - Voice-Powered Interactive Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/app.js" type="module"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">EduCraft AI</h1>
+            <p class="tagline">AI-Powered Interactive Learning</p>
+            <div class="powered-by">
+                <span>Powered by</span>
+                <div class="calance-logo">Calance</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <h2 class="section-title">Educational Content Explorer</h2>
+            <p class="section-subtitle">Explore interactive content in various subjects</p>
+            
+            <!-- Subject Grid -->
+            <div class="subjects-grid" id="subjectsGrid">
+                <!-- Mathematics -->
+                <div class="subject-card" data-subject="math">
+                    <div class="subject-icon">🧮</div>
+                    <h3 class="subject-title">Mathematics</h3>
+                    <p class="subject-description">Explore numbers, patterns, and the language of logic</p>
+                    <div class="subject-chapters">4 chapters</div>
+                </div>
+
+                <!-- Social Science -->
+                <div class="subject-card" data-subject="social_science">
+                    <div class="subject-icon">🌍</div>
+                    <h3 class="subject-title">Social Science</h3>
+                    <p class="subject-description">Understand society, economics, politics, and human relationships</p>
+                    <div class="subject-chapters">5 chapters</div>
+                </div>
+
+                <!-- Chemistry -->
+                <div class="subject-card" data-subject="chemistry">
+                    <div class="subject-icon">🧪</div>
+                    <h3 class="subject-title">Chemistry</h3>
+                    <p class="subject-description">Discover the composition, structure, and properties of matter</p>
+                    <div class="subject-chapters">2 chapters</div>
+                </div>
+
+                <!-- Biology -->
+                <div class="subject-card" data-subject="biology">
+                    <div class="subject-icon">🧬</div>
+                    <h3 class="subject-title">Biology</h3>
+                    <p class="subject-description">Explore the science of life from cells to ecosystems</p>
+                    <div class="subject-chapters">8 chapters</div>
+                </div>
+
+                <!-- English -->
+                <div class="subject-card" data-subject="english">
+                    <div class="subject-icon">📚</div>
+                    <h3 class="subject-title">English</h3>
+                    <p class="subject-description">Discover literature, language, and communication</p>
+                    <div class="subject-chapters">4 chapters</div>
+                </div>
+
+                <!-- Physics -->
+                <div class="subject-card" data-subject="physics">
+                    <div class="subject-icon">⚛️</div>
+                    <h3 class="subject-title">Physics</h3>
+                    <p class="subject-description">Explore the fundamental laws that govern the universe</p>
+                    <div class="subject-chapters">9 chapters</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Chat Interface (Hidden by default) -->
+    <div class="chat-interface" id="chatInterface" style="display: none;">
+        <div class="chat-header">
+            <button class="back-button" id="backButton">← Back to Subjects</button>
+            <h3 class="chat-subject" id="chatSubject">Subject</h3>
+            <button class="voice-toggle" id="voiceToggle">🎤 Voice</button>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                <p>Welcome! I'm your AI tutor for this subject. You can ask me questions, request explanations, or get help with problems. Try using voice input for a more natural conversation!</p>
+            </div>
+        </div>
+        
+        <div class="chat-input-container">
+            <form id="messageForm" class="chat-form">
+                <input type="text" id="messageInput" placeholder="Ask me anything about this subject..." />
+                <button type="submit" id="sendButton" disabled>Send</button>
+            </form>
+            <div class="voice-controls" id="voiceControls" style="display: none;">
+                <button id="startAudioButton" class="voice-button">🎤 Start Voice</button>
+                <div class="voice-status" id="voiceStatus">Click to start voice input</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Connecting to AI tutor...</p>
+    </div>
+</body>
+</html>

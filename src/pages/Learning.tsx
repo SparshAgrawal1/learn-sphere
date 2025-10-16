@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ModernNavigationTree } from '@/components/learning/ModernNavigationTree';
-import AITutorPanel from '@/components/learning/AITutorPanel';
+import SimpleAITutorPanel from '@/components/learning/SimpleAITutorPanel';
 import ContentFrame from '@/components/learning/ContentFrame';
 import { getLessonContentPath } from '@/utils/content-path-resolver';
 import curriculum, { getClassCurriculum } from '@/data/curriculum';
@@ -75,9 +75,6 @@ const Learning = () => {
   const { subject, chapter, topic } = useParams();
   const navigate = useNavigate();
   
-  const [aiMessages, setAiMessages] = useState<Array<{id: string, content: string, isAi: boolean, timestamp: Date}>>([]);
-  const [newMessage, setNewMessage] = useState('');
-  const [isAiTyping, setIsAiTyping] = useState(false);
   const [selectedClass, setSelectedClass] = useState<string | null>(null);
   const [currentContent, setCurrentContent] = useState<any>(null);
   
@@ -125,6 +122,12 @@ const Learning = () => {
   }, [navigate]);
   
   const handleContentLoad = (content: any) => {
+    // Debug: Log the content being received
+    console.log('Learning.tsx - handleContentLoad received:', content);
+    console.log('Learning.tsx - topic pdfPath:', content?.topic?.pdfPath);
+    console.log('Learning.tsx - topic name:', content?.topic?.name);
+    console.log('Learning.tsx - subject name:', content?.subject?.name);
+    
     setCurrentContent(content);
     // Reset PDF toggle to visual content when new content is loaded
     setShowPdf(false);
@@ -173,41 +176,6 @@ const Learning = () => {
     );
   }
 
-  const handleSendMessage = async () => {
-    if (!newMessage.trim()) return;
-
-    // Add user message
-    const userMessage = {
-      id: Date.now().toString(),
-      content: newMessage,
-      isAi: false,
-      timestamp: new Date()
-    };
-
-    setAiMessages(prev => [...prev, userMessage]);
-    setNewMessage('');
-    setIsAiTyping(true);
-
-    // Simulate AI response
-    setTimeout(() => {
-      const topicName = currentContent?.topic?.name || currentContent?.subject?.name || 'this topic';
-      const responses = [
-        `Great question about ${topicName}! ${newMessage.includes('gravity') ? 'Gravity is a fundamental force that attracts objects with mass toward each other.' : 'Let me help you understand this concept better.'}`,
-        `That's an excellent point. In the context of ${topicName}, we need to consider the underlying principles and how they apply to real-world scenarios.`,
-        `I can see you're thinking critically about this topic. Let me break this down for you step by step...`,
-      ];
-
-      const aiMessage = {
-        id: (Date.now() + 1).toString(),
-        content: responses[Math.floor(Math.random() * responses.length)],
-        isAi: true,
-        timestamp: new Date()
-      };
-
-      setAiMessages(prev => [...prev, aiMessage]);
-      setIsAiTyping(false);
-    }, 1000 + Math.random() * 2000);
-  };
 
   const handleProgress = (progress: number) => {
     // In a real app, you'd save this progress to your backend
@@ -390,16 +358,22 @@ const Learning = () => {
         <div className={`flex-shrink-0 glass-card p-0 overflow-hidden transition-all duration-300 ease-in-out relative ${
           isRightPanelOpen ? 'w-80' : 'w-0 opacity-0 pointer-events-none'
         }`}>
-          <AITutorPanel
-            messages={aiMessages}
-            newMessage={newMessage}
-            isAiTyping={isAiTyping}
-            onSendMessage={handleSendMessage}
-            onMessageChange={setNewMessage}
+          <SimpleAITutorPanel
             subtopicTitle={currentContent?.topic?.name || currentContent?.subject?.name || 'Learning'}
             themeColor={{
               accent: '#06B6D4',
               bg: '#155e75'
+            }}
+            pdfPath={currentContent?.topic?.pdfPath}
+            chapterName={currentContent?.topic?.name}
+            classNumber={selectedClass}
+            subjectName={currentContent?.subject?.name}
+            onTogglePdfMode={() => {
+              // Stop all narrations when switching to PDF
+              if (!showPdf) {
+                stopAllNarrations();
+              }
+              setShowPdf(!showPdf);
             }}
           />
           

@@ -624,12 +624,117 @@ const SubjectDashboard: React.FC = () => {
       <main className="relative z-10 w-full h-full pt-20">
         {/* Optimized Floating Layout */}
         <div className="absolute inset-0 pt-24 pb-16">
+          {/* Mobile Layout - Stacked */}
+          <div className="block md:hidden">
+            {/* Mobile Left Side */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="px-4 mb-6 space-y-3"
+            >
+              {/* Enhanced Subject Progress Card */}
+              <motion.div 
+                className="backdrop-blur-xl bg-gradient-to-r from-orange-500/30 to-yellow-500/10 rounded-2xl p-4 border border-white/20 hover:border-white/30 transition-all duration-300 shadow-lg shadow-orange-500/20"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div 
+                      className="w-10 h-10 rounded-xl flex items-center justify-center relative overflow-hidden"
+                      style={{ 
+                        background: `linear-gradient(135deg, #FF8C0080, #FF8C0060)`,
+                        boxShadow: `0 4px 12px #FF8C0030`
+                      }}
+                    >
+                      <classSpecificSubject.icon size={18} className="text-white" />
+                      {/* Animated glow effect */}
+                      <motion.div 
+                        className="absolute inset-0 rounded-xl"
+                        style={{ 
+                          background: `radial-gradient(circle, #FF8C0040 0%, transparent 70%)`
+                        }}
+                        animate={{ 
+                          scale: [1, 1.1, 1],
+                          opacity: [0.3, 0.7, 0.3]
+                        }}
+                        transition={{ 
+                          duration: 3, 
+                          repeat: Infinity
+                        }}
+                      />
+                    </div>
+                    {/* Subject indicator */}
+                    <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-orange-500 border-2 border-black/50 flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-white text-lg font-bold mb-1">{classSpecificSubject.name}</h3>
+                    <div className="flex items-center gap-2 text-white/70 text-sm">
+                      <span>{classSpecificSubject.chapters.length} Chapters</span>
+                      <span>•</span>
+                      <span>{classSpecificSubject.chapters.reduce((total, chapter) => total + chapter.topics.length, 0)} Topics</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Progress Bar */}
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-white/80 text-sm">Overall Progress</span>
+                    <span className="text-orange-400 text-sm font-bold">{Math.floor(Math.random() * 30 + 20)}%</span>
+                  </div>
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div 
+                      className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.floor(Math.random() * 30 + 20)}%` }}
+                      transition={{ duration: 1.5, delay: 0.5 }}
+                    />
+                  </div>
+                </div>
+                
+                {/* Quick Stats */}
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <div className="text-center">
+                    <div className="text-orange-400 text-lg font-bold">{classSpecificSubject.chapters.filter(c => c.topics.some(t => t.completed)).length}</div>
+                    <div className="text-white/60 text-xs">Chapters Done</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-orange-400 text-lg font-bold">{classSpecificSubject.chapters.reduce((total, chapter) => total + chapter.topics.filter(t => t.completed).length, 0)}</div>
+                    <div className="text-white/60 text-xs">Topics Done</div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+            
+            {/* Mobile TopicTimeline */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="px-4 space-y-3"
+            >
+              <TopicTimeline 
+                subject={classSpecificSubject}
+                activeChapterId={activeChapterId}
+                setActiveChapterId={setActiveChapterId}
+              />
+            </motion.div>
+          </div>
+          
+          {/* Desktop Layout - Side by Side */}
+          <div className="hidden md:block">
             {/* Left Side - Floating Cards */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="absolute left-8 top-32 w-80 space-y-3"
+              className="absolute left-4 lg:left-8 top-32 w-72 lg:w-80 space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-none"
             >
             {/* Enhanced Subject Progress Card */}
             <motion.div 
@@ -754,12 +859,12 @@ const SubjectDashboard: React.FC = () => {
             </motion.div>
           </motion.div>
           
-            {/* Right Side - Floating Cards */}
+            {/* Right Side - TopicTimeline */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="absolute right-8 top-32 w-80 space-y-3"
+              className="absolute right-4 lg:right-8 top-32 w-72 lg:w-80 space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-none"
             >
             <TopicTimeline 
               subject={classSpecificSubject}
@@ -767,6 +872,7 @@ const SubjectDashboard: React.FC = () => {
               setActiveChapterId={setActiveChapterId}
             />
           </motion.div>
+          </div>
         </div>
               
       </main>

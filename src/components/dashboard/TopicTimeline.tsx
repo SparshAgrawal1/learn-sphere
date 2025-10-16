@@ -174,7 +174,7 @@ const TopicTimeline: React.FC<TopicTimelineProps> = ({
 
       {/* Enhanced Topic Cards */}
       {activeChapter && (
-        <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-none">
+        <div className="space-y-3">
           {activeChapter.topics.map((topic, index) => {
             const isCompleted = topic.completed;
             const isInProgress = topic.progress > 0 && !isCompleted;

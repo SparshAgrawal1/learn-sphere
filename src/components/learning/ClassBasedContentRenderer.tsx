@@ -50,6 +50,10 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
         selectedSubtopic: subtopic
       };
       
+      // Debug: Log the content being passed
+      console.log('handleSubtopicSelect - contentToLoad:', contentToLoad);
+      console.log('handleSubtopicSelect - topic pdfPath:', currentContent.topic?.pdfPath);
+      
       // Use requestAnimationFrame to ensure proper timing and prevent loops
       requestAnimationFrame(() => {
         onContentLoad(contentToLoad);
@@ -270,11 +274,17 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
         // Use requestAnimationFrame to prevent loops and ensure proper timing
         requestAnimationFrame(() => {
           if (onContentLoad) {
-            onContentLoad({
+            const contentToLoad = {
               ...currentContent,
               contentPath: firstSubtopic.contentPath,
               selectedSubtopic: firstSubtopic
-            });
+            };
+            
+            // Debug: Log the content being passed
+            console.log('Auto-selection - contentToLoad:', contentToLoad);
+            console.log('Auto-selection - topic pdfPath:', currentContent.topic?.pdfPath);
+            
+            onContentLoad(contentToLoad);
           }
         });
       } else if (currentContent.topic.contentPath) {
@@ -283,10 +293,16 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
         setIsInitializing(false); // Set immediately
         requestAnimationFrame(() => {
           if (onContentLoad) {
-            onContentLoad({
+            const contentToLoad = {
               ...currentContent,
               contentPath: currentContent.topic.contentPath
-            });
+            };
+            
+            // Debug: Log the content being passed
+            console.log('Direct topic load - contentToLoad:', contentToLoad);
+            console.log('Direct topic load - topic pdfPath:', currentContent.topic?.pdfPath);
+            
+            onContentLoad(contentToLoad);
           }
         });
       }

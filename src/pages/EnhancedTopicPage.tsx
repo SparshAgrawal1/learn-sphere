@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Import custom components
 import ModernNavigationPanel from '@/components/learning/ModernNavigationPanel';
 import ContentFrame from '@/components/learning/ContentFrame';
-import AITutorPanel from '@/components/learning/AITutorPanel';
+import SimpleAITutorPanel from '@/components/learning/SimpleAITutorPanel';
 import AssessmentPanel from '@/components/learning/AssessmentPanel';
+import curriculum from '@/data/curriculum';
 
 interface Question {
   id: string;
@@ -34,21 +35,12 @@ interface Topic {
   description: string;
 }
 
-interface Message {
-  id: string;
-  content: string;
-  isAi: boolean;
-  timestamp: Date;
-}
 
 const EnhancedTopicPage: React.FC = () => {
   const { subjectId, topicId } = useParams<{ subjectId: string; topicId: string }>();
   const navigate = useNavigate();
   const [activeSubtopicId, setActiveSubtopicId] = useState<string | null>(null);
   const [topic, setTopic] = useState<Topic | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState('');
-  const [isAiTyping, setIsAiTyping] = useState(false);
   const [isPdfMode, setIsPdfMode] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
@@ -56,6 +48,8 @@ const EnhancedTopicPage: React.FC = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [assessmentCompleted, setAssessmentCompleted] = useState(false);
   const [assessmentScore, setAssessmentScore] = useState(0);
+  const [selectedClass, setSelectedClass] = useState<string | null>(null);
+  const [currentContent, setCurrentContent] = useState<any>(null);
   
   // Create particles for background
   const particles = Array.from({ length: 15 }).map((_, i) => ({
@@ -65,6 +59,41 @@ const EnhancedTopicPage: React.FC = () => {
     y: Math.random() * 100,
     delay: Math.random() * 20
   }));
+
+  // Get selected class from session storage
+  useEffect(() => {
+    const classFromStorage = sessionStorage.getItem('selectedClass');
+    if (classFromStorage) {
+      setSelectedClass(classFromStorage);
+    }
+  }, []);
+
+  // Load curriculum data when class is available
+  useEffect(() => {
+    if (!selectedClass || !subjectId || !topicId) return;
+
+    const classData = curriculum[selectedClass];
+    if (!classData) return;
+
+    const subject = classData.find(s => s.id.toLowerCase() === subjectId.toLowerCase());
+    if (!subject) return;
+
+    // Find the topic in the subject's chapters
+    let foundTopic = null;
+    for (const chapter of subject.chapters) {
+      if (chapter.topics) {
+        foundTopic = chapter.topics.find(t => t.id === topicId);
+        if (foundTopic) {
+          setCurrentContent({
+            subject: subject,
+            chapter: chapter,
+            topic: foundTopic
+          });
+          break;
+        }
+      }
+    }
+  }, [selectedClass, subjectId, topicId]);
 
   useEffect(() => {
     // This would normally be fetched from an API
@@ -187,15 +216,6 @@ const EnhancedTopicPage: React.FC = () => {
       setActiveSubtopicId(firstAvailableSubtopic.id);
     }
     
-    // Add welcome message
-    setMessages([
-      {
-        id: 'welcome',
-        content: `Welcome to the ${mockTopic.title} topic! I'm your AI tutor. How can I help you understand this topic better?`,
-        isAi: true,
-        timestamp: new Date()
-      }
-    ]);
   }, [topicId, subjectId]);
   
   const handleSubtopicClick = (subtopicId: string) => {
@@ -213,47 +233,6 @@ const EnhancedTopicPage: React.FC = () => {
     setIsPdfMode(prev => !prev);
   };
   
-  const handleSendMessage = () => {
-    if (!newMessage.trim()) return;
-    
-    // Add user message
-    const userMessage = {
-      id: `user-${Date.now()}`,
-      content: newMessage,
-      isAi: false,
-      timestamp: new Date()
-    };
-    
-    setMessages(prev => [...prev, userMessage]);
-    setNewMessage('');
-    setIsAiTyping(true);
-    
-    // Simulate AI response after a delay
-    setTimeout(() => {
-      const aiResponse = {
-        id: `ai-${Date.now()}`,
-        content: generateAIResponse(),
-        isAi: true,
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, aiResponse]);
-      setIsAiTyping(false);
-    }, 1500);
-  };
-  
-  const generateAIResponse = () => {
-    // Simple mock AI response generator
-    const responses = [
-      `That's a great question about ${topic?.title}! The key concept to understand is that gravity is a force that attracts objects with mass towards each other.`,
-      `When studying ${topic?.title}, it's important to remember that the gravitational force between two objects is proportional to the product of their masses and inversely proportional to the square of the distance between them.`,
-      `${topic?.title} is fascinating! Newton's law of universal gravitation states that every particle attracts every other particle with a force that is directly proportional to the product of their masses and inversely proportional to the square of the distance between them.`,
-      `That's an interesting perspective on ${topic?.title}. Einstein's general relativity actually expanded on Newton's theory by describing gravity as a curvature of spacetime caused by mass and energy.`,
-      `To answer your question about ${topic?.title}, we should consider both theoretical principles and experimental evidence. The inverse square relationship has been verified through numerous precise measurements.`
-    ];
-    
-    return responses[Math.floor(Math.random() * responses.length)];
-  };
   
   const handleShowAssessment = () => {
     setShowAssessment(true);
@@ -603,16 +582,16 @@ const EnhancedTopicPage: React.FC = () => {
         
         {/* Right Side - AI Tutor Panel */}
         <div className={`${isMobileChatOpen ? 'block absolute inset-0 z-10' : 'hidden'} md:block md:w-1/5 lg:w-1/6 z-10`}>
-          <AITutorPanel
-            messages={messages}
-            newMessage={newMessage}
-            isAiTyping={isAiTyping}
-            onSendMessage={handleSendMessage}
-            onMessageChange={setNewMessage}
-            subtopicTitle={activeSubtopic?.title || 'Select a topic'}
+          <SimpleAITutorPanel
+            subtopicTitle={activeSubtopic?.title || currentContent?.topic?.name || 'Select a topic'}
             themeColor={themeColor}
             isMobile={isMobileChatOpen}
             onClose={() => setIsMobileChatOpen(false)}
+            pdfPath={currentContent?.topic?.pdfPath}
+            chapterName={currentContent?.topic?.name}
+            classNumber={selectedClass}
+            subjectName={currentContent?.subject?.name}
+            onTogglePdfMode={handleToggleMode}
           />
         </div>
       </div>
