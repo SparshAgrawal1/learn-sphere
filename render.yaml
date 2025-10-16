@@ -26,10 +26,10 @@ services:
         source: /*
         destination: /index.html
     envVars:
+      # Update this URL to match your actual backend service URL after deployment
+      # You can find the correct URL in the Render dashboard
       - key: VITE_BACKEND_URL
         value: https://learn-sphere-vista-backend.onrender.com
-      - key: NODE_ENV
-        value: production
 
   # Backend Service (FastAPI + Python)
   - type: web
@@ -61,29 +61,3 @@ services:
 #     plan: starter
 #     databaseName: learnsphere
 #     user: learnsphere_user
-
-# Environment-specific configurations
-environments:
-  production:
-    services:
-      - name: learn-sphere-vista-frontend
-        envVars:
-          - key: VITE_BACKEND_URL
-            value: https://learn-sphere-vista-backend.onrender.com
-      - name: learn-sphere-vista-backend
-        plan: starter
-        envVars:
-          - key: ENVIRONMENT
-            value: production
-
-  preview:
-    services:
-      - name: learn-sphere-vista-frontend-preview
-        envVars:
-          - key: VITE_BACKEND_URL
-            value: https://learn-sphere-vista-backend-preview.onrender.com
-      - name: learn-sphere-vista-backend-preview
-        plan: starter
-        envVars:
-          - key: ENVIRONMENT
-            value: preview
