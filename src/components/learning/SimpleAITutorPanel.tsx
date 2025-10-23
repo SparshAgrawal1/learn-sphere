@@ -60,6 +60,14 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
   const micStreamRef = useRef<any>(null);
   const audioBufferRef = useRef<Uint8Array[]>([]);
   const bufferTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Audio chunk management for preventing distortion
+  const audioChunkQueueRef = useRef<Map<number, any>>(new Map());
+  const expectedSequenceRef = useRef<number>(1);
+  const audioPlaybackBufferRef = useRef<Uint8Array[]>([]);
+  const audioPlaybackTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const turnCompleteRef = useRef<boolean>(false);
+  const audioCompletionTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Determine subject based on subtopic title or use physics as default
   const getSubjectFromTitle = (title: string): string => {
@@ -74,6 +82,171 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
   };
 
   const currentSubject = getSubjectFromTitle(subtopicTitle);
+
+  // Audio chunk ordering and playback management
+  const handleAudioChunk = (message: any) => {
+    try {
+      const sequence = message.sequence || 0;
+      const audioData = base64ToArrayBuffer(message.data);
+      
+      // Convert to proper audio format for worklet (Int16Array)
+      const int16Array = new Int16Array(audioData);
+      
+      // Debug audio data
+      const sampleValues = int16Array.slice(0, 10); // First 10 samples
+      const hasNonZeroSamples = int16Array.some(sample => sample !== 0);
+      console.log(`[AUDIO] Chunk ${sequence}: ${int16Array.length} samples, first 10: [${sampleValues.join(', ')}], has audio: ${hasNonZeroSamples}`);
+      
+      // Store chunk in queue with proper format
+      audioChunkQueueRef.current.set(sequence, {
+        data: int16Array,
+        timestamp: message.timestamp || Date.now()
+      });
+      
+      // Process chunks in order
+      processAudioChunks();
+      
+    } catch (error) {
+      console.error('Failed to handle audio chunk:', error);
+    }
+  };
+
+  const processAudioChunks = () => {
+    const queue = audioChunkQueueRef.current;
+    const expected = expectedSequenceRef.current;
+    
+    console.log(`[AUDIO] Processing chunks - expected: ${expected}, queue size: ${queue.size}`);
+    
+    // Process chunks in sequence order
+    while (queue.has(expected)) {
+      const chunk = queue.get(expected);
+      if (chunk) {
+        // Add to playback buffer
+        audioPlaybackBufferRef.current.push(chunk.data);
+        queue.delete(expected);
+        expectedSequenceRef.current = expected + 1;
+        
+        console.log(`[AUDIO] Processed chunk ${expected}, buffer size: ${audioPlaybackBufferRef.current.length}`);
+      }
+    }
+    
+    // Start playback if not already running and we have chunks
+    if (audioPlaybackBufferRef.current.length > 0 && !audioPlaybackTimerRef.current) {
+      console.log('[AUDIO] Starting playback timer for new response');
+      startAudioPlayback();
+    }
+  };
+
+  const startAudioPlayback = () => {
+    if (audioPlaybackTimerRef.current) {
+      console.log('[AUDIO] Playback timer already running, skipping start');
+      return;
+    }
+    
+    console.log('[AUDIO] Starting audio playback timer');
+    audioPlaybackTimerRef.current = setInterval(() => {
+      if (audioPlaybackBufferRef.current.length > 0 && audioPlayerNodeRef.current) {
+        const chunk = audioPlaybackBufferRef.current.shift();
+        if (chunk) {
+          try {
+            // Validate audio format before sending
+            if (!(chunk instanceof Int16Array)) {
+              console.error('[AUDIO] Invalid audio format, expected Int16Array, got:', typeof chunk);
+              return;
+            }
+            
+            // Check if worklet is ready (basic backpressure)
+            if (audioPlayerNodeRef.current.port) {
+              // Send Int16Array buffer directly to worklet
+              const int16Chunk = chunk as Int16Array;
+              audioPlayerNodeRef.current.port.postMessage(int16Chunk.buffer);
+              console.log(`[AUDIO] Played chunk (${int16Chunk.length} samples), remaining: ${audioPlaybackBufferRef.current.length}`);
+            } else {
+              // Worklet not ready, put chunk back
+              audioPlaybackBufferRef.current.unshift(chunk);
+              console.log('[AUDIO] Worklet not ready, chunk requeued');
+            }
+          } catch (error) {
+            console.error('[AUDIO] Failed to send chunk to worklet:', error);
+            // Put chunk back in buffer for retry
+            audioPlaybackBufferRef.current.unshift(chunk);
+          }
+        }
+      } else if (audioPlaybackBufferRef.current.length === 0) {
+        // Check if we're still expecting more chunks or if turn is complete
+        const queueSize = audioChunkQueueRef.current.size;
+        const isTurnComplete = turnCompleteRef.current;
+        
+        if (queueSize === 0 && isTurnComplete) {
+          // No more chunks expected and turn is complete, stop playback
+          if (audioPlaybackTimerRef.current) {
+            clearInterval(audioPlaybackTimerRef.current);
+            audioPlaybackTimerRef.current = null;
+          }
+          setIsPlayingAudio(false);
+          console.log('[AUDIO] Playback completed, turn finished');
+        } else if (queueSize === 0 && !isTurnComplete) {
+          // No chunks in queue but turn not complete, wait a bit longer
+          console.log('[AUDIO] Buffer empty, waiting for more chunks...');
+        }
+        // If queueSize > 0, keep timer running to wait for more chunks
+      }
+    }, 20); // 20ms intervals for smooth playback (50fps)
+  };
+
+  const resetAudioPlayback = () => {
+    console.log('[AUDIO] Resetting audio playback buffers and timers');
+    console.log('[AUDIO] Before reset - queue size:', audioChunkQueueRef.current.size, 'buffer size:', audioPlaybackBufferRef.current.length, 'expected seq:', expectedSequenceRef.current);
+    
+    // Clear all audio buffers and reset sequence
+    audioChunkQueueRef.current.clear();
+    audioPlaybackBufferRef.current = [];
+    expectedSequenceRef.current = 1;
+    turnCompleteRef.current = false;
+    
+    if (audioPlaybackTimerRef.current) {
+      console.log('[AUDIO] Clearing existing playback timer');
+      clearInterval(audioPlaybackTimerRef.current);
+      audioPlaybackTimerRef.current = null;
+    }
+    
+    if (audioCompletionTimerRef.current) {
+      console.log('[AUDIO] Clearing completion timer');
+      clearTimeout(audioCompletionTimerRef.current);
+      audioCompletionTimerRef.current = null;
+    }
+    
+    console.log('[AUDIO] After reset - all buffers cleared, ready for new response');
+  };
+
+  const handleTurnComplete = () => {
+    turnCompleteRef.current = true;
+    console.log('[AUDIO] Turn completed, clearing worklet buffer and waiting for audio to finish');
+    console.log('[AUDIO] Current state - isPlayingAudio:', isPlayingAudio, 'buffer size:', audioPlaybackBufferRef.current.length);
+    
+    // Immediately clear the worklet buffer to prepare for next response
+    if (audioPlayerNodeRef.current) {
+      audioPlayerNodeRef.current.port.postMessage({ command: "endOfAudio" });
+      console.log('[AUDIO] Sent endOfAudio to clear worklet buffer');
+    }
+    
+    // Set a timeout to force cleanup if audio doesn't finish naturally
+    audioCompletionTimerRef.current = setTimeout(() => {
+      console.log('[AUDIO] Force cleanup after turn completion timeout');
+      resetAudioPlayback();
+      setIsPlayingAudio(false);
+      console.log('[AUDIO] Audio state reset, ready for next response');
+    }, 5000); // 5 second timeout
+  };
+
+  const resetForNewConversation = () => {
+    console.log('[AUDIO] Full session reset - use only when explicitly needed');
+    resetAudioPlayback();
+    setIsPlayingAudio(false);
+    setIsAiTyping(false);
+    currentMessageIdRef.current = null;
+    turnCompleteRef.current = false;
+  };
 
   // Connect to SSE endpoint
   const connectSSE = (audioMode?: boolean) => {
@@ -113,54 +286,78 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     };
 
     eventSourceRef.current.onmessage = (event) => {
-      const messageFromServer = JSON.parse(event.data);
-      console.log("[AGENT TO CLIENT]", messageFromServer);
-
-      // Check if the turn is complete
-      if (messageFromServer.turn_complete && messageFromServer.turn_complete === true) {
-        currentMessageIdRef.current = null;
-        setIsAiTyping(false);
-        setIsPlayingAudio(false);
-        return;
-      }
-
-      // Check for interrupt message
-      if (messageFromServer.interrupted && messageFromServer.interrupted === true) {
-        if (audioPlayerNodeRef.current) {
-          audioPlayerNodeRef.current.port.postMessage({ command: "endOfAudio" });
-        }
-        return;
-      }
-
-      // Handle audio messages
-      if (messageFromServer.mime_type === "audio/pcm" && audioPlayerNodeRef.current) {
-        setIsPlayingAudio(true);
-        audioPlayerNodeRef.current.port.postMessage(base64ToArrayBuffer(messageFromServer.data));
-        console.log("[AGENT TO CLIENT] received %s bytes", base64ToArrayBuffer(messageFromServer.data).byteLength);
-      }
-
-      // Handle text messages - only show text in text mode, not in audio mode
-      if (messageFromServer.mime_type === "text/plain" && !isAudio) {
-        setIsAiTyping(true);
+      try {
+        const messageFromServer = JSON.parse(event.data);
+        console.log("[AGENT TO CLIENT]", messageFromServer);
         
-        // Add a new message for a new turn
-        if (currentMessageIdRef.current === null) {
-          currentMessageIdRef.current = Math.random().toString(36).substring(7);
-          const newAiMessage: Message = {
-            id: currentMessageIdRef.current,
-            content: messageFromServer.data,
-            isAi: true,
-            timestamp: new Date()
-          };
-          setMessages(prev => [...prev, newAiMessage]);
-        } else {
-          // Update existing message
-          setMessages(prev => prev.map(msg => 
-            msg.id === currentMessageIdRef.current 
-              ? { ...msg, content: msg.content + messageFromServer.data }
-              : msg
-          ));
+        // Handle error messages
+        if (messageFromServer.error) {
+          console.error('[AUDIO ERROR]', messageFromServer.error, messageFromServer.message);
+          resetAudioPlayback();
+          setIsPlayingAudio(false);
+          return;
         }
+
+        // Check if the turn is complete
+        if (messageFromServer.turn_complete && messageFromServer.turn_complete === true) {
+          currentMessageIdRef.current = null;
+          setIsAiTyping(false);
+          handleTurnComplete(); // Properly handle turn completion
+          return;
+        }
+
+        // Check for interrupt message
+        if (messageFromServer.interrupted && messageFromServer.interrupted === true) {
+          resetAudioPlayback(); // Clear all audio buffers
+          if (audioPlayerNodeRef.current) {
+            audioPlayerNodeRef.current.port.postMessage({ command: "endOfAudio" });
+          }
+          return;
+        }
+
+        // Handle audio messages with chunk ordering
+        if (messageFromServer.mime_type === "audio/pcm") {
+          const sequence = messageFromServer.sequence || 0;
+          
+          // Detect new response by checking if this is sequence 1 (first chunk of new response)
+          if (sequence === 1) {
+            console.log('[AUDIO] New response starting (sequence 1), resetting audio buffers');
+            resetAudioPlayback(); // Reset audio buffers for new response
+          }
+          
+          setIsPlayingAudio(true);
+          handleAudioChunk(messageFromServer);
+          console.log("[AGENT TO CLIENT] received audio chunk, sequence:", messageFromServer.sequence);
+        }
+
+        // Handle text messages - only show text in text mode, not in audio mode
+        if (messageFromServer.mime_type === "text/plain" && !isAudio) {
+          setIsAiTyping(true);
+          
+          // Add a new message for a new turn
+          if (currentMessageIdRef.current === null) {
+            currentMessageIdRef.current = Math.random().toString(36).substring(7);
+            const newAiMessage: Message = {
+              id: currentMessageIdRef.current,
+              content: messageFromServer.data,
+              isAi: true,
+              timestamp: new Date()
+            };
+            setMessages(prev => [...prev, newAiMessage]);
+          } else {
+            // Update existing message
+            setMessages(prev => prev.map(msg => 
+              msg.id === currentMessageIdRef.current 
+                ? { ...msg, content: msg.content + messageFromServer.data }
+                : msg
+            ));
+          }
+        }
+      } catch (error) {
+        console.error('[SSE MESSAGE ERROR]', error);
+        // Try to recover from message parsing errors
+        resetAudioPlayback();
+        setIsPlayingAudio(false);
       }
     };
 
@@ -303,16 +500,23 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
   // Audio recorder handler
   const audioRecorderHandler = (pcmData: ArrayBuffer) => {
     console.log('Audio data received:', pcmData.byteLength, 'bytes');
+    
+    // Only reset turn completion flag when user starts speaking, keep session active
+    if (turnCompleteRef.current) {
+      console.log('[AUDIO] User started speaking, resetting turn completion flag');
+      turnCompleteRef.current = false; // Reset only the turn flag, not entire session
+    }
+    
     // Add audio data to buffer
     audioBufferRef.current.push(new Uint8Array(pcmData));
     
-    // Start timer if not already running
+    // Start timer if not already running - reduced frequency for better performance
     if (!bufferTimerRef.current) {
-      bufferTimerRef.current = setInterval(sendBufferedAudio, 200); // 0.2 seconds
+      bufferTimerRef.current = setInterval(sendBufferedAudio, 100); // 0.1 seconds for lower latency
     }
   };
 
-  // Send buffered audio data every 0.2 seconds
+  // Send buffered audio data every 0.1 seconds with size optimization
   const sendBufferedAudio = async () => {
     if (audioBufferRef.current.length === 0) {
       return;
@@ -322,6 +526,11 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     let totalLength = 0;
     for (const chunk of audioBufferRef.current) {
       totalLength += chunk.length;
+    }
+    
+    // Only send if we have enough data (optimize for network efficiency)
+    if (totalLength < 1024) { // Less than 1KB, wait for more data
+      return;
     }
     
     console.log('Sending buffered audio:', totalLength, 'bytes from', audioBufferRef.current.length, 'chunks');
@@ -497,6 +706,9 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       clearInterval(bufferTimerRef.current);
       bufferTimerRef.current = null;
     }
+    
+    // Reset audio playback buffers and timers
+    resetAudioPlayback();
     
     // Stop microphone stream
     if (micStreamRef.current) {
@@ -712,21 +924,40 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
             <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400' : 'bg-red-400'} animate-pulse`} />
           </div>
           
-          {/* Close button (mobile only) */}
-          {isMobile && (
-            <button 
+          <div className="flex items-center gap-2">
+            {/* Reset Conversation Button */}
+            <button
               className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               onClick={() => {
-                cleanupConnections();
-                if (onClose) onClose();
+                resetForNewConversation();
+                console.log('[AUDIO] Manual session reset triggered by user');
               }}
+              title="Reset session (stops current conversation)"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                <path d="M21 3v5h-5"/>
+                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                <path d="M3 21v-5h5"/>
               </svg>
             </button>
-          )}
+            
+            {/* Close button (mobile only) */}
+            {isMobile && (
+              <button 
+                className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                onClick={() => {
+                  cleanupConnections();
+                  if (onClose) onClose();
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Messages Area */}

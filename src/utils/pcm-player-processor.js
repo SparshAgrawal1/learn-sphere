@@ -16,8 +16,9 @@ class PCMPlayerProcessor extends AudioWorkletProcessor {
     this.port.onmessage = (event) => {
       // Reset the buffer when 'endOfAudio' message received
       if (event.data.command === 'endOfAudio') {
-        this.readIndex = this.writeIndex; // Clear the buffer
-        console.log("endOfAudio received, clearing the buffer.");
+        this.readIndex = 0;
+        this.writeIndex = 0; // Reset both indices for clean start
+        console.log("endOfAudio received, clearing the buffer completely.");
         return;
       }
 
