@@ -129,6 +129,12 @@ function showModule(moduleId) {
         showAchievement(`मॉड्यूल पूर्ण: ${getModuleName(moduleId)}`);
     }
     currentModule = moduleId;
+    
+    // Re-initialize dropdowns when showing language study module
+    if (moduleId === 'thinking-language' && typeof initializeDropdowns === 'function') {
+        setTimeout(() => initializeDropdowns(), 100);
+    }
+    
     setTimeout(() => startModuleNarration(moduleId), 200);
     window.scrollTo(0, 0);
 }

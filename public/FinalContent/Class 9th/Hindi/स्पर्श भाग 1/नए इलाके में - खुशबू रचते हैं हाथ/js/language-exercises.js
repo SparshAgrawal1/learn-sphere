@@ -23,8 +23,34 @@ const contractionAnswers = {
 
 // Initialize when the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // No additional initialization needed
+    initializeDropdowns();
 });
+
+// Initialize dropdowns to ensure they work properly
+function initializeDropdowns() {
+    // Get all select elements in vocabulary and contraction exercises
+    const vocabSelects = document.querySelectorAll('#thinking-language select[id^="vocab"]');
+    const contractionSelects = document.querySelectorAll('#thinking-language select[id^="contraction"]');
+    
+    // Add event listeners to all selects
+    [...vocabSelects, ...contractionSelects].forEach(select => {
+        // Ensure the select is properly initialized
+        select.style.display = 'block';
+        select.style.visibility = 'visible';
+        
+        // Add change event listener for debugging
+        select.addEventListener('change', function() {
+            console.log(`Selected value for ${this.id}: ${this.value}`);
+        });
+        
+        // Add click event listener to ensure dropdown opens
+        select.addEventListener('click', function() {
+            console.log(`Clicked on ${this.id}`);
+        });
+    });
+    
+    console.log(`Initialized ${vocabSelects.length} vocabulary dropdowns and ${contractionSelects.length} contraction dropdowns`);
+}
 
 // Check vocabulary answers
 function checkVocabulary() {

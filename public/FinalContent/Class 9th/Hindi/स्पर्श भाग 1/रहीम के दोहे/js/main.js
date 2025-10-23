@@ -531,9 +531,7 @@ function startModuleNarration(moduleId) {
             break;
             
         case 'activities':
-            if (window.narrator) {
-                window.narrator.speak("गतिविधि खंड में आपका स्वागत है। यहां आप रहीम के दोहों से संबंधित विभिन्न क्रियाकलापों में भाग लेंगे।");
-            }
+            // Narration removed as requested
             break;
             
         default:
@@ -768,20 +766,48 @@ function saveReflection() {
 // Save listening notes
 function saveListeningNotes() {
     const birthYearSelected = document.querySelector('input[name="birth-year"]:checked');
-    const guruSelected = document.querySelector('input[name="guru"]:checked');
-    const deathPlaceSelected = document.querySelector('input[name="death-place"]:checked');
-    const narrativeSelected = document.querySelector('input[name="narrative"]:checked');
+    const courtSelected = document.querySelector('input[name="court"]:checked');
+    const birthPlaceSelected = document.querySelector('input[name="birth-place"]:checked');
     
-    if (!birthYearSelected || !guruSelected || !deathPlaceSelected || !narrativeSelected) {
-        alert('कृपया सभी प्रश्नों के उत्तर दें और एक कथात्मक विकल्प चुनें।');
+    if (!birthYearSelected || !courtSelected || !birthPlaceSelected) {
+        alert('कृपया सभी प्रश्नों के उत्तर दें।');
         return;
     }
     
-    // Save the selected options (in a real app, this would be sent to a server)
-    alert('आपके चुने गए विकल्प सहेज लिए गए हैं!');
+    // Check answers and provide feedback
+    let correctCount = 0;
+    let totalQuestions = 3;
+    
+    // Check birth year (correct answer: 1556)
+    if (birthYearSelected.value === '1556') {
+        correctCount++;
+        birthYearSelected.closest('.option-group').style.borderColor = '#4caf50';
+    } else {
+        birthYearSelected.closest('.option-group').style.borderColor = '#f44336';
+    }
+    
+    // Check court (correct answer: अकबर)
+    if (courtSelected.value === 'अकबर') {
+        correctCount++;
+        courtSelected.closest('.option-group').style.borderColor = '#4caf50';
+    } else {
+        courtSelected.closest('.option-group').style.borderColor = '#f44336';
+    }
+    
+    // Check birth place (correct answer: लाहौर)
+    if (birthPlaceSelected.value === 'लाहौर') {
+        correctCount++;
+        birthPlaceSelected.closest('.option-group').style.borderColor = '#4caf50';
+    } else {
+        birthPlaceSelected.closest('.option-group').style.borderColor = '#f44336';
+    }
+    
+    // Show feedback
+    const feedbackMessage = `आपने ${totalQuestions} में से ${correctCount} प्रश्नों के सही उत्तर दिए!`;
+    alert(feedbackMessage);
     
     // Update progress
-    score += 15;
+    score += correctCount * 5; // 5 points per correct answer
     document.getElementById('totalScore').textContent = score;
     
     if (!modulesCompleted.includes('activities')) {
@@ -791,7 +817,7 @@ function saveListeningNotes() {
     }
     
     if (narrator) {
-        narrator.speak("बहुत अच्छा! आपके चुने गए विकल्प सहेज लिए गए हैं।");
+        narrator.speak(feedbackMessage);
     }
 }
 
@@ -811,9 +837,7 @@ function saveWriting() {
     score += 15;
     document.getElementById('totalScore').textContent = score;
     
-    if (narrator) {
-        narrator.speak("उत्कृष्ट कार्य! आपका चयन सहेज लिया गया है।");
-    }
+    // Narration removed as requested
 }
 
 // Record speaking response
@@ -825,9 +849,7 @@ function recordSpeaking() {
     score += 10;
     document.getElementById('totalScore').textContent = score;
     
-    if (narrator) {
-        narrator.speak("किसी ऐसे व्यक्ति के बारे में सोचें जो दृढ़ता, संकल्प और इच्छाशक्ति जैसे गुण प्रदर्शित करता है। उनके बारे में अपने विचार साझा करें।");
-    }
+    // Narration removed as requested
 }
 
 // Play listening activity
@@ -835,9 +857,7 @@ function playListeningActivity() {
     // In a real app, this would play an audio file
     alert('वास्तविक कार्यान्वयन में, यह कबीर के जीवन के बारे में ऑडियो चलाएगा।');
     
-    if (narrator) {
-        narrator.speak("कबीर का जन्म 1398 में काशी में हुआ माना जाता है और उन्होंने 120 वर्ष की आयु पाई थी। वे गुरु रामानंद के शिष्य थे। अपने जीवन के अंतिम कुछ वर्ष उन्होंने मगहर में बिताए, जहाँ वे चिरनिद्रा में लीन हो गए। कबीर का आविर्भाव ऐसे समय में हुआ जब राजनीतिक, धार्मिक और सामाजिक क्रांतियाँ अपने चरम पर थीं।");
-    }
+    // Narration removed as requested
 }
 
 // Show resource
@@ -845,17 +865,5 @@ function showResource(resourceId) {
     // In a real app, this would show or load a specific resource
     alert(`वास्तविक कार्यान्वयन में, यह संसाधन दिखाएगा: ${resourceId}`);
     
-    if (narrator) {
-        switch(resourceId) {
-            case 'kabir-life':
-                narrator.speak("कबीर का जन्म 1398 में काशी में हुआ माना जाता है और उन्होंने 120 वर्ष की आयु पाई थी। वे गुरु रामानंद के शिष्य थे। अपने जीवन के अंतिम कुछ वर्ष उन्होंने मगहर में बिताए, जहाँ वे चिरनिद्रा में लीन हो गए।");
-                break;
-            case 'kabir-photos':
-                narrator.speak("ये चित्र कबीर के जीवन और उनके कार्यों को दर्शाते हैं। हालांकि उनके वास्तविक चित्र उपलब्ध नहीं हैं, ये कलात्मक प्रतिनिधित्व हैं।");
-                break;
-            case 'project-template':
-                narrator.speak("यह टेम्पलेट कबीर के जीवन और उनकी शिक्षाओं पर आपके प्रोजेक्ट के लिए एक संरचना प्रदान करता है, जिसमें उनके विचारों, उनके समय के सामाजिक संदर्भ, और आज के समय में उनकी प्रासंगिकता के लिए खंड शामिल हैं।");
-                break;
-        }
-    }
+    // Narration removed as requested
 }

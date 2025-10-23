@@ -87,7 +87,7 @@ function playListeningActivity() {
             if (index >= paragraphs.length) {
                 // All paragraphs spoken, now give instructions
                 setTimeout(() => {
-                    window.narrator.speak("अब कृपया पहले बॉक्स में नोट्स लिखें। फिर दूसरे बॉक्स में एक कथा लिखें।");
+                    // Narration removed as requested
                 }, 1000);
                 return;
             }
@@ -101,7 +101,7 @@ function playListeningActivity() {
             };
             
             // Speak the current paragraph
-            window.narrator.speak(paragraphs[index]);
+            // Narration removed as requested
         }
         
         // Start speaking the first paragraph
@@ -153,7 +153,7 @@ function showResource(resourceId) {
     alert(content);
     
     if (window.narrator) {
-        window.narrator.speak(content);
+        // Narration removed as requested
     }
 }
 
@@ -166,7 +166,7 @@ function openWritingPad() {
         
         // Provide instructions via narrator
         if (window.narrator) {
-            window.narrator.speak("कृपया रहीम के विचारों की वर्तमान प्रासंगिकता पर दिए गए विकल्पों में से एक चुनें।");
+            // Narration removed as requested
         }
     } else {
         console.error('Writing selection element not found');
@@ -184,30 +184,7 @@ function saveWriting() {
     
     const selectedValue = selectedOption.value;
     
-    // Create feedback element if it doesn't exist
-    let feedbackElement = document.getElementById('writing-feedback');
-    if (!feedbackElement) {
-        feedbackElement = document.createElement('div');
-        feedbackElement.id = 'writing-feedback';
-        feedbackElement.className = 'feedback-message';
-        selectedOption.closest('.writing-selection').appendChild(feedbackElement);
-    }
-    
-    // Display appropriate feedback
-    if (typeof answerFeedback !== 'undefined' && answerFeedback.writing && answerFeedback.writing[selectedValue]) {
-        feedbackElement.textContent = answerFeedback.writing[selectedValue];
-        feedbackElement.className = 'feedback-message show';
-        
-        // Add success class if it's the best answer
-        if (typeof writingAnswers !== 'undefined' && selectedValue === writingAnswers.option) {
-            feedbackElement.classList.add('success');
-        } else {
-            feedbackElement.classList.add('partial-success');
-        }
-    } else {
-        feedbackElement.textContent = "आपका विकल्प सहेज लिया गया है!";
-        feedbackElement.className = 'feedback-message show success';
-    }
+    // Feedback display removed as requested
     
     // Update progress
     if (typeof updateProgress === 'function') {
@@ -215,7 +192,7 @@ function saveWriting() {
     }
     
     if (window.narrator) {
-        window.narrator.speak("उत्कृष्ट कार्य! " + feedbackElement.textContent);
+        // Narration removed as requested
     }
 }
 
@@ -230,7 +207,7 @@ function recordSpeaking() {
     }
     
     if (window.narrator) {
-        window.narrator.speak("रहीम के दोहों और उनकी वर्तमान प्रासंगिकता के बारे में अपने विचार साझा करें।");
+        // Narration removed as requested
     }
 }
 
@@ -239,10 +216,9 @@ function saveListeningNotes() {
     const birthYearSelected = document.querySelector('input[name="birth-year"]:checked');
     const courtSelected = document.querySelector('input[name="court"]:checked');
     const birthPlaceSelected = document.querySelector('input[name="birth-place"]:checked');
-    const narrativeSelected = document.querySelector('input[name="narrative"]:checked');
     
-    if (!birthYearSelected || !courtSelected || !birthPlaceSelected || !narrativeSelected) {
-        alert('कृपया सभी प्रश्नों के उत्तर दें और एक कथात्मक विकल्प चुनें।');
+    if (!birthYearSelected || !courtSelected || !birthPlaceSelected) {
+        alert('कृपया सभी प्रश्नों के उत्तर दें।');
         return;
     }
     
@@ -305,23 +281,13 @@ function saveListeningNotes() {
         (birthPlaceValue === listeningAnswers.birthPlace ? '✓ सही!' : '✗ गलत।');
     feedbackContainer.appendChild(birthPlaceFeedback);
     
-    // Create feedback for narrative
-    const narrativeValue = narrativeSelected.value;
-    const narrativeFeedback = document.createElement('div');
-    narrativeFeedback.className = 'feedback-item';
-    narrativeFeedback.classList.add('correct'); // All narrative options are valid
-    
-    narrativeFeedback.textContent = typeof answerFeedback !== 'undefined' && answerFeedback.narrative && 
-        answerFeedback.narrative[narrativeValue] ? answerFeedback.narrative[narrativeValue] : 
-        '✓ अच्छा विकल्प!';
-    feedbackContainer.appendChild(narrativeFeedback);
+    // Narrative section removed as it was hidden
     
     // Calculate score
     let correctCount = 0;
-    if (birthYearValue === listeningAnswers.birthYear) correctCount++;
-    if (courtValue === listeningAnswers.court) correctCount++;
-    if (birthPlaceValue === listeningAnswers.birthPlace) correctCount++;
-    // Narrative is always considered correct
+    if (birthYearValue === '1556') correctCount++;
+    if (courtValue === 'अकबर') correctCount++;
+    if (birthPlaceValue === 'लाहौर') correctCount++;
     
     // Overall feedback
     const overallFeedback = document.createElement('div');
@@ -336,6 +302,6 @@ function saveListeningNotes() {
     }
     
     if (window.narrator) {
-        window.narrator.speak(`बहुत अच्छा! आपने ${correctCount} तथ्यात्मक प्रश्नों के सही उत्तर दिए!`);
+        // Narration removed as requested
     }
 }

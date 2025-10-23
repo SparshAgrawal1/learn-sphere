@@ -16,11 +16,7 @@ function setupActivityListeners() {
         recordBtn.addEventListener('click', recordSpeaking);
     }
     
-    // Play listening activity button
-    const listenBtn = document.querySelector('.listening-activity .interactive-btn');
-    if (listenBtn) {
-        listenBtn.addEventListener('click', playListeningActivity);
-    }
+    // Listening activity button removed - no longer needed
     
     // Open writing pad button
     const writeBtn = document.querySelector('.writing-activity .interactive-btn');
@@ -72,50 +68,7 @@ const bachchanLifeContent = `
 बच्चन साहित्य अकादमी पुरस्कार, सोवियत भूमि नेहरू पुरस्कार और सरस्वती सम्मान से सम्मानित हुए। उनकी कविताएँ आज भी पाठकों को प्रेरणा देती हैं।
 `;
 
-// Play the listening activity audio
-function playListeningActivity() {
-    if (window.narrator) {
-        // Make sure the user has interacted with the page
-        if (typeof trackUserInteraction === 'function') {
-            trackUserInteraction();
-        }
-        
-        // First stop any ongoing narration
-        if (window.narrator.stop) {
-            window.narrator.stop();
-        }
-        
-        // Break content into smaller paragraphs to avoid interruption
-        const contentParagraphs = bachchanLifeContent.split('\n\n').filter(p => p.trim().length > 0);
-        
-        // Function to speak paragraphs sequentially
-        function speakSequentially(paragraphs, index = 0) {
-            if (index >= paragraphs.length) {
-                // All paragraphs spoken, now give instructions
-                setTimeout(() => {
-                    window.narrator.speak("अब कृपया पहले बॉक्स में नोट्स लिखें। फिर दूसरे बॉक्स में एक कथा लिखें।");
-                }, 1000);
-                return;
-            }
-            
-            // Set callback for when this paragraph ends
-            window.narrator.onEndCallback = function() {
-                // Small pause between paragraphs
-                setTimeout(() => {
-                    speakSequentially(paragraphs, index + 1);
-                }, 300);
-            };
-            
-            // Speak the current paragraph
-            window.narrator.speak(paragraphs[index]);
-        }
-        
-        // Start speaking the first paragraph
-        speakSequentially(contentParagraphs);
-    } else {
-        alert('आपके ब्राउज़र में स्पीच सिंथेसिस उपलब्ध नहीं है। कृपया हरिवंशराय बच्चन के जीवन के बारे में पढ़ें।');
-    }
-}
+// Listening activity audio function removed - no longer needed
 
 // Bachchan information for project work
 const bachchanInfo = {
@@ -158,9 +111,7 @@ function showResource(resourceId) {
     
     alert(content);
     
-    if (window.narrator) {
-        window.narrator.speak(content);
-    }
+    // Audio feedback removed - no longer needed
 }
 
 // This function is no longer needed as we've replaced the writing pad with selection options
@@ -170,10 +121,7 @@ function openWritingPad() {
     if (writingSelection) {
         writingSelection.scrollIntoView({ behavior: 'smooth' });
         
-        // Provide instructions via narrator
-        if (window.narrator) {
-            window.narrator.speak("कृपया कविता 'अग्नि पथ' के विचारों की वर्तमान प्रासंगिकता पर दिए गए विकल्पों में से एक चुनें।");
-        }
+        // Instructions provided via visual text only
     } else {
         console.error('Writing selection element not found');
     }
@@ -220,9 +168,7 @@ function saveWriting() {
         updateProgress('activities', 15);
     }
     
-    if (window.narrator) {
-        window.narrator.speak("उत्कृष्ट कार्य! " + feedbackElement.textContent);
-    }
+    // Audio feedback removed - visual feedback only
 }
 
 // Record speaking response
@@ -235,9 +181,7 @@ function recordSpeaking() {
         updateProgress('activities', 10);
     }
     
-    if (window.narrator) {
-        window.narrator.speak("कविता 'अग्नि पथ' के भाव और संदेश के बारे में अपने विचार साझा करें।");
-    }
+    // Audio instructions removed - visual instructions only
 }
 
 // Function to handle reflection submissions with good, better, best feedback
@@ -318,10 +262,7 @@ function saveReflection() {
         updateProgress(moduleId, 15);
     }
     
-    // Speak feedback if narrator is available
-    if (window.narrator) {
-        window.narrator.speak(qualityLabel + " " + feedbackElement.textContent.replace(qualityLabel + ":", ""));
-    }
+    // Audio feedback removed - visual feedback only
 }
 
 // Save listening notes
@@ -425,7 +366,5 @@ function saveListeningNotes() {
         updateProgress('activities', 15);
     }
     
-    if (window.narrator) {
-        window.narrator.speak(`बहुत अच्छा! आपने ${correctCount} तथ्यात्मक प्रश्नों के सही उत्तर दिए!`);
-    }
+    // Audio feedback removed - visual feedback only
 }

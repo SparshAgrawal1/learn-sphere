@@ -333,7 +333,7 @@ export const curriculum: ClassContent = {
               progress: 65,
               completed: false,
               contentPath: '/FinalContent/Class 9th/Science/Chemistry/Matter In Our Surroundings/index.html',
-              pdfPath: '/FinalContent/Class 9th/Science/Chemistry/Matter In Our Surroundings/Matter In Our Surroundings.pdf',
+              pdfPath: '/FinalContent/Class 9th/Science/Chemistry/Matter In Our Surroundings/Matter in our Surroundings.pdf',
               subtopics: [
                 {
                   id: '1_Physical_Nature_of_Matter',
@@ -771,7 +771,161 @@ export const curriculum: ClassContent = {
           name: 'Moments – Supplementary reader (short stories)',
         icon: BookCopy,
         color: '#8B5CF6',
-          topics: []
+          topics: [
+            {
+              id: 'The Lost Child',
+              name: 'The Lost Child',
+              progress: 90,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Lost Child/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Lost Child/The Lost Child.pdf'
+            },
+            {
+              id: 'The Adventures of Toto',
+              name: 'The Adventures of Toto',
+              progress: 85,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Adventures of Toto/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Adventures of Toto/The Adventures of Toto.pdf'
+            },
+            {
+              id: 'Iswaran the Storyteller',
+              name: 'Iswaran the Storyteller',
+              progress: 80,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/Iswaran the Storyteller/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/Iswaran the Storyteller/Iswaran the Storyteller.pdf'
+            },
+            {
+              id: 'In the Kingdom of Fools',
+              name: 'In the Kingdom of Fools',
+              progress: 75,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/In the Kingdom of Fools/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/In the Kingdom of Fools/In the Kingdom of Fools.pdf'
+            },
+            {
+              id: 'The Happy Prince',
+              name: 'The Happy Prince',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Happy Prince/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Happy Prince/The Happy Prince.pdf'
+            },
+            {
+              id: 'Weathering the Storm in Ersama',
+              name: 'Weathering the Storm in Ersama',
+              progress: 65,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/Weathering the Storm in Ersama/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/Weathering the Storm in Ersama/Weathering the Storm in Ersama.pdf'
+            },
+            {
+              id: 'The Last Leaf',
+              name: 'The Last Leaf',
+              progress: 60,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Last Leaf/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Last Leaf/The Last Leaf.pdf'
+            },
+            {
+              id: 'A House is not a Home',
+              name: 'A House is not a Home',
+              progress: 55,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/A House is not a Home/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/A House is not a Home/A House is not a Home.pdf'
+            },
+            {
+              id: 'The Beggar',
+              name: 'The Beggar',
+              progress: 50,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Beggar/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Moments – Supplementary reader (short stories)/The Beggar/The Beggar.pdf'
+            }
+          ]
+        },
+        {
+          id: 'Words and Expressions',
+          name: 'Words and Expressions',
+          icon: BookCopy,
+          color: '#8B5CF6',
+          topics: [
+            {
+              id: 'A Truly Beautiful Mind',
+              name: 'A Truly Beautiful Mind',
+              progress: 80,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/A truly Beautiful Mind/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/A truly Beautiful Mind/A truly Beautiful Mind.pdf'
+            },
+            {
+              id: 'If I Were You',
+              name: 'If I Were You',
+              progress: 75,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/If I Were You/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/If I Were You/If I Were You.pdf'
+            },
+            {
+              id: 'Kathmandu',
+              name: 'Kathmandu',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/Kathmandu/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/Kathmandu/Kathmandu.pdf'
+            },
+            {
+              id: 'My Childhood',
+              name: 'My Childhood',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/My childhood/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/My childhood/My Childhood.pdf'
+            },
+            {
+              id: 'Reach for the Top',
+              name: 'Reach for the Top',
+              progress: 65,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/Reach for the Top/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/Reach for the Top/Reach for the Top.pdf'
+            },
+            {
+              id: 'The Fun they Had',
+              name: 'The Fun they Had',
+              progress: 95,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/The fun they Had/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/The fun they Had/The Fun they had.pdf'
+            },
+            {
+              id: 'The Little Girl',
+              name: 'The Little Girl',
+              progress: 85,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/The Little Girl/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/The Little Girl/The little girl.pdf'
+            },
+            {
+              id: 'The Snake and the Mirror',
+              name: 'The Snake and the Mirror',
+              progress: 75,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/The Snake and the Mirror/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/The Snake and the Mirror/The snake and the mirror.pdf'
+            },
+            {
+              id: 'The Sound of Music',
+              name: 'The Sound of Music',
+              progress: 90,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/English/Words and Expressions/The Sound of Music/index.html',
+              pdfPath: '/FinalContent/Class 9th/English/Words and Expressions/The Sound of Music/The Sound of Music.pdf'
+            }
+        ]
+
         }
       ]
     },
@@ -978,16 +1132,71 @@ export const curriculum: ClassContent = {
             progress: 75,
             completed: false,
             contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रहीम के दोहे/index.html',
-            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रहीम के दोहे/Rahim ke dohe.pdf',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रहीम के दोहे/rahim ke dohe.pdf',
             description: 'रहीम के नीति और ज्ञान से भरपूर दोहे'
           },
           {
-            id: 'भारत का संविधान',
-            name: 'भारत का संविधान',
-            progress: 70,
+            id: 'एवरेस्ट_ मेरी शिखर यात्रा',
+            name: 'एवरेस्ट_ मेरी शिखर यात्रा',
+            progress: 0,
             completed: false,
-            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/भारत का संविधान/index.html',
-            description: 'भारतीय संविधान की महत्ता और विशेषताएं'
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/एवरेस्ट_ मेरी शिखर यात्रा/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/एवरेस्ट_ मेरी शिखर यात्रा/Everest meri shikhar yatra.pdf',
+            description: ''
+          },
+          {
+            id: 'गीत-अगीत',
+            name: 'गीत-अगीत',
+            progress: 0,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/गीत-अगीत/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/गीत-अगीत/geet ageet.pdf',
+            description: ''
+          },
+          {
+            id: 'तुम कब जाओगे, अतिथि',
+            name: 'तुम कब जाओगे, अतिथि',
+            progress: 0,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/तुम कब जाओगे, अतिथि/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/तुम कब जाओगे, अतिथि/tum kab aaoge atithi.pdf',
+            description: ''
+          },
+          {
+            id: 'दुःख का अधिकार',
+            name: 'दुःख का अधिकार',
+            progress: 0,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/दुःख का अधिकार/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/दुःख का अधिकार/dukh ka adhikar.pdf',
+            description: ''
+          },
+          {
+            id: 'रैदास के पद 2',
+            name: 'रैदास के पद 2',
+            progress: 0,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रैदास के पद 2/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/रैदास के पद 2/redas ke pad.pdf',
+            description: ''
+          },
+          {
+            id: 'वैज्ञानिक चेतना के वाहक चंद्रशेखर वेंकट रामन्',
+            name: 'वैज्ञानिक चेतना के वाहक चंद्रशेखर वेंकट रामन्',
+            progress: 0,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/वैज्ञानिक चेतना के वाहक चंद्रशेखर वेंकट रामन्/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/वैज्ञानिक चेतना के वाहक चंद्रशेखर वेंकट रामन्/vaigyanic chetna.pdf',
+            description: ''
+          },
+          {
+            id: 'शुक्रतारे के समान',
+            name: 'शुक्रतारे के समान',
+            progress: 0,
+            completed: false,
+            contentPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/शुक्रतारे के समान/index.html',
+            pdfPath: '/FinalContent/Class 9th/Hindi/स्पर्श भाग 1/शुक्रतारे के समान/Shukratare ke saman.pdf',
+            description: ''
           }
         ]
       }
@@ -1158,7 +1367,37 @@ export const curriculum: ClassContent = {
               progress: 80,
               completed: true,
               contentPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/index.html',
-              pdfPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/Magnetic Effects of Electric Current.pdf'
+              pdfPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/Magnetic Effects of Electric Current.pdf',
+              subtopics: [
+                {
+                  id: 'Magnetic_Effects',
+                  name: 'Magnetic Effects',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/12.1 magnetic effect.html',
+                  progress: 85,
+                  completed: true
+                },
+                {
+                  id: 'MAGNETIC_FIELD_DUE_TO_A_CURRENT_CARRYING_CONDUCTOR',
+                  name: 'Magnetic Field Due to a Current Carrying Conductor',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/12.2 MAGNETIC FIELD DUE TO A CURRENT-CARRYING ARRYING CONDUCTOR.html',
+                  progress: 80,
+                  completed: true
+                },
+                {
+                  id: 'Magnetic_Effects_of_Electric_Current_Part_3_latest',
+                  name: 'Force on a current Carrying Conductor in a Magnetic Field',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/12.3 FORCE ON A CURRENT-CARRYING CONDUCTOR IN A MAGNETIC FIELD.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'Magnetic_Effects_of_Electric_Current_Part_4_latest',
+                  name: 'Domestic Circuit',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Magnetic Effects of Electric Current/12.4 domestic-circuit.html',
+                  progress: 70,
+                  completed: false
+                }
+              ]
             }
           ]
         },
@@ -1205,13 +1444,6 @@ export const curriculum: ClassContent = {
                   completed: false
                 }
               ]
-            },
-            {
-              id: 'Metal and Non-metals',
-              name: 'Metals and Non-metals',
-              progress: 70,
-              completed: false,
-              contentPath: '/FinalContent/Class 10th/Science/Chemistry/Metal and Non-metals/index.html'
             }
           ]
         },
@@ -1422,7 +1654,7 @@ export const curriculum: ClassContent = {
     progress: 55,
               completed: false,
               contentPath: '/FinalContent/Class 10th/Science/Biology/Reproduction/index.html',
-              pdfPath: '/FinalContent/Class 10th/Science/Biology/Reproduction/How do Organisms Reproduce?.pdf',
+              pdfPath: '/FinalContent/Class 10th/Science/Biology/Reproduction/Reproduction.pdf',
               subtopics: [
                 {
                   id: 'reproduction-dna-exhibit',
@@ -1692,7 +1924,137 @@ export const curriculum: ClassContent = {
           name: 'Footprints Without Feet – Supplementary reader (short stories)',
         icon: BookCopy,
         color: '#8B5CF6',
-          topics: []
+          topics: [
+            {
+              id: 'A Question of trust',
+              name: 'A Question of Trust',
+              progress: 90,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/A Question of trust/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/A Question of trust/A Question of Trust.pdf'
+            },
+            {
+              id: 'A Triumph of surgery',
+              name: 'A Triumph of Surgery',
+              progress: 85,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/A Triumph of surgery/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/A Triumph of surgery/A triumph of Surgery.pdf'
+            },
+            {
+              id: 'Bholi',
+              name: 'Bholi',
+              progress: 80,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/Bholi/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/Bholi/Bholi.pdf'
+            },
+            {
+              id: 'Footprints without Feet',
+              name: 'Footprints Without Feet',
+              progress: 75,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/Footprints without Feet/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/Footprints without Feet/Footprints without feet.pdf'
+            },
+            {
+              id: 'The Book that Saved the Earth',
+              name: 'The Book that Saved the Earth',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Book that Saved the Earth/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Book that Saved the Earth/The Book that saved the Earth.pdf'
+            },
+            {
+              id: 'The making of a Scientist',
+              name: 'The Making of a Scientist',
+              progress: 65,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The making of a Scientist/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The making of a Scientist/The making of Scientist.pdf'
+            },
+            {
+              id: 'The Midnight Visitor',
+              name: 'The Midnight Visitor',
+              progress: 60,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Midnight Visitor/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Midnight Visitor/The Midnight Visitor.pdf'
+            },
+            {
+              id: 'The Necklace',
+              name: 'The Necklace',
+              progress: 55,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Necklace/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Necklace/The Necklace.pdf'
+            },
+            {
+              id: 'The Thief_s Story',
+              name: "The Thief's Story",
+              progress: 50,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Thief_s Story/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Footprints Without Feet – Supplementary reader (short stories)/The Thief_s Story/The Thief_s Story.pdf'
+            }
+          ]
+        }
+        ,
+        {
+          id: 'Words and Expressions –(practice in grammar, comprehension, writing)',
+          name: 'Words and Expressions – Practice (grammar, comprehension, writing)',
+          icon: BookCopy,
+          color: '#8B5CF6',
+          topics: [
+            {
+              id: 'From the Diary of Anne Frank',
+              name: 'From the Diary of Anne Frank',
+              progress: 85,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/From the Diary of Anne Frank/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/From the Diary of Anne Frank/From the diary of anne frank.pdf'
+            },
+            {
+              id: 'Glimpses of India',
+              name: 'Glimpses of India',
+              progress: 80,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/Glimpses of India/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/Glimpses of India/The Book that saved the Earth.pdf'
+            },
+            {
+              id: 'Madam Rides the Bus',
+              name: 'Madam Rides the Bus',
+              progress: 80,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/Madam Rides the Bus/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/Madam Rides the Bus/Madam rides the bus.pdf'
+            },
+            {
+              id: 'Mijbil the Otter',
+              name: 'Mijbil the Otter',
+              progress: 75,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/Mijbil the Otter/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/Mijbil the Otter/Mijbil the otter.pdf'
+            },
+            {
+              id: 'The Proposal',
+              name: 'The Proposal',
+              progress: 75,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/The Proposal/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/The Proposal/The proposal.pdf'
+            },
+            {
+              id: 'The Sermon at Benares',
+              name: 'The Sermon at Benares',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/The Sermon at Benares/index.html',
+              pdfPath: '/FinalContent/Class 10th/English/Words and Expressions –(practice in grammar, comprehension, writing)/The Sermon at Benares/The sermon at Benares.pdf'
+            }
+          ]
         }
       ]
     },
@@ -1961,7 +2323,8 @@ export const curriculum: ClassContent = {
             name: 'गिन्नी का सोना और झेन की देन',
             progress: 45,
             completed: false,
-            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/ गिन्नी का सोना और झेन की देन/index.html',
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/गिन्नी का सोना और झेन की देन/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/गिन्नी का सोना और झेन की देन/ginni ka sona.pdf',
             description: 'जापानी संस्कृति और मानवीय मूल्यों पर आधारित कहानी'
           },
           {
@@ -1972,6 +2335,33 @@ export const curriculum: ClassContent = {
             contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/रवींद्रनाथ ठाकुर की आत्मत्राण/index.html',
             pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/रवींद्रनाथ ठाकुर की आत्मत्राण/atmatrana.pdf',
             description: 'रवींद्रनाथ ठाकुर की आध्यात्मिक कविता'
+          },
+          {
+            id: 'मनुष्यता',
+            name: 'मनुष्यता',
+            progress: 35,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/मनुष्यता/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/मनुष्यता/manushyata.pdf',
+            description: 'प्रेमचंद का निबंध - मानवता और सहानुभूति पर'
+          },
+          {
+            id: 'तीसरी कसम',
+            name: 'तीसरी कसम',
+            progress: 30,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तीसरी कसम/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/तीसरी कसम/teesri kasam.pdf',
+            description: 'कृष्णा सोबती का उपन्यास - प्रेम और सामाजिक बंधनों की कहानी'
+          },
+          {
+            id: 'डायरी का एक पन्ना',
+            name: 'डायरी का एक पन्ना',
+            progress: 25,
+            completed: false,
+            contentPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/डायरी का एक पन्ना/index.html',
+            pdfPath: '/FinalContent/Class 10th/Hindi/स्पर्श भाग 2/डायरी का एक पन्ना/diary ka ek panna.pdf',
+            description: 'एक छात्र की डायरी से लिया गया प्रेरणादायक पन्ना'
           }
         ]
       }

@@ -397,32 +397,39 @@
                         <h4>अरुण कमल की कविताओं की वर्तमान प्रासंगिकता (एक विकल्प चुनें)</h4>
                         
                         <div class="writing-option">
-                            <input type="radio" id="writing1" name="writing-option" value="1" onchange="saveWriting()">
+                            <input type="radio" id="writing1" name="writing-option" value="1">
                             <label for="writing1">
                                 <strong>शहरीकरण और पर्यावरण:</strong> 'नए इलाके में' कविता आज के तेज़ी से बदलते शहरी परिदृश्य की याद दिलाती है। आज भी हम देखते हैं कि शहर तेज़ी से बदल रहे हैं, पुरानी इमारतें गिराई जा रही हैं और नई बन रही हैं। इस प्रक्रिया में हम अपनी पहचान और स्मृतियों को खो रहे हैं। कविता हमें पर्यावरण संरक्षण और सतत विकास के महत्व के बारे में सोचने पर मजबूर करती है।
                             </label>
                         </div>
                         
                         <div class="writing-option">
-                            <input type="radio" id="writing2" name="writing-option" value="2" onchange="saveWriting()">
+                            <input type="radio" id="writing2" name="writing-option" value="2">
                             <label for="writing2">
                                 <strong>सामाजिक विषमता:</strong> 'खुशबू रचते हैं हाथ' कविता आज भी उतनी ही प्रासंगिक है। यह कविता हमें याद दिलाती है कि हमारे समाज में अभी भी बहुत विषमता है। जो लोग हमारे जीवन को सुंदर और सुगंधित बनाते हैं, वे अक्सर गंदगी और गरीबी में जीने के लिए मजबूर होते हैं। यह कविता हमें समाज के हर वर्ग के प्रति संवेदनशील होने और सामाजिक न्याय के लिए काम करने की प्रेरणा देती है।
                             </label>
                         </div>
                         
                         <div class="writing-option">
-                            <input type="radio" id="writing3" name="writing-option" value="3" onchange="saveWriting()">
+                            <input type="radio" id="writing3" name="writing-option" value="3">
                             <label for="writing3">
                                 <strong>मानवीय श्रम का महत्व:</strong> अरुण कमल की कविताएँ मानवीय श्रम के महत्व को रेखांकित करती हैं। 'खुशबू रचते हैं हाथ' में वे दिखाते हैं कि कैसे मेहनतकश लोग अपने हाथों से दुनिया को सुंदर बनाते हैं। आज के डिजिटल युग में जब मशीनें मानवीय श्रम की जगह ले रही हैं, यह कविता हमें मानवीय कौशल और श्रम के महत्व की याद दिलाती है और इसके सम्मान की आवश्यकता पर बल देती है।
                             </label>
                         </div>
                         
                         <div class="writing-option">
-                            <input type="radio" id="writing4" name="writing-option" value="4" onchange="saveWriting()">
+                            <input type="radio" id="writing4" name="writing-option" value="4">
                             <label for="writing4">
                                 <strong>स्मृति और समय का संबंध:</strong> 'नए इलाके में' कविता स्मृति और समय के बीच के जटिल संबंध को दर्शाती है। आज के तेज़ी से बदलते समय में, जब सूचना और घटनाएँ बहुत तेज़ी से बदलती हैं, यह कविता हमें याद दिलाती है कि कैसे हमारी स्मृतियाँ भी अस्थायी हो जाती हैं। "यहाँ स्मृति का भरोसा नहीं, एक ही दिन में पुरानी पड़ जाती है दुनिया" - यह पंक्ति आज के सोशल मीडिया युग में और भी अधिक प्रासंगिक है, जहाँ कल की खबर आज पुरानी हो जाती है।
                             </label>
                         </div>
+                        
+                        <div class="option-selection-actions">
+                            <button class="interactive-btn" onclick="saveWriting()" id="chooseOptionBtn">
+                                ✅ विकल्प चुनें
+                            </button>
+                        </div>
+                        
                         <div id="writing-feedback"></div>
                     </div>
                     <!-- Button removed as feedback is shown immediately when option is selected -->

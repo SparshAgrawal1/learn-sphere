@@ -38,32 +38,32 @@ const storyParts = [
         title: "नए इलाके में",
         content: `
             <h3>कविता (1): नए इलाके में</h3>
-            <p> नए <span class="highlight-vocab">इलाके<span class="vocab-tooltip">क्षेत्र</span></span> में</p>
-            <p>इन नए बसते इलाकों में</p>
-            <p>जहाँ रोज़ बन रहे हैं नए-नए मकान</p>
+            <p> नए <span class="highlight-vocab">इलाके<span class="vocab-tooltip">क्षेत्र, जगह</span></span> में</p>
+            <p>इन नए <span class="highlight-vocab">बसते<span class="vocab-tooltip">बसने वाले, रहने वाले</span></span> इलाकों में</p>
+            <p>जहाँ रोज़ बन रहे हैं नए-नए <span class="highlight-vocab">मकान<span class="vocab-tooltip">घर</span></span></p>
             <p>मैं <span class="highlight-vocab">अकसर<span class="vocab-tooltip">प्रायः, बहुधा</span></span> रास्ता भूल जाता हूँ</p>
-            <p>धोखा दे जाते हैं पुराने निशान</p>
-            <p>खोजता हूँ <span class="highlight-vocab">ताकता<span class="vocab-tooltip">देखता</span></span> पीपल का पेड़</p>
+            <p><span class="highlight-vocab">धोखा<span class="vocab-tooltip">भ्रम, गलतफहमी</span></span> दे जाते हैं पुराने <span class="highlight-vocab">निशान<span class="vocab-tooltip">चिह्न, संकेत</span></span></p>
+            <p>खोजता हूँ <span class="highlight-vocab">ताकता<span class="vocab-tooltip">देखता, ढूंढता</span></span> पीपल का पेड़</p>
             <p>खोजता हूँ <span class="highlight-vocab">ढहा<span class="vocab-tooltip">गिरा हुआ, ध्वस्त</span></span> हुआ घर</p>
-            <p>और ज़मीन का खाली टुक</p>
+            <p>और ज़मीन का खाली <span class="highlight-vocab">टुक<span class="vocab-tooltip">टुकड़ा, भाग</span></span></p>
             <p>जहाँ से बाएँ मुड़ना था मुझे</p>
             <p>फिर दो मकान बाद</p>
-            <p>बिना रंगवाले लोहे के फाटक का घर था</p>
-            <p>इकमंज़िला</p>
+            <p>बिना रंगवाले लोहे के <span class="highlight-vocab">फाटक<span class="vocab-tooltip">दरवाज़ा, गेट</span></span> का घर था</p>
+            <p><span class="highlight-vocab">इकमंज़िला<span class="vocab-tooltip">एक मंज़िल का</span></span></p>
             <p>और मैं हर बार एक घर पीछे चल देता हूँ</p>
             <p>या दो घर आगे <span class="highlight-vocab">ठकमकाता<span class="vocab-tooltip">धीरे-धीरे, डगमगाते हुए</span></span></p>
             <p>यहाँ रोज़ कुछ बन रहा है</p>
-            <p>रोज़ कुछ घट रहा है</p>
-            <p>यहाँ <span class="highlight-vocab">स्मृति<span class="vocab-tooltip">याद</span></span> का भरोसा नहीं</p>
+            <p>रोज़ कुछ <span class="highlight-vocab">घट<span class="vocab-tooltip">कम होना, नष्ट होना</span></span> रहा है</p>
+            <p>यहाँ <span class="highlight-vocab">स्मृति<span class="vocab-tooltip">याद, स्मरण</span></span> का भरोसा नहीं</p>
             <p>एक ही दिन में पुरानी पड़ जाती है दुनिया</p>
-            <p>जैसे <span class="highlight-vocab">वसंत<span class="vocab-tooltip">छह ऋतुओं में से एक</span></span> का गया <span class="highlight-vocab">पतझड़<span class="vocab-tooltip">एक ऋतु जब पेड़ों के पत्ते झड़ते हैं</span></span> को लौटा हूँ</p>
-            <p>जैसे <span class="highlight-vocab">बैसाख<span class="vocab-tooltip">चैत के बाद आने वाला महीना</span></span> का गया <span class="highlight-vocab">भादों<span class="vocab-tooltip">सावन के बाद आने वाला महीना</span></span> को लौटा हूँ</p>
-            <p>अब यही है उपाय कि</p>
-            <p>हर दरवाज़ा खटखटाओ और पूछो-</p>
+            <p>जैसे <span class="highlight-vocab">वसंत<span class="vocab-tooltip">छह ऋतुओं में से एक, बसंत ऋतु</span></span> का गया <span class="highlight-vocab">पतझड़<span class="vocab-tooltip">एक ऋतु जब पेड़ों के पत्ते झड़ते हैं</span></span> को लौटा हूँ</p>
+            <p>जैसे <span class="highlight-vocab">बैसाख<span class="vocab-tooltip">चैत के बाद आने वाला महीना (अप्रैल-मई)</span></span> का गया <span class="highlight-vocab">भादों<span class="vocab-tooltip">सावन के बाद आने वाला महीना (अगस्त-सितंबर)</span></span> को लौटा हूँ</p>
+            <p>अब यही है <span class="highlight-vocab">उपाय<span class="vocab-tooltip">तरीका, समाधान</span></span> कि</p>
+            <p>हर दरवाज़ा <span class="highlight-vocab">खटखटाओ<span class="vocab-tooltip">दस्तक देना</span></span> और पूछो-</p>
             <p>क्या यही है वो घर?</p>
             <p>समय बहुत कम है तुम्हारे पास</p>
-            <p>आ चला पानी ढहा आ रहा <span class="highlight-vocab">अकास<span class="vocab-tooltip">आकाश</span></span></p>
-            <p>शायद पुकार ले कोई पहचाना</p>
+            <p>आ चला पानी ढहा आ रहा <span class="highlight-vocab">अकास<span class="vocab-tooltip">आकाश, आसमान</span></span></p>
+            <p>शायद <span class="highlight-vocab">पुकार<span class="vocab-tooltip">बुलाना, आवाज़ देना</span></span> ले कोई <span class="highlight-vocab">पहचाना<span class="vocab-tooltip">जाना-पहचाना</span></span></p>
             <p>ऊपर से देखकर</p>
         `
     },
@@ -71,26 +71,26 @@ const storyParts = [
         title: "खुशबू रचते हैं हाथ",
         content: `
             <h3>कविता (2): खुशबू रचते हैं हाथ</h3>
-            <p> खुशबू रचते हैं हाथ</p>
-            <p>कई गलियों के बीच</p>
+            <p> <span class="highlight-vocab">खुशबू<span class="vocab-tooltip">सुगंध, महक</span></span> <span class="highlight-vocab">रचते<span class="vocab-tooltip">बनाते, सृजन करते</span></span> हैं हाथ</p>
+            <p>कई <span class="highlight-vocab">गलियों<span class="vocab-tooltip">संकरी सड़कें</span></span> के बीच</p>
             <p>कई <span class="highlight-vocab">नालों<span class="vocab-tooltip">नाली, जल निकासी का मार्ग</span></span> के पार</p>
             <p><span class="highlight-vocab">कूड़े-करकट<span class="vocab-tooltip">कचरा, रद्दी</span></span> के ढेरों के बाद</p>
-            <p>बदबू से फटते जाते इस <span class="highlight-vocab">टोले<span class="vocab-tooltip">मोहल्ला, बस्ती</span></span> के अंदर</p>
+            <p><span class="highlight-vocab">बदबू<span class="vocab-tooltip">दुर्गंध, बुरी गंध</span></span> से फटते जाते इस <span class="highlight-vocab">टोले<span class="vocab-tooltip">मोहल्ला, बस्ती</span></span> के अंदर</p>
             <p>खुशबू रचते हैं हाथ</p>
             <p>खुशबू रचते हैं हाथ।</p>
-            <p>उभरी नसोंवाले हाथ</p>
-            <p>घिसे नाखूनोंवाले हाथ</p>
+            <p><span class="highlight-vocab">उभरी<span class="vocab-tooltip">बाहर निकली हुई</span></span> <span class="highlight-vocab">नसोंवाले<span class="vocab-tooltip">नसों वाले</span></span> हाथ</p>
+            <p><span class="highlight-vocab">घिसे<span class="vocab-tooltip">घिसे हुए, पुराने</span></span> <span class="highlight-vocab">नाखूनोंवाले<span class="vocab-tooltip">नाखून वाले</span></span> हाथ</p>
             <p>पीपल के पत्ते-से नए-नए हाथ</p>
-            <p>जूही की डाल-से खुशबूदार हाथ</p>
-            <p>गंदे कटे-पिटे हाथ</p>
+            <p><span class="highlight-vocab">जूही<span class="vocab-tooltip">एक सुगंधित फूल</span></span> की <span class="highlight-vocab">डाल<span class="vocab-tooltip">शाखा, टहनी</span></span>-से <span class="highlight-vocab">खुशबूदार<span class="vocab-tooltip">सुगंधित</span></span> हाथ</p>
+            <p>गंदे <span class="highlight-vocab">कटे-पिटे<span class="vocab-tooltip">कटे और पिटे हुए</span></span> हाथ</p>
             <p><span class="highlight-vocab">ज़ख्म<span class="vocab-tooltip">चोट, घाव</span></span> से फटे हुए हाथ</p>
             <p>खुशबू रचते हैं हाथ</p>
             <p>खुशबू रचते हैं हाथ।</p>
             <p>यहीं इस गली में बनती हैं</p>
-            <p><span class="highlight-vocab">मुल्क<span class="vocab-tooltip">देश</span></span> की मशहूर अगरबत्तियाँ</p>
-            <p>इन्हीं गंदे मुहल्लों के गंदे लोग बनाते हैं</p>
-            <p><span class="highlight-vocab">केवड़ा<span class="vocab-tooltip">एक सुगंधित पौधा</span></span> गुलाब <span class="highlight-vocab">खस<span class="vocab-tooltip">एक सुगंधित घास</span></span> और रातरानी अगरबत्तियाँ</p>
-            <p>दुनिया की सारी गंदगी के बीच</p>
+            <p><span class="highlight-vocab">मुल्क<span class="vocab-tooltip">देश</span></span> की <span class="highlight-vocab">मशहूर<span class="vocab-tooltip">प्रसिद्ध, मशहूर</span></span> <span class="highlight-vocab">अगरबत्तियाँ<span class="vocab-tooltip">सुगंधित छड़ियाँ</span></span></p>
+            <p>इन्हीं गंदे <span class="highlight-vocab">मुहल्लों<span class="vocab-tooltip">मोहल्लों, क्षेत्रों</span></span> के गंदे लोग बनाते हैं</p>
+            <p><span class="highlight-vocab">केवड़ा<span class="vocab-tooltip">एक सुगंधित पौधा</span></span> गुलाब <span class="highlight-vocab">खस<span class="vocab-tooltip">एक सुगंधित घास</span></span> और <span class="highlight-vocab">रातरानी<span class="vocab-tooltip">रात में खिलने वाला फूल</span></span> अगरबत्तियाँ</p>
+            <p>दुनिया की सारी <span class="highlight-vocab">गंदगी<span class="vocab-tooltip">मैल, अपवित्रता</span></span> के बीच</p>
             <p>दुनिया की सारी खुशबू</p>
             <p>खुशबू रचते हैं हाथ</p>
             <p>रचते रहते हैं हाथ</p>
@@ -546,18 +546,136 @@ function highlightParagraphsForChunk(paragraphs, chunkIndex, totalChunks) {
 }
 
 function highlightVocabulary() {
-    // Only highlight vocabulary without audio
-    const feedbackMsg = document.createElement('div');
-    feedbackMsg.className = 'feedback-message success show';
-    feedbackMsg.textContent = 'शब्दार्थ हाइलाइट (सूची नीचे भाषा अध्ययन खंड में उपलब्ध)।';
+    // Toggle vocabulary highlighting
     const storyContent = document.getElementById('storyContent');
-    if (storyContent) {
+    if (!storyContent) return;
+    
+    const highlightedWords = storyContent.querySelectorAll('.highlight-vocab');
+    const isHighlighted = highlightedWords.length > 0 && highlightedWords[0].style.backgroundColor !== '';
+    
+    if (isHighlighted) {
+        // Remove highlighting
+        highlightedWords.forEach(word => {
+            word.style.backgroundColor = '';
+            word.style.color = '';
+            word.style.borderRadius = '';
+            word.style.padding = '';
+        });
+        
+        // Remove vocabulary list if exists
+        const existingVocabList = storyContent.querySelector('.vocabulary-list');
+        if (existingVocabList) {
+            existingVocabList.remove();
+        }
+        
+        const feedbackMsg = document.createElement('div');
+        feedbackMsg.className = 'feedback-message info show';
+        feedbackMsg.textContent = 'शब्दार्थ हाइलाइट हटाया गया।';
+        storyContent.appendChild(feedbackMsg);
+        setTimeout(() => {
+            feedbackMsg.classList.remove('show');
+            setTimeout(() => feedbackMsg.remove(), 500);
+        }, 2000);
+    } else {
+        // Add highlighting
+        highlightedWords.forEach(word => {
+            word.style.backgroundColor = '#fff3cd';
+            word.style.color = '#856404';
+            word.style.borderRadius = '3px';
+            word.style.padding = '2px 4px';
+            word.style.cursor = 'help';
+        });
+        
+        // Create comprehensive vocabulary list
+        createVocabularyList();
+        
+        const feedbackMsg = document.createElement('div');
+        feedbackMsg.className = 'feedback-message success show';
+        feedbackMsg.textContent = 'शब्दार्थ हाइलाइट किया गया। नीचे शब्दों की सूची देखें।';
         storyContent.appendChild(feedbackMsg);
         setTimeout(() => {
             feedbackMsg.classList.remove('show');
             setTimeout(() => feedbackMsg.remove(), 500);
         }, 3000);
     }
+}
+
+function createVocabularyList() {
+    const storyContent = document.getElementById('storyContent');
+    if (!storyContent) return;
+    
+    // Remove existing vocabulary list
+    const existingVocabList = storyContent.querySelector('.vocabulary-list');
+    if (existingVocabList) {
+        existingVocabList.remove();
+    }
+    
+    // Create vocabulary list container
+    const vocabList = document.createElement('div');
+    vocabList.className = 'vocabulary-list';
+    vocabList.innerHTML = `
+        <div class="vocab-section">
+            <h3>📚 शब्दार्थ (Word Meanings)</h3>
+            <div class="vocab-grid">
+                <div class="vocab-column">
+                    <h4>कविता 1: नए इलाके में</h4>
+                    <div class="vocab-item"><strong>इलाके:</strong> क्षेत्र, जगह</div>
+                    <div class="vocab-item"><strong>बसते:</strong> बसने वाले, रहने वाले</div>
+                    <div class="vocab-item"><strong>मकान:</strong> घर</div>
+                    <div class="vocab-item"><strong>अकसर:</strong> प्रायः, बहुधा</div>
+                    <div class="vocab-item"><strong>धोखा:</strong> भ्रम, गलतफहमी</div>
+                    <div class="vocab-item"><strong>निशान:</strong> चिह्न, संकेत</div>
+                    <div class="vocab-item"><strong>ताकता:</strong> देखता, ढूंढता</div>
+                    <div class="vocab-item"><strong>ढहा:</strong> गिरा हुआ, ध्वस्त</div>
+                    <div class="vocab-item"><strong>टुक:</strong> टुकड़ा, भाग</div>
+                    <div class="vocab-item"><strong>फाटक:</strong> दरवाज़ा, गेट</div>
+                    <div class="vocab-item"><strong>इकमंज़िला:</strong> एक मंज़िल का</div>
+                    <div class="vocab-item"><strong>ठकमकाता:</strong> धीरे-धीरे, डगमगाते हुए</div>
+                    <div class="vocab-item"><strong>घट:</strong> कम होना, नष्ट होना</div>
+                    <div class="vocab-item"><strong>स्मृति:</strong> याद, स्मरण</div>
+                    <div class="vocab-item"><strong>वसंत:</strong> छह ऋतुओं में से एक, बसंत ऋतु</div>
+                    <div class="vocab-item"><strong>पतझड़:</strong> एक ऋतु जब पेड़ों के पत्ते झड़ते हैं</div>
+                    <div class="vocab-item"><strong>बैसाख:</strong> चैत के बाद आने वाला महीना (अप्रैल-मई)</div>
+                    <div class="vocab-item"><strong>भादों:</strong> सावन के बाद आने वाला महीना (अगस्त-सितंबर)</div>
+                    <div class="vocab-item"><strong>उपाय:</strong> तरीका, समाधान</div>
+                    <div class="vocab-item"><strong>खटखटाओ:</strong> दस्तक देना</div>
+                    <div class="vocab-item"><strong>अकास:</strong> आकाश, आसमान</div>
+                    <div class="vocab-item"><strong>पुकार:</strong> बुलाना, आवाज़ देना</div>
+                    <div class="vocab-item"><strong>पहचाना:</strong> जाना-पहचाना</div>
+                </div>
+                <div class="vocab-column">
+                    <h4>कविता 2: खुशबू रचते हैं हाथ</h4>
+                    <div class="vocab-item"><strong>खुशबू:</strong> सुगंध, महक</div>
+                    <div class="vocab-item"><strong>रचते:</strong> बनाते, सृजन करते</div>
+                    <div class="vocab-item"><strong>गलियों:</strong> संकरी सड़कें</div>
+                    <div class="vocab-item"><strong>नालों:</strong> नाली, जल निकासी का मार्ग</div>
+                    <div class="vocab-item"><strong>कूड़े-करकट:</strong> कचरा, रद्दी</div>
+                    <div class="vocab-item"><strong>बदबू:</strong> दुर्गंध, बुरी गंध</div>
+                    <div class="vocab-item"><strong>टोले:</strong> मोहल्ला, बस्ती</div>
+                    <div class="vocab-item"><strong>उभरी:</strong> बाहर निकली हुई</div>
+                    <div class="vocab-item"><strong>नसोंवाले:</strong> नसों वाले</div>
+                    <div class="vocab-item"><strong>घिसे:</strong> घिसे हुए, पुराने</div>
+                    <div class="vocab-item"><strong>नाखूनोंवाले:</strong> नाखून वाले</div>
+                    <div class="vocab-item"><strong>जूही:</strong> एक सुगंधित फूल</div>
+                    <div class="vocab-item"><strong>डाल:</strong> शाखा, टहनी</div>
+                    <div class="vocab-item"><strong>खुशबूदार:</strong> सुगंधित</div>
+                    <div class="vocab-item"><strong>कटे-पिटे:</strong> कटे और पिटे हुए</div>
+                    <div class="vocab-item"><strong>ज़ख्म:</strong> चोट, घाव</div>
+                    <div class="vocab-item"><strong>मुल्क:</strong> देश</div>
+                    <div class="vocab-item"><strong>मशहूर:</strong> प्रसिद्ध, मशहूर</div>
+                    <div class="vocab-item"><strong>अगरबत्तियाँ:</strong> सुगंधित छड़ियाँ</div>
+                    <div class="vocab-item"><strong>मुहल्लों:</strong> मोहल्लों, क्षेत्रों</div>
+                    <div class="vocab-item"><strong>केवड़ा:</strong> एक सुगंधित पौधा</div>
+                    <div class="vocab-item"><strong>खस:</strong> एक सुगंधित घास</div>
+                    <div class="vocab-item"><strong>रातरानी:</strong> रात में खिलने वाला फूल</div>
+                    <div class="vocab-item"><strong>गंदगी:</strong> मैल, अपवित्रता</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add the vocabulary list to the story content
+    storyContent.appendChild(vocabList);
 }
 
 function togglePrintMode() {

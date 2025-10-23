@@ -251,6 +251,7 @@ function recordSpeaking() {
 // Save writing selection
 function saveWriting() {
     const selectedOption = document.querySelector('input[name="writing-option"]:checked');
+    const chooseOptionBtn = document.getElementById('chooseOptionBtn');
     
     // Create feedback element
     const feedbackElement = document.createElement('div');
@@ -263,7 +264,14 @@ function saveWriting() {
         if (selectedOption.value === correctAnswer) {
             // Success feedback for correct answer
             feedbackElement.classList.add('success');
-            feedbackElement.innerHTML = '<strong>सही उत्तर!</strong> "सामाजिक विषमता" इन कविताओं की प्रमुख प्रासंगिकता है। "खुशबू रचते हैं हाथ" कविता में यह विशेष रूप से सामने आता है, जहां श्रमिकों की स्थिति और सामाजिक विषमता को उजागर किया गया है।';
+            feedbackElement.innerHTML = '<strong>🎉 सही उत्तर!</strong><br><br>"सामाजिक विषमता" इन कविताओं की प्रमुख प्रासंगिकता है। "खुशबू रचते हैं हाथ" कविता में यह विशेष रूप से सामने आता है, जहां श्रमिकों की स्थिति और सामाजिक विषमता को उजागर किया गया है।<br><br>यह कविता हमें याद दिलाती है कि जो लोग हमारे जीवन को सुंदर बनाते हैं, वे खुद गंदगी और गरीबी में जीने को मजबूर हैं।';
+            
+            // Update button text and disable it
+            if (chooseOptionBtn) {
+                chooseOptionBtn.textContent = '✅ सही उत्तर!';
+                chooseOptionBtn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
+                chooseOptionBtn.disabled = true;
+            }
             
             // Update progress
             if (typeof updateProgress === 'function') {
@@ -282,24 +290,40 @@ function saveWriting() {
             
             // Custom guidance based on what they selected
             let guidance = "";
+            let selectedText = "";
             switch(selectedOption.value) {
                 case "1":
+                    selectedText = "शहरीकरण और पर्यावरण";
                     guidance = 'शहरीकरण और पर्यावरण महत्वपूर्ण हैं, लेकिन "खुशबू रचते हैं हाथ" कविता का मुख्य संदेश अलग है। कृपया श्रमिक वर्ग की स्थिति पर फिर से विचार करें।';
                     break;
                 case "3":
+                    selectedText = "मानवीय श्रम का महत्व";
                     guidance = 'मानवीय श्रम का महत्व दिखाया गया है, लेकिन कवि की मुख्य चिंता श्रम के मूल्यांकन और सामाजिक असमानता से संबंधित है।';
                     break;
                 case "4":
+                    selectedText = "स्मृति और समय का संबंध";
                     guidance = 'स्मृति और समय "नए इलाके में" कविता में तो महत्वपूर्ण हैं, लेकिन दोनों कविताओं को देखें तो एक अधिक व्यापक विषय उभरता है।';
                     break;
             }
             
-            feedbackElement.innerHTML = '<strong>यह सही उत्तर नहीं है।</strong> ' + guidance + '<br><br>पुनः प्रयास करें और विशेषकर "खुशबू रचते हैं हाथ" कविता पर ध्यान दें।';
+            feedbackElement.innerHTML = `<strong>❌ यह सही उत्तर नहीं है।</strong><br><br>आपने "${selectedText}" चुना है।<br><br>${guidance}<br><br><strong>💡 सुझाव:</strong> पुनः प्रयास करें और विशेषकर "खुशबू रचते हैं हाथ" कविता पर ध्यान दें।`;
+            
+            // Reset button for retry
+            if (chooseOptionBtn) {
+                chooseOptionBtn.textContent = '🔄 पुनः प्रयास करें';
+                chooseOptionBtn.style.background = 'linear-gradient(135deg, #ff9800 0%, #f57c00 100%)';
+            }
         }
     } else {
         // Warning feedback
         feedbackElement.classList.add('error');
-        feedbackElement.textContent = 'कृपया एक विकल्प चुनें।';
+        feedbackElement.innerHTML = '<strong>⚠️ चेतावनी!</strong><br><br>कृपया एक विकल्प चुनें। ऊपर दिए गए चार विकल्पों में से कोई एक रेडियो बटन पर क्लिक करें।';
+        
+        // Reset button
+        if (chooseOptionBtn) {
+            chooseOptionBtn.textContent = '✅ विकल्प चुनें';
+            chooseOptionBtn.style.background = 'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)';
+        }
     }
     
     // Find the dedicated feedback container
@@ -313,7 +337,7 @@ function saveWriting() {
         
         // If it's a wrong answer, auto-hide after some time
         if (!(selectedOption && selectedOption.value === correctAnswer)) {
-            // Auto-hide after 10 seconds for incorrect answers
+            // Auto-hide after 15 seconds for incorrect answers
             setTimeout(() => {
                 feedbackElement.classList.remove('show');
                 setTimeout(() => {
@@ -321,7 +345,7 @@ function saveWriting() {
                         feedbackElement.remove();
                     }
                 }, 500);
-            }, 10000);
+            }, 15000);
         }
     }
 }

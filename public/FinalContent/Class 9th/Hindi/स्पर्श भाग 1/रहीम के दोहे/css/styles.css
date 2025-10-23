@@ -1,5 +1,15 @@
 /* Interactive Hindi Lesson: Kabir Ke Sakhi - Main Styles */
 
+/* ======= Hidden Content ======= */
+/* Hide the specific question about Rahim's thoughts description and its options */
+.listening-notes h4:nth-of-type(2) {
+    display: none !important;
+}
+
+.listening-notes .narrative-options {
+    display: none !important;
+}
+
 /* ======= Base Styles ======= */
 * {
     margin: 0;
