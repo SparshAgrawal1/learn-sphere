@@ -6,6 +6,7 @@ import ContentFrame from '@/components/learning/ContentFrame';
 import { getLessonContentPath } from '@/utils/content-path-resolver';
 import curriculum, { getClassCurriculum } from '@/data/curriculum';
 import ClassBasedContentRenderer from '@/components/learning/ClassBasedContentRenderer';
+import QuizModal from '@/components/learning/QuizModal';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Home, ChevronLeft, ChevronRight, PanelLeft, PanelRight, FileText, Monitor } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -85,6 +86,9 @@ const Learning = () => {
   // PDF/Visual content toggle state
   const [showPdf, setShowPdf] = useState(false);
   
+  // Quiz modal state
+  const [showQuizModal, setShowQuizModal] = useState(false);
+  
   // Get selected class from session storage
   useEffect(() => {
     const classFromStorage = sessionStorage.getItem('selectedClass');
@@ -122,6 +126,12 @@ const Learning = () => {
   }, [navigate]);
   
   const handleContentLoad = (content: any) => {
+    // Check if this is a quiz modal trigger
+    if (content.showQuizModal) {
+      setShowQuizModal(true);
+      return;
+    }
+    
     // Debug: Log the content being received
     console.log('Learning.tsx - handleContentLoad received:', content);
     console.log('Learning.tsx - topic pdfPath:', content?.topic?.pdfPath);
@@ -400,6 +410,21 @@ const Learning = () => {
           </button>
         )}
       </div>
+      
+      {/* Quiz Modal */}
+      <QuizModal
+        isOpen={showQuizModal}
+        onClose={() => setShowQuizModal(false)}
+        onStartQuiz={() => {
+          // TODO: Implement quiz functionality
+          console.log('Starting quiz for:', currentContent?.topic?.name);
+        }}
+        topicName={currentContent?.topic?.name}
+        chapterName={currentContent?.chapter?.name}
+        subjectName={currentContent?.chapter?.name || currentContent?.subject?.name}
+        classNumber={selectedClass}
+        pdfPath={currentContent?.topic?.pdfPath}
+      />
     </div>
   );
 };

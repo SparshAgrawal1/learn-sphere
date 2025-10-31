@@ -450,6 +450,29 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                       </button>
                     </div>
                   )}
+                  
+                  {/* Quiz Button */}
+                  <div className="pt-4 border-t border-white/10">
+                    <button 
+                      className="w-full p-4 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-lg"
+                      onClick={() => {
+                        // This will be handled by the parent component
+                        if (onContentLoad) {
+                          onContentLoad({
+                            ...currentContent,
+                            showQuizModal: true
+                          });
+                        }
+                      }}
+                    >
+                      <div className="flex items-center justify-center gap-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Start Quiz
+                      </div>
+                    </button>
+                  </div>
                 </>
               )}
             </div>
@@ -458,15 +481,41 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
       );
     }
     
-    // If no subtopics, show a simple message (content will auto-load via useEffect)
+    // If no subtopics, show a simple message with quiz button (content will auto-load via useEffect)
     return (
-      <div className="p-6">
-        <h2 className="text-2xl font-bold text-white mb-4">
-          {currentContent.topic.name}
-        </h2>
-        <p className="text-white/70">
-          Content is loading in the main area...
-        </p>
+      <div className="h-full flex flex-col">
+        <div className="p-6 pb-0 flex-shrink-0">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            {currentContent.topic.name}
+          </h2>
+          <p className="text-white/70">
+            Content is loading in the main area...
+          </p>
+        </div>
+        
+        {/* Quiz Button for topics without subtopics */}
+        <div className="flex-1 flex items-end p-6">
+          <div className="w-full">
+            <button 
+              className="w-full p-4 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-lg"
+              onClick={() => {
+                if (onContentLoad) {
+                  onContentLoad({
+                    ...currentContent,
+                    showQuizModal: true
+                  });
+                }
+              }}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Start Quiz
+              </div>
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
