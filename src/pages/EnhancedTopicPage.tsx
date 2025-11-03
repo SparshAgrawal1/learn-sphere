@@ -590,7 +590,7 @@ const EnhancedTopicPage: React.FC = () => {
             pdfPath={currentContent?.topic?.pdfPath}
             chapterName={currentContent?.topic?.name}
             classNumber={selectedClass}
-            subjectName={currentContent?.subject?.name}
+            subjectName={currentContent?.chapter?.name || currentContent?.subject?.name}
             onTogglePdfMode={handleToggleMode}
           />
         </div>

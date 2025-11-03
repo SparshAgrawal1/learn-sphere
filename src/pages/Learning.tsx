@@ -118,6 +118,12 @@ const Learning = () => {
         (window as any).stopNarration();
       }
       
+      // Force cleanup of any AI Tutor SSE connections
+      // This will close any hanging EventSource connections when navigating away
+      if (typeof (window as any).forceCleanupAITutor === 'function') {
+        (window as any).forceCleanupAITutor();
+      }
+      
       // Stop any story narration
       if (typeof (window as any).stopStoryNarration === 'function') {
         (window as any).stopStoryNarration();
@@ -131,12 +137,6 @@ const Learning = () => {
       setShowQuizModal(true);
       return;
     }
-    
-    // Debug: Log the content being received
-    console.log('Learning.tsx - handleContentLoad received:', content);
-    console.log('Learning.tsx - topic pdfPath:', content?.topic?.pdfPath);
-    console.log('Learning.tsx - topic name:', content?.topic?.name);
-    console.log('Learning.tsx - subject name:', content?.subject?.name);
     
     setCurrentContent(content);
     // Reset PDF toggle to visual content when new content is loaded
@@ -377,7 +377,7 @@ const Learning = () => {
             pdfPath={currentContent?.topic?.pdfPath}
             chapterName={currentContent?.topic?.name}
             classNumber={selectedClass}
-            subjectName={currentContent?.subject?.name}
+            subjectName={currentContent?.chapter?.name || currentContent?.subject?.name}
             onTogglePdfMode={() => {
               // Stop all narrations when switching to PDF
               if (!showPdf) {
@@ -417,7 +417,7 @@ const Learning = () => {
         onClose={() => setShowQuizModal(false)}
         onStartQuiz={() => {
           // TODO: Implement quiz functionality
-          console.log('Starting quiz for:', currentContent?.topic?.name);
+          setShowQuizModal(true);
         }}
         topicName={currentContent?.topic?.name}
         chapterName={currentContent?.chapter?.name}

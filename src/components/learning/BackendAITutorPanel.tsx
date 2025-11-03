@@ -81,7 +81,8 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
     // Build URL with chapter-specific parameters if available
     const urlParams = new URLSearchParams({
       subject: currentSubject,
-      is_audio: isAudio.toString()
+      is_audio: isAudio.toString(),
+      is_quiz: 'false' // This is a regular AI tutor, not quiz mode
     });
     
     // Add chapter-specific parameters if provided
@@ -755,7 +756,7 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
                 backgroundImage: 'url("/noise.png")',
                 backgroundBlendMode: 'overlay',
                 backgroundSize: '200px',
-                backgroundOpacity: '0.05'
+                // backgroundOpacity: '0.05'
               }}
             >
               {messages.length === 0 ? (

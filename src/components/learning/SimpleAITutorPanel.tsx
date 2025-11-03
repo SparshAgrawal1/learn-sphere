@@ -51,6 +51,8 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
   const eventSourceRef = useRef<EventSource | null>(null);
   const currentMessageIdRef = useRef<string | null>(null);
   const sessionIdRef = useRef<string>(Math.random().toString().substring(10));
+  const hasConnectedRef = useRef<boolean>(false); // Track if we've ever connected
+  const chunkCounterRef = useRef<number>(0); // Track chunk order
   
   // Audio-related refs
   const audioPlayerNodeRef = useRef<any>(null);
@@ -81,7 +83,10 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     return 'physics'; // Default to physics
   };
 
-  const currentSubject = getSubjectFromTitle(subtopicTitle);
+  // Use actual subjectName if provided, otherwise detect from title
+  const currentSubject = subjectName ? 
+    subjectName.toLowerCase().replace(' ', '_') : // Convert "Social Science" to "social_science"
+    getSubjectFromTitle(subtopicTitle);
 
   // Audio chunk ordering and playback management
   const handleAudioChunk = (message: any) => {
@@ -91,11 +96,6 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       
       // Convert to proper audio format for worklet (Int16Array)
       const int16Array = new Int16Array(audioData);
-      
-      // Debug audio data
-      const sampleValues = int16Array.slice(0, 10); // First 10 samples
-      const hasNonZeroSamples = int16Array.some(sample => sample !== 0);
-      console.log(`[AUDIO] Chunk ${sequence}: ${int16Array.length} samples, first 10: [${sampleValues.join(', ')}], has audio: ${hasNonZeroSamples}`);
       
       // Store chunk in queue with proper format
       audioChunkQueueRef.current.set(sequence, {
@@ -252,22 +252,16 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
   const connectSSE = (audioMode?: boolean) => {
     const audioModeToUse = audioMode !== undefined ? audioMode : isAudio;
     
-    // Debug: Log the parameters being passed
-    console.log('SimpleAITutorPanel - connectSSE parameters:', {
-      pdfPath,
-      chapterName,
-      classNumber,
-      subjectName,
-      currentSubject
-    });
+    console.log('Connecting SSE for:', subtopicTitle);
     
     // Build URL with chapter-specific parameters if available
     const urlParams = new URLSearchParams({
       subject: currentSubject,
-      is_audio: audioModeToUse.toString()
+      is_audio: audioModeToUse.toString(),
+      is_quiz: 'false' // This is a regular AI tutor, not quiz mode
     });
     
-    // Add chapter-specific parameters if provided
+    // Add chapter-specific parameters only if provided (no fallbacks)
     if (pdfPath) urlParams.append('pdf_path', pdfPath);
     if (chapterName) urlParams.append('chapter_name', chapterName);
     if (classNumber) urlParams.append('class_number', classNumber);
@@ -275,24 +269,24 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     
     const sseUrl = getSseUrl(sessionIdRef.current, urlParams);
     
-    console.log('SimpleAITutorPanel - SSE URL:', sseUrl);
-    
     eventSourceRef.current = new EventSource(sseUrl);
+    hasConnectedRef.current = true; // Mark that we've made a connection
 
     eventSourceRef.current.onopen = () => {
-      console.log("SSE connection opened for subject:", currentSubject, "audio mode:", audioModeToUse);
       setIsConnected(true);
       setIsAiTyping(false);
+      // Reset message tracking for new connection
+      currentMessageIdRef.current = null;
+      chunkCounterRef.current = 0;
     };
 
     eventSourceRef.current.onmessage = (event) => {
       try {
         const messageFromServer = JSON.parse(event.data);
-        console.log("[AGENT TO CLIENT]", messageFromServer);
         
         // Handle error messages
         if (messageFromServer.error) {
-          console.error('[AUDIO ERROR]', messageFromServer.error, messageFromServer.message);
+          console.log('[SSE ERROR]', messageFromServer.error);
           resetAudioPlayback();
           setIsPlayingAudio(false);
           return;
@@ -300,9 +294,13 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
 
         // Check if the turn is complete
         if (messageFromServer.turn_complete && messageFromServer.turn_complete === true) {
-          currentMessageIdRef.current = null;
-          setIsAiTyping(false);
-          handleTurnComplete(); // Properly handle turn completion
+          // Add a small delay to ensure all chunks are processed before clearing the current message ID
+          setTimeout(() => {
+            currentMessageIdRef.current = null;
+            chunkCounterRef.current = 0; // Reset chunk counter
+            setIsAiTyping(false);
+            handleTurnComplete(); // Properly handle turn completion
+          }, 100); // 100ms delay
           return;
         }
 
@@ -333,10 +331,12 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
         // Handle text messages - only show text in text mode, not in audio mode
         if (messageFromServer.mime_type === "text/plain" && !isAudio) {
           setIsAiTyping(true);
+          chunkCounterRef.current++;
           
           // Add a new message for a new turn
           if (currentMessageIdRef.current === null) {
             currentMessageIdRef.current = Math.random().toString(36).substring(7);
+            chunkCounterRef.current = 1; // Reset counter for new message
             const newAiMessage: Message = {
               id: currentMessageIdRef.current,
               content: messageFromServer.data,
@@ -345,7 +345,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
             };
             setMessages(prev => [...prev, newAiMessage]);
           } else {
-            // Update existing message
+            // Update existing message - append new chunk
             setMessages(prev => prev.map(msg => 
               msg.id === currentMessageIdRef.current 
                 ? { ...msg, content: msg.content + messageFromServer.data }
@@ -362,14 +362,12 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     };
 
     eventSourceRef.current.onerror = () => {
-      console.log("SSE connection error or closed.");
       setIsConnected(false);
       if (eventSourceRef.current) {
         eventSourceRef.current.close();
       }
       // Attempt to reconnect after 5 seconds
       setTimeout(() => {
-        console.log("Reconnecting...");
         connectSSE();
       }, 5000);
     };
@@ -385,14 +383,12 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       // Add all the parameters that are sent during SSE connection
       subject: currentSubject,
       is_audio: isAudioMessage,
-      // Add chapter-specific parameters if provided
+      // Add chapter-specific parameters only if provided (no fallbacks)
       ...(pdfPath && { pdf_path: pdfPath }),
       ...(chapterName && { chapter_name: chapterName }),
       ...(classNumber && { class_number: classNumber }),
       ...(subjectName && { subject_name: subjectName })
     };
-    
-    console.log('SimpleAITutorPanel - sendMessage payload:', messagePayload);
     
     try {
       const response = await fetch(sendUrl, {
@@ -404,10 +400,10 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       });
       
       if (!response.ok) {
-        console.error('Failed to send message:', response.statusText);
+        // Error handling
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      // Error handling
     }
   };
 
@@ -692,13 +688,32 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
 
   // Cleanup function for SSE and audio
   const cleanupConnections = () => {
-    console.log('SimpleAITutorPanel - Cleaning up connections');
+    // Only cleanup if there's actually a connection to clean up
+    const hasActiveConnection = eventSourceRef.current !== null;
+    
+    if (!hasActiveConnection && !hasConnectedRef.current) {
+      console.log('No connection ever made - skipping cleanup');
+      return;
+    }
+    
+    console.log('Cleaning up AI Tutor connections...');
     
     // Close SSE connection
     if (eventSourceRef.current) {
-      console.log('SimpleAITutorPanel - Closing SSE connection');
       eventSourceRef.current.close();
       eventSourceRef.current = null;
+    }
+    
+    // Only call backend cleanup if we actually had a connection
+    if (hasConnectedRef.current) {
+      try {
+        const cleanupUrl = `http://localhost:8000/cleanup/${sessionIdRef.current}`;
+        fetch(cleanupUrl, { method: 'POST' }).catch(error => {
+          console.log('Backend cleanup call failed (connection may already be closed):', error);
+        });
+      } catch (error) {
+        console.log('Backend cleanup call failed:', error);
+      }
     }
     
     // Clear audio buffer timer
@@ -735,6 +750,9 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       audioRecorderContextRef.current = null;
     }
     
+    // Reset connection tracking
+    hasConnectedRef.current = false;
+    
     // Reset states
     setIsConnected(false);
     setIsVoiceActive(false);
@@ -742,16 +760,30 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     setVoiceStatus('Click to start voice input');
   };
 
-  // Initialize connection
+  // Initialize connection when component mounts or props change
   useEffect(() => {
-    connectSSE();
+    // Only connect when we have meaningful content (not the default 'Learning' title)
+    if (subtopicTitle && subtopicTitle !== 'Learning') {
+      console.log('Initializing AI Tutor connection for:', subtopicTitle);
+      connectSSE();
+    }
     
-    return cleanupConnections;
-  }, []);
+    // Register global cleanup function
+    (window as any).forceCleanupAITutor = cleanupConnections;
+    
+    // Return cleanup function that only runs if there's an active connection
+    return () => {
+      if (eventSourceRef.current) {
+        console.log('Props changed - cleaning up previous connection');
+        cleanupConnections();
+      }
+    };
+  }, [subtopicTitle, pdfPath, chapterName, classNumber, subjectName]); // Re-connect when any of these props change
 
-  // Cleanup on component unmount or when onClose is called
+  // Cleanup on component unmount
   useEffect(() => {
     return () => {
+      console.log('AI Tutor component unmounting - final cleanup');
       cleanupConnections();
     };
   }, []);
@@ -762,18 +794,31 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       cleanupConnections();
     };
 
+    // More targeted visibility handling - only cleanup on actual navigation away
     const handleVisibilityChange = () => {
+      // Only cleanup if hidden for more than 5 seconds (indicates navigation away)
       if (document.hidden) {
-        cleanupConnections();
+        setTimeout(() => {
+          if (document.hidden) {
+            cleanupConnections();
+          }
+        }, 5000);
       }
+    };
+
+    // Handle popstate for browser back/forward navigation
+    const handlePopState = () => {
+      cleanupConnections();
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('popstate', handlePopState);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, []);
 
