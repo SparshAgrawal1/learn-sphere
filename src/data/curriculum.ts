@@ -1890,7 +1890,7 @@ export const curriculum: ClassContent = {
               name: 'The Sermon at Benares',
               progress: 75,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Sermon at Benares /index.html',
+              contentPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Sermon at Benares/index.html',
               pdfPath: '/FinalContent/Class 10th/English/First Flight – Main textbook (prose and poetry)/The Sermon at Benares/The sermon at Benares.pdf'
             },
             {
