@@ -6,7 +6,8 @@ export const API_CONFIG = {
   // API endpoints
   ENDPOINTS: {
     EVENTS: '/events',
-    SEND: '/send'
+    SEND: '/send',
+    CLEANUP: '/cleanup'
   }
 } as const;
 
@@ -31,4 +32,9 @@ export const getSseUrl = (sessionId: string, params?: URLSearchParams): string =
 // Helper function to get send URL
 export const getSendUrl = (sessionId: string): string => {
   return getApiUrl('SEND', sessionId);
+};
+
+// Helper function to get cleanup URL
+export const getCleanupUrl = (sessionId: string): string => {
+  return getApiUrl('CLEANUP', sessionId);
 };

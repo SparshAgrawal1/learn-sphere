@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Mic, MicOff, BrainCog } from 'lucide-react';
-import { getSseUrl, getSendUrl } from '@/config/api';
+import { getSseUrl, getSendUrl, getCleanupUrl } from '@/config/api';
 
 interface Message {
   id: string;
@@ -707,7 +707,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     // Only call backend cleanup if we actually had a connection
     if (hasConnectedRef.current) {
       try {
-        const cleanupUrl = `http://localhost:8000/cleanup/${sessionIdRef.current}`;
+        const cleanupUrl = getCleanupUrl(sessionIdRef.current);
         fetch(cleanupUrl, { method: 'POST' }).catch(error => {
           console.log('Backend cleanup call failed (connection may already be closed):', error);
         });
