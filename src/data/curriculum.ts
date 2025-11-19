@@ -509,23 +509,6 @@ export const curriculum: ClassContent = {
         color: '#F59E0B',
         topics: [
             {
-              id: 'Human Heart',
-              name: 'Human Heart',
-              progress: 50,
-              completed: false,
-              contentPath: '/FinalContent/Class 9th/Science/Biology/Human Heart/Human Heart.html',
-              description: 'Structure and function of the human heart',
-              subtopics: [
-                {
-                  id: 'human-heart-intro',
-                  name: 'Human Heart Overview',
-                  contentPath: '/FinalContent/Class 9th/Science/Biology/Human Heart/Human Heart.html',
-                  progress: 50,
-                  completed: false
-                }
-              ]
-            },
-            {
               id: 'Fundamental Unit of Life',
               name: 'Cell—The Fundamental Unit of Life',
               progress: 45,
@@ -533,6 +516,13 @@ export const curriculum: ClassContent = {
               contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/index.html',
               pdfPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/The fundamental unit of life.pdf',
               subtopics: [
+                {
+                  id: 'human-heart-intro',
+                  name: 'Human Heart Overview',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/Human Heart.html',
+                  progress: 50,
+                  completed: false
+                },
                 {
                   id: 'cell_discovery_interactive',
                   name: 'Cell Discovery (Interactive)',
