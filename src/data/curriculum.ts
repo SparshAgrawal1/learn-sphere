@@ -509,6 +509,23 @@ export const curriculum: ClassContent = {
         color: '#F59E0B',
         topics: [
             {
+              id: 'Human Heart',
+              name: 'Human Heart',
+              progress: 50,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Science/Biology/Human Heart/Human Heart.html',
+              description: 'Structure and function of the human heart',
+              subtopics: [
+                {
+                  id: 'human-heart-intro',
+                  name: 'Human Heart Overview',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Human Heart/Human Heart.html',
+                  progress: 50,
+                  completed: false
+                }
+              ]
+            },
+            {
               id: 'Fundamental Unit of Life',
               name: 'Cell—The Fundamental Unit of Life',
               progress: 45,
@@ -1212,7 +1229,368 @@ export const curriculum: ClassContent = {
       natureElement: 'leaf',
       description: 'Explore the world of numbers, patterns, and problem-solving',
       position: { x: 0, y: -25, z: 0 },
-      chapters: []
+      chapters: [
+        {
+          id: 'Mathematics Topics',
+          name: 'Mathematics Topics',
+          icon: Calculator,
+          color: '#10B981',
+          topics: [
+            {
+              id: 'number-systems',
+              name: 'Number Systems',
+              progress: 85,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Number Systems/Number Systems.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Number Systems/Number System.pdf',
+              description: 'Understanding different types of numbers and their properties',
+              subtopics: [
+                {
+                  id: 'real-numbers',
+                  name: 'Real Numbers',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Number Systems/Real Numbers.html',
+                  progress: 90,
+                  completed: true
+                },
+                {
+                  id: 'irrational-numbers',
+                  name: 'Irrational Numbers',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Number Systems/Irrational Numbers.html',
+                  progress: 85,
+                  completed: true
+                },
+                {
+                  id: 'decimal-expansions',
+                  name: 'Decimal Expansions',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Number Systems/Decimal Expansions.html',
+                  progress: 80,
+                  completed: true
+                }
+              ]
+            },
+            {
+              id: 'polynomials',
+              name: 'Polynomials',
+              progress: 78,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Polynomials/Polynomials.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Polynomials/Polynomials.pdf',
+              description: 'Study of polynomial expressions and their operations',
+              subtopics: [
+                {
+                  id: 'polynomial-types',
+                  name: 'Types of Polynomials',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Polynomials/Polynomial Types.html',
+                  progress: 85,
+                  completed: true
+                },
+                {
+                  id: 'zeros-of-polynomials',
+                  name: 'Zeros of Polynomials',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Polynomials/Zeros of Polynomials.html',
+                  progress: 75,
+                  completed: true
+                },
+                {
+                  id: 'factorization',
+                  name: 'Factorization of Polynomials',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Polynomials/Factorization of Polynomials.html',
+                  progress: 80,
+                  completed: true
+                },
+                {
+                  id: 'algebraic-identities',
+                  name: 'Algebraic Identities',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Polynomials/Algebraic Identities.html',
+                  progress: 70,
+                  completed: true
+                }
+              ]
+            },
+            {
+              id: 'coordinate-geometry',
+              name: 'Coordinate Geometry',
+              progress: 72,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Coordinate Geometry/Understanding Position in a Plane.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Coordinate Geometry/Coordinate geometry.pdf',
+              description: 'Introduction to coordinate systems and plotting points',
+              subtopics: [
+                {
+                  id: 'cartesian-system',
+                  name: 'Cartesian Coordinate System',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Coordinate Geometry/Building Cartesian Coordinate System.html',
+                  progress: 80,
+                  completed: true
+                },
+                {
+                  id: 'plotting-coordinates',
+                  name: 'Plotting Coordinates',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Coordinate Geometry/Reading Writing Plotting Coordinates.html',
+                  progress: 75,
+                  completed: true
+                },
+                {
+                  id: 'positions-in-plane',
+                  name: 'Understanding Positions in a Plane',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Coordinate Geometry/Understanding Position in a Plane.html',
+                  progress: 65,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'linear-equations-two-variables',
+              name: 'Linear Equations in Two Variables',
+              progress: 68,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Linear Equations in Two Variables/Linear Equation in two variables.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Linear Equations in Two Variables/linear equation in two variables.pdf',
+              description: 'Solutions of linear equations with two variables'
+            },
+            {
+              id: 'euclids-geometry',
+              name: 'Introduction to Euclid\'s Geometry',
+              progress: 70,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Introduction to Euclid’s Geometry/The Evolution of Geometry.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Introduction to Euclid’s Geometry/Introduction to Euclid_s geometry.pdf',
+              description: 'Basic concepts of Euclidean geometry and axioms',
+              subtopics: [
+                {
+                  id: 'evolution-of-geometry',
+                  name: 'The Evolution of Geometry',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Introduction to Euclid’s Geometry/The Evolution of Geometry.html',
+                  progress: 75,
+                  completed: true
+                },
+                {
+                  id: 'axioms-postulates',
+                  name: 'What Are Axioms and Postulates',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Introduction to Euclid’s Geometry/What Are Axioms and Postulates.html',
+                  progress: 70,
+                  completed: true
+                },
+                {
+                  id: 'euclids-seven-axioms',
+                  name: 'Euclid\'s Seven Axioms',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Introduction to Euclid’s Geometry/Euclid_s Seven Axioms (Common Notions).html',
+                  progress: 65,
+                  completed: true
+                }
+              ]
+            },
+            {
+              id: 'lines-and-angles',
+              name: 'Lines and Angles',
+              progress: 74,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Lines and Angles/Fundamentals Lines, Angles and their Types.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Lines and Angles/Lines and Angles.pdf',
+              description: 'Properties of lines, angles, and their relationships',
+              subtopics: [
+                {
+                  id: 'fundamentals-lines-angles',
+                  name: 'Fundamentals - Lines, Angles and Their Types',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Lines and Angles/Fundamentals Lines, Angles and their Types.html',
+                  progress: 80,
+                  completed: true
+                },
+                {
+                  id: 'parallel-lines',
+                  name: 'Parallel Lines',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Lines and Angles/Parallel Lines.html',
+                  progress: 75,
+                  completed: true
+                },
+                {
+                  id: 'lines-angles-part2',
+                  name: 'Lines And Angles Part 2',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Lines and Angles/Lines and Angles Part2.html',
+                  progress: 70,
+                  completed: true
+                },
+                {
+                  id: 'lines-angles-part3',
+                  name: 'Lines And Angles Part 3',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Lines and Angles/Lines and angles Part3.html',
+                  progress: 70,
+                  completed: true
+                }
+              ]
+            },
+            {
+              id: 'triangles',
+              name: 'Triangles',
+              progress: 76,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Triangles/Triangles Introduction.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Triangles/Triangles.pdf',
+              description: 'Properties and theorems related to triangles',
+              subtopics: [
+                {
+                  id: 'introduction-triangles',
+                  name: 'Introduction to Triangles',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Triangles/Triangles Introduction.html',
+                  progress: 80,
+                  completed: true
+                },
+                {
+                  id: 'congruence-criteria',
+                  name: 'Congruence Criteria (SAS, ASA, AAS)',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Triangles/Congruence Criteria SAS ASA AAS.html',
+                  progress: 75,
+                  completed: true
+                },
+                {
+                  id: 'isosceles-triangles',
+                  name: 'Isosceles Triangles',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Triangles/Isosceles triangles.html',
+                  progress: 73,
+                  completed: true
+                }
+              ]
+            },
+            {
+              id: 'quadrilaterals',
+              name: 'Quadrilaterals',
+              progress: 71,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Quadrilaterals/Quadrilateral part1.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Quadrilaterals/Quadrilaterals.pdf',
+              description: 'Properties of different types of quadrilaterals',
+              subtopics: [
+                {
+                  id: 'quadrilaterals-part1',
+                  name: 'Quadrilaterals Part 1',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Quadrilaterals/Quadrilateral part1.html',
+                  progress: 75,
+                  completed: true
+                },
+                {
+                  id: 'quadrilaterals-part2',
+                  name: 'Quadrilaterals Part 2',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Quadrilaterals/Quadrilateral part2.html',
+                  progress: 68,
+                  completed: true
+                }
+              ]
+            },
+            {
+              id: 'circles',
+              name: 'Circles',
+              progress: 69,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Circles/Circles part 1.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Circles/Circles.pdf',
+              description: 'Properties of circles, chords, and related theorems',
+              subtopics: [
+                {
+                  id: 'circles-part1',
+                  name: 'Circles Part 1',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Circles/Circles part 1.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'circles-part2',
+                  name: 'Circles Part 2',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Circles/Circles part 2.html',
+                  progress: 68,
+                  completed: false
+                },
+                {
+                  id: 'circles-part3',
+                  name: 'Circles Part 3',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Circles/Circles part 3.html',
+                  progress: 65,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'herons-formula',
+              name: 'Heron\'s Formula',
+              progress: 73,
+              completed: true,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Heron_s Formula/Heron_s formula.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Heron_s Formula/Heron_s Formula.pdf',
+              description: 'Calculating area of triangles using Heron\'s formula'
+            },
+            {
+              id: 'surface-area-volume',
+              name: 'Surface Area and Volume',
+              progress: 67,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Surface Area and volume/Surface Area Right Circular Cone.html',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Surface Area and volume/Surface areas and volumes.pdf',
+              description: 'Calculation of surface area and volume of 3D shapes',
+              subtopics: [
+                {
+                  id: 'surface-area-cone',
+                  name: 'Surface Area of Right Circular Cone',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Surface Area and volume/Surface Area Right Circular Cone.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'surface-area-sphere',
+                  name: 'Surface Area of Sphere',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Surface Area and volume/Surface Area Sphere.html',
+                  progress: 68,
+                  completed: false
+                },
+                {
+                  id: 'volume-cone',
+                  name: 'Volume of Cone',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Surface Area and volume/Volume cone.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'volume-sphere',
+                  name: 'Volume of Sphere',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Surface Area and volume/Volume sphere.html',
+                  progress: 65,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'statistics',
+              name: 'Statistics',
+              progress: 65,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Mathematics/Statistics/Statistics Bargraph.HTML',
+              pdfPath: '/FinalContent/Class 9th/Mathematics/Statistics/Statistics.pdf',
+              description: 'Collection, organization, and interpretation of data',
+              subtopics: [
+                {
+                  id: 'statistics-bargraph',
+                  name: 'Statistics Bar Graph',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Statistics/Statistics Bargraph.HTML',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'statistics-histogram',
+                  name: 'Statistics Histogram',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Statistics/Statistics histogram.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'statistics-frequency-polygon',
+                  name: 'Statistics Frequency Polygon',
+                  contentPath: '/FinalContent/Class 9th/Mathematics/Statistics/Statistics Frequency polygon.html',
+                  progress: 60,
+                  completed: false
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   '10th': [
@@ -2389,86 +2767,88 @@ export const curriculum: ClassContent = {
               name: 'Arithmetic Progression',
               progress: 60,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_fundamentals (3).html',
-              pdfPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ARITHMETIC PROGRESSIONS.pdf',
+              contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/AP Fundamentals.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/Arithmetic Progressions.pdf',
+              description: 'Understanding arithmetic progressions, patterns, and their applications',
               subtopics: [
                 {
                   id: 'ap_patterns_intro',
                   name: 'Introduction to Patterns',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_patterns_intro.html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/AP Patterns.html',
                   progress: 70,
                   completed: false
                 },
                 {
                   id: 'ap_fundamentals',
                   name: 'AP Fundamentals',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_fundamentals (3).html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/AP Fundamentals.html',
                   progress: 65,
                   completed: false
                 },
                 {
                   id: 'ap_nth_term',
                   name: 'nth Term of AP',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_nth_term.html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/AP Nth Term.html',
                   progress: 60,
                   completed: false
                 },
                 {
                   id: 'ap_sum_terms',
                   name: 'Sum of Terms in AP',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_sum_terms.html',
-    progress: 55,
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/AP Sum Terms.html',
+                  progress: 55,
                   completed: false
                 },
                 {
                   id: 'ap_advanced_applications',
                   name: 'Advanced Applications',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/ap_advanced_applications.html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/AP Advanced Applications.html',
                   progress: 50,
                   completed: false
                 }
               ]
             },
             {
-              id: 'Linear Equations in 2 variables',
-              name: 'Linear Equations in Two Variables',
+              id: 'Pair Of Linear Equations In Two Variables',
+              name: 'Pair Of Linear Equations In Two Variables',
               progress: 70,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/1-linear-equations-preview.html',
-              pdfPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/ PAIR OF LINEAR EQUATIONS IN TWO VARIABLES.pdf',
+              contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Preview.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Pair of Linear Equations in two variables.pdf',
+              description: 'Solving pairs of linear equations using various methods',
               subtopics: [
                 {
-                  id: '1-linear-equations-preview',
+                  id: 'linear-equations-preview',
                   name: 'Linear Equations Preview',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/1-linear-equations-preview.html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Preview.html',
                   progress: 80,
-                  completed: true
+                  completed: false
                 },
                 {
-                  id: '2-linear-equations-graphical',
+                  id: 'linear-equations-graphical',
                   name: 'Graphical Method',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/2-linear-equations-graphical (1).html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Graphical.html',
                   progress: 75,
                   completed: false
                 },
                 {
-                  id: '3-substitution-method',
+                  id: 'substitution-method',
                   name: 'Substitution Method',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/3-substitution-method.html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Substitution Method.html',
                   progress: 70,
                   completed: false
                 },
                 {
-                  id: '4-elimination-method',
+                  id: 'elimination-method',
                   name: 'Elimination Method',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/4-elimination-method.html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Elimination Method.html',
                   progress: 65,
                   completed: false
                 },
                 {
-                  id: '5-chapter-summary',
+                  id: 'chapter-summary',
                   name: 'Chapter Summary',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Linear Equations in 2 variables/5-chapter-summary.html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Chapter Summary.html',
                   progress: 60,
                   completed: false
                 }
@@ -2479,34 +2859,35 @@ export const curriculum: ClassContent = {
               name: 'Quadratic Equations',
               progress: 65,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/quadratic_equations_learning.html',
-              pdfPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/QUADRATIC EQUATIONS.pdf',
-            subtopics: [
+              contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/Quadratic Equations Learning.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/Quadratic Equations.pdf',
+              description: 'Solving quadratic equations using various methods and understanding nature of roots',
+              subtopics: [
                 {
-                  id: 'quadratic_equations_learning',
-                  name: 'Quadratic Equations Learning',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/quadratic_equations_learning.html',
+                  id: 'quadratic_intro',
+                  name: 'Introduction to Quadratic Equations',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/Quadratic Equations Learning.html',
                   progress: 75,
                   completed: false
                 },
                 {
-                  id: 'fixed_quadratic_timeline',
-                  name: 'Quadratic Timeline',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/fixed_quadratic_timeline.html',
+                  id: 'quadratic_equations_learning',
+                  name: 'Quadratic Equations Learning',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/Quadratic Equations Learning.html',
                   progress: 70,
                   completed: false
                 },
                 {
-                  id: 'factorization_quadratic_solver',
-                  name: 'Factorization Method',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/factorization_quadratic_solver.html',
+                  id: 'factorization_method',
+                  name: 'Factorization Quadratic Solver',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/Factorization Quadratic Solver.html',
                   progress: 65,
                   completed: false
                 },
                 {
-                  id: 'nature_of_roots_explorer',
-                  name: 'Nature of Roots Explorer',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/nature_of_roots_explorer.html',
+                  id: 'nature_of_roots',
+                  name: 'Nature Of Roots Explorer',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Quadratic Equations/Nature Of Roots Explorer.html',
                   progress: 60,
                   completed: false
                 }
@@ -2517,22 +2898,447 @@ export const curriculum: ClassContent = {
               name: 'Coordinate Geometry',
               progress: 55,
               completed: false,
-              contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/coordinate-geometry-intro (1).html',
+              contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/Coordinate Geometry.html',
               pdfPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/COORDINATE GEOMETRY.pdf',
               description: 'Understanding coordinate systems, distance formula, and geometric applications',
               subtopics: [
                 {
                   id: 'coordinate-geometry-intro',
                   name: 'Introduction to Coordinate Geometry',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/coordinate-geometry-intro (1).html',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/Coordinate Geometry.html',
                   progress: 60,
                   completed: false
                 },
                 {
-                  id: 'distance-formula-lesson',
-                  name: 'Distance Formula and Applications',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/distance-formula-lesson.html',
+                  id: 'distance-formula',
+                  name: 'Distance Formula',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/Distance Formula.html',
                   progress: 50,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Real Numbers',
+              name: 'Real Numbers',
+              progress: 60,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Introduction.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Real numbers.pdf',
+              description: 'Understanding fundamental theorem of arithmetic, HCF, LCM, and irrational numbers',
+              subtopics: [
+                {
+                  id: 'introduction',
+                  name: 'Introduction',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Introduction.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'fundamental-theorem',
+                  name: 'Fundamental Theorem of Arithmetic',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Fundamental Theorem Of Arithmetic.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'hcf-lcm-applications',
+                  name: 'Applications of HCF and LCM',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Applications Of Fundamental Theorem - HCF and LCM.html',
+                  progress: 55,
+                  completed: false
+                },
+                {
+                  id: 'digit-endings',
+                  name: 'Checking Digit Endings',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Checking Digit Endings Using Prime Factorization.html',
+                  progress: 50,
+                  completed: false
+                },
+                {
+                  id: 'proving-irrationality',
+                  name: 'Proving Irrationality of Square Roots',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Proving Irrationality Of Square Roots.html',
+                  progress: 45,
+                  completed: false
+                },
+                {
+                  id: 'irrationality-operations',
+                  name: 'Irrationality of Sums and Products',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Irrationality Of Sums And Products.html',
+                  progress: 40,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Polynomials',
+              name: 'Polynomials',
+              progress: 65,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Polynomials/Introduction To Polynomials.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Polynomials/Polynomials.pdf',
+              description: 'Exploring polynomial expressions, zeroes, and their relationships with coefficients',
+              subtopics: [
+                {
+                  id: 'introduction-polynomials',
+                  name: 'Introduction to Polynomials',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Polynomials/Introduction To Polynomials.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'geometrical-meaning',
+                  name: 'Geometrical Meaning of Zeroes',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Polynomials/Geometrical Meaning of Zeroes.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'zeroes-coefficients',
+                  name: 'Relationship Between Zeroes and Coefficients',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Polynomials/Relationship Zeroes Coefficients.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'cubic-polynomials',
+                  name: 'Cubic Polynomials Relationship',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Polynomials/Cubic Polynomials Relationship.html',
+                  progress: 55,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Triangles',
+              name: 'Triangles',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Triangles/Similar And Congruent Traingles.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Triangles/Triangles.pdf',
+              description: 'Understanding triangle similarity, congruence, and theorems',
+              subtopics: [
+                {
+                  id: 'similar-congruent',
+                  name: 'Similar and Congruent Triangles',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Triangles/Similar And Congruent Traingles.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'similarity-criteria',
+                  name: 'Criteria for Triangle Similarity',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Triangles/Criteria For Triangle Similarity.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'bpt-theorem',
+                  name: 'Basic Proportionality Theorem',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Triangles/Basic Proportionality Theorem (Thales Theorem).html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'applications-similar',
+                  name: 'Applications of Similar Triangles',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Triangles/Applications Of Similar Triangles.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'advanced-problems',
+                  name: 'Advanced Problems and Exercises',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Triangles/Advanced Problems And Exercise Solution.html',
+                  progress: 55,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Circles',
+              name: 'Circles',
+              progress: 68,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Introduction.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Circles/Circles.pdf',
+              description: 'Exploring properties of circles, tangents, and secants',
+              subtopics: [
+                {
+                  id: 'circles-introduction',
+                  name: 'Introduction to Circles',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Introduction.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'tangent-secant',
+                  name: 'Tangent and Secant',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Tangent and Secant.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'tangent-perpendicular',
+                  name: 'Tangent Perpendicular Theorem',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Tangent Perpendicular Theorem.html',
+                  progress: 68,
+                  completed: false
+                },
+                {
+                  id: 'equal-tangent-length',
+                  name: 'Equal Tangent Length Theorem',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Equal Tangent Length Theorem.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'tangent-point-position',
+                  name: 'Tangent Point Position',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Tangent Point Position.html',
+                  progress: 62,
+                  completed: false
+                },
+                {
+                  id: 'concentric-circles',
+                  name: 'Concentric Circles',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Concentric Circles.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'angles-relationship',
+                  name: 'Angles Relationship in Circles',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Circles/Angles Relationship.html',
+                  progress: 58,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Introduction to Trigonometry',
+              name: 'Introduction to Trigonometry',
+              progress: 72,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Trigonometry Basics.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Introduction to Trigonometry.pdf',
+              description: 'Understanding trigonometric ratios, identities, and their applications',
+              subtopics: [
+                {
+                  id: 'trigonometry-basics',
+                  name: 'Trigonometry Basics',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Trigonometry Basics.html',
+                  progress: 80,
+                  completed: false
+                },
+                {
+                  id: 'trigonometric-ratios',
+                  name: 'Trigonometric Ratios and Definitions',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Trigonometric Ratios.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'special-angles',
+                  name: 'Special Angles in Trigonometry',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Trignometry Special Angles.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'trig-properties',
+                  name: 'Properties and Relationships of Trigonometric Ratios',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Trigonometric Ratios Properties.html',
+                  progress: 68,
+                  completed: false
+                },
+                {
+                  id: 'trig-identities',
+                  name: 'Trigonometric Identities',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Trigonometric Identities.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'trig-applications',
+                  name: 'Trigonometry Applications and Problem Solving',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Introdunction To Trignometry/Trigonometry Applications.html',
+                  progress: 60,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Some Applications of Trigonometry',
+              name: 'Some Applications of Trigonometry',
+              progress: 58,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Some Application Of Trignometry/Heights And Distances.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Some Application Of Trignometry/Some applications of Trigonometry.pdf',
+              description: 'Practical applications of trigonometry in heights and distances',
+              subtopics: [
+                {
+                  id: 'heights-distances',
+                  name: 'Heights and Distances',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Some Application Of Trignometry/Heights And Distances.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'height-distance-problems',
+                  name: 'Height and Distance Problems',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Some Application Of Trignometry/Heights Distances Problems.html',
+                  progress: 50,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Areas Related to Circles',
+              name: 'Areas Related to Circles',
+              progress: 62,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Areas Related To Circle/Sectors And Segments.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Areas Related To Circle/Area related to Circles.pdf',
+              description: 'Calculating areas of sectors, segments, and arc lengths',
+              subtopics: [
+                {
+                  id: 'sectors-segments',
+                  name: 'Sectors and Segments',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Areas Related To Circle/Sectors And Segments.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'sector-area-formula',
+                  name: 'Sector Area Formula',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Areas Related To Circle/Sector Area Formula.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'arc-length-formula',
+                  name: 'Arc Length Formula',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Areas Related To Circle/Arc Length Formula.html',
+                  progress: 55,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Surface Area and Volumes',
+              name: 'Surface Area and Volumes',
+              progress: 64,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Surface Area And Volumes/Combination Of Solids.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Surface Area And Volumes/Surface Areas and Volumes.pdf',
+              description: 'Understanding surface areas and volumes of combined solids',
+              subtopics: [
+                {
+                  id: 'combination-solids',
+                  name: 'Combination of Solids',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Surface Area And Volumes/Combination Of Solids.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'surface-area-combination',
+                  name: 'Surface Area of Combinations',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Surface Area And Volumes/2. Surface Area Combinations.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'volume-combination',
+                  name: 'Volume of Combinations',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Surface Area And Volumes/Volumem Combinations.html',
+                  progress: 60,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Statistics',
+              name: 'Statistics',
+              progress: 66,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Statistics/Intoduction.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Statistics/Statistics.pdf',
+              description: 'Understanding measures of central tendency for grouped data',
+              subtopics: [
+                {
+                  id: 'statistics-introduction',
+                  name: 'Introduction to Statistics',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Statistics/Intoduction.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'mean-grouped-data',
+                  name: 'Mean of Grouped Data',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Statistics/Mean Of Grouped Data.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'median-grouped-data',
+                  name: 'Median of Grouped Data',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Statistics/Medial Of Grouped Data.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'mode-grouped-data',
+                  name: 'Mode of Grouped Data',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Statistics/Mode Of Grouped Data.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'comparison-applications',
+                  name: 'Comparison and Applications of Central Tendency',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Statistics/Comparison And Applications Of Central Tendency.html',
+                  progress: 55,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Probability',
+              name: 'Probability',
+              progress: 63,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Probability/Introduction To Probability.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Probability/Probability.pdf',
+              description: 'Introduction to probability concepts and real-world applications',
+              subtopics: [
+                {
+                  id: 'probability-introduction',
+                  name: 'Introduction to Probability',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Probability/Inroduction.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'elementary-events',
+                  name: 'Elementary Events and Sample Space',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Probability/Elementry Events And Sample Space.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'complementary-events',
+                  name: 'Complementary Events and Probability Range',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Probability/Complementary Events And Probability Range.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'real-world-applications',
+                  name: 'Real World Probability Applications',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Probability/Real world Probability Applications.html',
+                  progress: 55,
                   completed: false
                 }
               ]
