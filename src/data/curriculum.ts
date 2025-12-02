@@ -1602,6 +1602,51 @@ export const curriculum: ClassContent = {
         color: '#F59E0B',
         topics: [
             {
+              id: 'Electricity',
+              name: 'Electricity',
+              progress: 85,
+              completed: true,
+              contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/index.html',
+              pdfPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity.pdf',
+              subtopics: [
+                {
+                  id: 'ohms_law',
+                  name: "Ohm's law",
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/ohms_law.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'Electricity_Part_1_latest',
+                  name: 'Electricity Part 1',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part 1_latest.html',
+                  progress: 90,
+                  completed: true
+                },
+                {
+                  id: 'Electricity_Part2_latest',
+                  name: 'Electricity Part 2',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part2_latest.html',
+                  progress: 85,
+                  completed: true
+                },
+                {
+                  id: 'Electricity_Part3_latest',
+                  name: 'Electricity Part 3',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part3_latest.html',
+                  progress: 80,
+                  completed: true
+                },
+                {
+                  id: 'Electricity_Part4_latest',
+                  name: 'Electricity Part 4',
+                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part4_latest.html',
+                  progress: 75,
+                  completed: false
+                }
+              ]
+            },
+            {
               id: 'Light Refraction',
               name: 'Light - Reflection and Refraction',
               progress: 95,
@@ -1692,44 +1737,6 @@ export const curriculum: ClassContent = {
               ]
             },
             {
-              id: 'Electricity',
-              name: 'Electricity',
-              progress: 85,
-              completed: true,
-              contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/index.html',
-              pdfPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity.pdf',
-              subtopics: [
-                {
-                  id: 'Electricity_Part_1_latest',
-                  name: 'Electricity Part 1',
-                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part 1_latest.html',
-                  progress: 90,
-                  completed: true
-                },
-                {
-                  id: 'Electricity_Part2_latest',
-                  name: 'Electricity Part 2',
-                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part2_latest.html',
-                  progress: 85,
-                  completed: true
-                },
-                {
-                  id: 'Electricity_Part3_latest',
-                  name: 'Electricity Part 3',
-                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part3_latest.html',
-                  progress: 80,
-                  completed: true
-                },
-                {
-                  id: 'Electricity_Part4_latest',
-                  name: 'Electricity Part 4',
-                  contentPath: '/FinalContent/Class 10th/Science/Physics/Electricity/Electricity Part4_latest.html',
-                  progress: 75,
-                  completed: false
-                }
-              ]
-            },
-            {
               id: 'Magnetic Effects of Electric Current',
               name: 'Magnetic Effects of Electric Current',
               progress: 80,
@@ -1783,6 +1790,13 @@ export const curriculum: ClassContent = {
               contentPath: '/FinalContent/Class 10th/Science/Chemistry/Carbon and its Compound/index.html',
               pdfPath: '/FinalContent/Class 10th/Science/Chemistry/Carbon and its Compound/Carbon and its Compounds.pdf',
               subtopics: [
+                {
+                  id: 'ionic_bonds',
+                  name: 'Ionic Bonds',
+                  contentPath: '/FinalContent/Class 10th/Science/Chemistry/Carbon and its Compound/ionic_bonds.html',
+                  progress: 80,
+                  completed: false
+                },
                 {
                   id: 'Versatile_nature_of_Carbon',
                   name: 'Versatile Nature of Carbon',
@@ -2753,6 +2767,119 @@ export const curriculum: ClassContent = {
           color: '#10B981',
         topics: [
             {
+              id: 'Real Numbers',
+              name: 'Real Numbers',
+              progress: 60,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Introduction.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Real numbers.pdf',
+              description: 'Understanding fundamental theorem of arithmetic, HCF, LCM, and irrational numbers',
+              subtopics: [
+                {
+                  id: 'introduction-to-real-numbers',
+                  name: 'Introduction to Real Numbers',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Introduction_to_real_numbers.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'introduction',
+                  name: 'Introduction',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Introduction.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'fundamental-theorem',
+                  name: 'Fundamental Theorem of Arithmetic',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Fundamental Theorem Of Arithmetic.html',
+                  progress: 60,
+                  completed: false
+                },
+                {
+                  id: 'hcf-lcm-applications',
+                  name: 'Applications of HCF and LCM',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Applications Of Fundamental Theorem - HCF and LCM.html',
+                  progress: 55,
+                  completed: false
+                },
+                {
+                  id: 'digit-endings',
+                  name: 'Checking Digit Endings',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Checking Digit Endings Using Prime Factorization.html',
+                  progress: 50,
+                  completed: false
+                },
+                {
+                  id: 'proving-irrationality',
+                  name: 'Proving Irrationality of Square Roots',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Proving Irrationality Of Square Roots.html',
+                  progress: 45,
+                  completed: false
+                },
+                {
+                  id: 'irrationality-operations',
+                  name: 'Irrationality of Sums and Products',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Irrationality Of Sums And Products.html',
+                  progress: 40,
+                  completed: false
+                }
+              ]
+            },
+            {
+              id: 'Pair Of Linear Equations In Two Variables',
+              name: 'Pair Of Linear Equations In Two Variables',
+              progress: 70,
+              completed: false,
+              contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Preview.html',
+              pdfPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Pair of Linear Equations in two variables.pdf',
+              description: 'Solving pairs of linear equations using various methods',
+              subtopics: [
+                {
+                  id: 'linear-equations-part-1',
+                  name: 'Linear Equations Part 1',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/linear_equations_part_1.html',
+                  progress: 80,
+                  completed: false
+                },
+                {
+                  id: 'linear-equations-preview',
+                  name: 'Linear Equations Preview',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Preview.html',
+                  progress: 80,
+                  completed: false
+                },
+                {
+                  id: 'linear-equations-graphical',
+                  name: 'Graphical Method',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Graphical.html',
+                  progress: 75,
+                  completed: false
+                },
+                {
+                  id: 'substitution-method',
+                  name: 'Substitution Method',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Substitution Method.html',
+                  progress: 70,
+                  completed: false
+                },
+                {
+                  id: 'elimination-method',
+                  name: 'Elimination Method',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Elimination Method.html',
+                  progress: 65,
+                  completed: false
+                },
+                {
+                  id: 'chapter-summary',
+                  name: 'Chapter Summary',
+                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Chapter Summary.html',
+                  progress: 60,
+                  completed: false
+                }
+              ]
+            },
+            {
               id: 'Arithmetic Progression',
               name: 'Arithmetic Progression',
               progress: 60,
@@ -2794,52 +2921,6 @@ export const curriculum: ClassContent = {
                   name: 'Advanced Applications',
                   contentPath: '/FinalContent/Class 10th/Mathematics/Arithmetic Progression/AP Advanced Applications.html',
                   progress: 50,
-                  completed: false
-                }
-              ]
-            },
-            {
-              id: 'Pair Of Linear Equations In Two Variables',
-              name: 'Pair Of Linear Equations In Two Variables',
-              progress: 70,
-              completed: false,
-              contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Preview.html',
-              pdfPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Pair of Linear Equations in two variables.pdf',
-              description: 'Solving pairs of linear equations using various methods',
-              subtopics: [
-                {
-                  id: 'linear-equations-preview',
-                  name: 'Linear Equations Preview',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Preview.html',
-                  progress: 80,
-                  completed: false
-                },
-                {
-                  id: 'linear-equations-graphical',
-                  name: 'Graphical Method',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Linear Equations Graphical.html',
-                  progress: 75,
-                  completed: false
-                },
-                {
-                  id: 'substitution-method',
-                  name: 'Substitution Method',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Substitution Method.html',
-                  progress: 70,
-                  completed: false
-                },
-                {
-                  id: 'elimination-method',
-                  name: 'Elimination Method',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Elimination Method.html',
-                  progress: 65,
-                  completed: false
-                },
-                {
-                  id: 'chapter-summary',
-                  name: 'Chapter Summary',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Pair Of Linear Equations In Two Variables/Chapter Summary.html',
-                  progress: 60,
                   completed: false
                 }
               ]
@@ -2904,59 +2985,6 @@ export const curriculum: ClassContent = {
                   name: 'Distance Formula',
                   contentPath: '/FinalContent/Class 10th/Mathematics/Coordinate Geometry/Distance Formula.html',
                   progress: 50,
-                  completed: false
-                }
-              ]
-            },
-            {
-              id: 'Real Numbers',
-              name: 'Real Numbers',
-              progress: 60,
-              completed: false,
-              contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Introduction.html',
-              pdfPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Real numbers.pdf',
-              description: 'Understanding fundamental theorem of arithmetic, HCF, LCM, and irrational numbers',
-              subtopics: [
-                {
-                  id: 'introduction',
-                  name: 'Introduction',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Introduction.html',
-                  progress: 65,
-                  completed: false
-                },
-                {
-                  id: 'fundamental-theorem',
-                  name: 'Fundamental Theorem of Arithmetic',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Fundamental Theorem Of Arithmetic.html',
-                  progress: 60,
-                  completed: false
-                },
-                {
-                  id: 'hcf-lcm-applications',
-                  name: 'Applications of HCF and LCM',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Applications Of Fundamental Theorem - HCF and LCM.html',
-                  progress: 55,
-                  completed: false
-                },
-                {
-                  id: 'digit-endings',
-                  name: 'Checking Digit Endings',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Checking Digit Endings Using Prime Factorization.html',
-                  progress: 50,
-                  completed: false
-                },
-                {
-                  id: 'proving-irrationality',
-                  name: 'Proving Irrationality of Square Roots',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Proving Irrationality Of Square Roots.html',
-                  progress: 45,
-                  completed: false
-                },
-                {
-                  id: 'irrationality-operations',
-                  name: 'Irrationality of Sums and Products',
-                  contentPath: '/FinalContent/Class 10th/Mathematics/Real Numbers/Irrationality Of Sums And Products.html',
-                  progress: 40,
                   completed: false
                 }
               ]
