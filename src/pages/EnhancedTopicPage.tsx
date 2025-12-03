@@ -68,6 +68,18 @@ const EnhancedTopicPage: React.FC = () => {
     }
   }, []);
 
+  // Cleanup AI Tutor connections on unmount or navigation
+  useEffect(() => {
+    // Cleanup function when component unmounts or navigates away
+    return () => {
+      // Force cleanup of AI Tutor SSE connections
+      if (typeof (window as any).forceCleanupAITutor === 'function') {
+        console.log('EnhancedTopicPage: Cleaning up AI Tutor on unmount');
+        (window as any).forceCleanupAITutor();
+      }
+    };
+  }, []);
+
   // Load curriculum data when class is available
   useEffect(() => {
     if (!selectedClass || !subjectId || !topicId) return;

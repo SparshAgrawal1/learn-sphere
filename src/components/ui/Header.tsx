@@ -26,6 +26,20 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const navigate = useNavigate();
 
+  // Handle back button click with cleanup
+  const handleBackClick = () => {
+    // Force cleanup of AI Tutor connections before navigation
+    if (typeof (window as any).forceCleanupAITutor === 'function') {
+      console.log('Header back button: Calling AI Tutor cleanup before navigation');
+      (window as any).forceCleanupAITutor();
+    }
+    
+    // Small delay to ensure cleanup completes
+    setTimeout(() => {
+      navigate(backButtonPath);
+    }, 100);
+  };
+
   return (
     <header className="absolute top-0 left-0 right-0 z-50 px-8 py-3 backdrop-blur-md bg-gradient-to-b from-black/40 to-transparent border-b border-white/10">
       <div className="max-w-7xl mx-auto flex justify-between items-center relative z-50">
@@ -36,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
             <Button
               variant="ghost"
               className="text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-2 pointer-events-auto cursor-pointer"
-              onClick={() => navigate(backButtonPath)}
+              onClick={handleBackClick}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m12 19-7-7 7-7"/>

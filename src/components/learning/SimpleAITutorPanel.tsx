@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Mic, MicOff, BrainCog } from 'lucide-react';
 import { getSseUrl, getSendUrl, getCleanupUrl } from '@/config/api';
+import pako from 'pako';
 
 interface Message {
   id: string;
@@ -92,7 +93,20 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
   const handleAudioChunk = (message: any) => {
     try {
       const sequence = message.sequence || 0;
-      const audioData = base64ToArrayBuffer(message.data);
+      let audioData = base64ToArrayBuffer(message.data);
+      
+      // Check if audio is compressed and decompress it
+      if (message.compressed) {
+        try {
+          const compressedArray = new Uint8Array(audioData);
+          const decompressed = pako.inflate(compressedArray);
+          audioData = decompressed.buffer;
+          const compressionRatio = compressedArray.length / decompressed.length;
+          console.log(`[AUDIO] Decompressed audio: ${compressedArray.length} → ${decompressed.length} bytes (${(compressionRatio * 100).toFixed(1)}% compression)`);
+        } catch (error) {
+          console.error('Failed to decompress audio, using original:', error);
+        }
+      }
       
       // Convert to proper audio format for worklet (Int16Array)
       const int16Array = new Int16Array(audioData);
@@ -539,12 +553,19 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       offset += chunk.length;
     }
     
-    // Send the combined audio data
+    // Compress the audio data before sending
+    const compressedBuffer = pako.deflate(combinedBuffer, { level: 6 });
+    const compressionRatio = compressedBuffer.length / combinedBuffer.length;
+    console.log(`[CLIENT TO AGENT] Compressed audio: ${combinedBuffer.length} → ${compressedBuffer.length} bytes (${(compressionRatio * 100).toFixed(1)}% of original)`);
+    
+    // Send the compressed audio data
     await sendMessage({
       mime_type: "audio/pcm",
-      data: arrayBufferToBase64(combinedBuffer.buffer),
+      data: arrayBufferToBase64(compressedBuffer.buffer),
+      compressed: true,
+      original_size: combinedBuffer.length
     }, true); // isAudioMessage = true for audio messages
-    console.log("[CLIENT TO AGENT] sent %s bytes", combinedBuffer.byteLength);
+    console.log("[CLIENT TO AGENT] sent %s bytes (compressed)", compressedBuffer.byteLength);
     
     // Clear the buffer
     audioBufferRef.current = [];
@@ -638,51 +659,13 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       await startAudio();
       console.log("Audio recording started");
     } else {
-      // Stop voice input and cleanup IMMEDIATELY
-      console.log("Stopping voice input and cleaning up - stopping all data transmission");
+      // Stop voice input and perform FULL cleanup (same as back button/unmount)
+      console.log("Stopping voice input - performing full cleanup");
       
-      // 1. Stop audio buffer timer FIRST to prevent more data transmission
-      if (bufferTimerRef.current) {
-        console.log("Stopping audio buffer timer");
-        clearInterval(bufferTimerRef.current);
-        bufferTimerRef.current = null;
-      }
+      // Call the full cleanup function (same as back button does)
+      cleanupConnections();
       
-      // 2. Clear any pending audio data in buffer
-      if (audioBufferRef.current.length > 0) {
-        console.log("Clearing pending audio buffer data");
-        audioBufferRef.current = [];
-      }
-      
-      // 3. Stop microphone stream
-      if (micStreamRef.current) {
-        console.log("Stopping microphone stream");
-        const { stopMicrophone } = await import('@/utils/audio-recorder');
-        stopMicrophone(micStreamRef.current);
-        micStreamRef.current = null;
-      }
-      
-      // 4. Stop audio player
-      if (audioPlayerNodeRef.current) {
-        console.log("Stopping audio player");
-        audioPlayerNodeRef.current.port.postMessage({ command: "endOfAudio" });
-        audioPlayerNodeRef.current = null;
-      }
-      
-      // 5. Close SSE connection
-      if (eventSourceRef.current) {
-        console.log("Closing SSE connection when stopping voice");
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
-        setIsConnected(false);
-      }
-      
-      // 6. Reset all states
-      setIsVoiceActive(false);
-      setIsPlayingAudio(false);
-      setVoiceStatus('🎤 Click to start voice input');
-      
-      console.log("All audio transmission stopped and connections cleaned up");
+      console.log("Voice stopped - all connections cleaned up");
     }
   };
 

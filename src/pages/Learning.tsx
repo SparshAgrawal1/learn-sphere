@@ -216,6 +216,22 @@ const Learning = () => {
     return 'Dashboard';
   };
 
+  // Handle back button click with cleanup
+  const handleBackClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // Force cleanup of AI Tutor connections before navigation
+    if (typeof (window as any).forceCleanupAITutor === 'function') {
+      console.log('Back button: Calling AI Tutor cleanup before navigation');
+      (window as any).forceCleanupAITutor();
+    }
+    
+    // Small delay to ensure cleanup completes
+    setTimeout(() => {
+      navigate(getBackUrl());
+    }, 100);
+  };
+
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--bg-primary)' }}>
       {/* Glassmorphic Header */}
@@ -224,6 +240,7 @@ const Learning = () => {
           <div className="flex items-center gap-6">
             <Link 
               to={getBackUrl()} 
+              onClick={handleBackClick}
               className="glass-button flex items-center gap-2 text-sm"
             >
               <ArrowLeft className="h-4 w-4" />
