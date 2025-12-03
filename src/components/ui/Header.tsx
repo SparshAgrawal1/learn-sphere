@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, User, Settings, Bell } from 'lucide-react';
+import { LogOut, User, Settings, Bell, Sparkles } from 'lucide-react';
 import Logo from '@/components/landing/Logo';
 import { Button } from '@/components/ui/button';
 
@@ -83,7 +83,18 @@ const Header: React.FC<HeaderProps> = ({
           )}
           
           {currentPage !== 'landing' && (
-            <div className="flex items-center gap-3">
+            <>
+              <Button
+                variant="default"
+                size="sm"
+                className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white text-xs px-2.5 py-1 h-auto flex items-center gap-1 pointer-events-auto cursor-pointer"
+                onClick={() => window.open('https://learnwithai.calance.work/', '_blank')}
+              >
+                <Sparkles size={14} />
+                AI Content Generator
+              </Button>
+              
+              <div className="flex items-center gap-3">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -108,6 +119,7 @@ const Header: React.FC<HeaderProps> = ({
                 <User size={18} className="text-white" />
               </motion.button>
             </div>
+            </>
           )}
         </div>
       </div>
