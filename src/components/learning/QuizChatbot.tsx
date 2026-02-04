@@ -233,34 +233,81 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
           return;
         }
 
-        // Handle text messages first (even if turn_complete comes after)
-        if (messageFromServer.mime_type === "text/plain") {
-          console.log("[QUIZ TEXT CHUNK] Received:", messageFromServer.data);
+        // Handle output transcription (for native audio models)
+        // Quiz is text-only, so we show transcriptions as regular text messages
+        if (messageFromServer.outputTranscription && messageFromServer.outputTranscription.text) {
+          const transcriptionText = messageFromServer.outputTranscription.text;
+          const isFinished = messageFromServer.outputTranscription.finished || false;
+
+          console.log("[QUIZ TRANSCRIPTION] Received:", transcriptionText);
           setIsAiTyping(true);
           
-          // Use requestAnimationFrame to ensure proper timing
           requestAnimationFrame(() => {
-            // Add a new message for a new turn
             if (currentMessageIdRef.current === null) {
+              // Start new message
               currentMessageIdRef.current = Math.random().toString(36).substring(7);
-              console.log("[QUIZ NEW MESSAGE] Creating new message with ID:", currentMessageIdRef.current);
+              console.log("[QUIZ NEW MESSAGE] Creating new message from transcription with ID:", currentMessageIdRef.current);
               const newAiMessage: Message = {
                 id: currentMessageIdRef.current,
-                content: messageFromServer.data,
+                content: transcriptionText,
                 isAi: true,
                 timestamp: new Date()
               };
               setMessages(prev => [...prev, newAiMessage]);
             } else {
-              // Update existing message
-              console.log("[QUIZ UPDATE MESSAGE] Updating message ID:", currentMessageIdRef.current);
-              setMessages(prev => prev.map(msg => 
-                msg.id === currentMessageIdRef.current 
-                  ? { ...msg, content: msg.content + messageFromServer.data }
-                  : msg
-              ));
+              // Append to existing message (streaming)
+              // Check if transcription is cumulative (full text) or incremental (new chunk)
+              console.log("[QUIZ UPDATE MESSAGE] Updating message from transcription ID:", currentMessageIdRef.current);
+              setMessages(prev => prev.map(msg => {
+                if (msg.id === currentMessageIdRef.current) {
+                  const currentContent = msg.content;
+                  
+                  // If transcription text starts with existing content, it's cumulative (full text)
+                  // In this case, replace the content instead of appending
+                  if (transcriptionText.startsWith(currentContent)) {
+                    console.log("[QUIZ] Cumulative text detected, replacing content");
+                    return { ...msg, content: transcriptionText };
+                  }
+                  
+                  // If the transcription text is already at the end, don't append (prevents duplicates)
+                  if (currentContent.endsWith(transcriptionText)) {
+                    console.log("[QUIZ] Skipping duplicate text (already at end)");
+                    return msg; // No change needed
+                  }
+                  
+                  // If finished and the full transcription text is already in the message, don't append
+                  if (isFinished && currentContent.includes(transcriptionText) && transcriptionText.length > 10) {
+                    console.log("[QUIZ] Skipping duplicate finished text (already in message)");
+                    return msg; // No change needed
+                  }
+                  
+                  // Append new incremental transcription text
+                  return { ...msg, content: currentContent + transcriptionText };
+                }
+                return msg;
+              }));
             }
           });
+
+          if (isFinished) {
+            currentMessageIdRef.current = null;
+            setIsAiTyping(false);
+          }
+        }
+
+        // Ignore audio chunks in quiz (text-only mode)
+        if (messageFromServer.mime_type === "audio/pcm") {
+          console.log("[QUIZ] Ignoring audio chunk in text-only quiz mode");
+        }
+
+        // Handle text messages (for half-cascade models)
+        // Note: Native audio models use transcriptions, not text parts
+        // Skip text messages since we're using native audio models with transcriptions (prevents duplicates)
+        if (messageFromServer.mime_type === "text/plain") {
+          // Skip text messages - we're using native audio models with transcriptions
+          // This prevents duplicate messages (transcription + text part)
+          console.log("[QUIZ] Skipping text message (using transcriptions instead)");
+          return;
         }
 
         // Check if the turn is complete (after processing text)

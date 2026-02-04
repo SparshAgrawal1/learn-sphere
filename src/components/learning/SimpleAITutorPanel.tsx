@@ -51,6 +51,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
   const currentMessageIdRef = useRef<string | null>(null);
+  const currentInputTranscriptionIdRef = useRef<string | null>(null);
   const sessionIdRef = useRef<string>(Math.random().toString().substring(10));
   const hasConnectedRef = useRef<boolean>(false); // Track if we've ever connected
   const chunkCounterRef = useRef<number>(0); // Track chunk order
@@ -291,6 +292,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       setIsAiTyping(false);
       // Reset message tracking for new connection
       currentMessageIdRef.current = null;
+      currentInputTranscriptionIdRef.current = null;
       chunkCounterRef.current = 0;
     };
 
@@ -311,6 +313,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
           // Add a small delay to ensure all chunks are processed before clearing the current message ID
           setTimeout(() => {
             currentMessageIdRef.current = null;
+            currentInputTranscriptionIdRef.current = null;
             chunkCounterRef.current = 0; // Reset chunk counter
             setIsAiTyping(false);
             handleTurnComplete(); // Properly handle turn completion
@@ -327,8 +330,105 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
           return;
         }
 
+        // Handle input transcription (user's spoken words in audio mode)
+        // This shows what the user said when using voice input
+        if (messageFromServer.inputTranscription && messageFromServer.inputTranscription.text) {
+          const transcriptionText = messageFromServer.inputTranscription.text;
+          const isFinished = messageFromServer.inputTranscription.finished || false;
+          
+          // Only show input transcription in audio mode
+          if (isAudio) {
+            requestAnimationFrame(() => {
+              if (currentInputTranscriptionIdRef.current === null) {
+                // Create new input transcription message
+                currentInputTranscriptionIdRef.current = Math.random().toString(36).substring(7);
+                const newMessage: Message = {
+                  id: currentInputTranscriptionIdRef.current,
+                  content: transcriptionText,
+                  isAi: false,
+                  timestamp: new Date()
+                };
+                setMessages(prev => [...prev, newMessage]);
+              } else {
+                // Update existing input transcription message
+                setMessages(prev => prev.map(msg => 
+                  msg.id === currentInputTranscriptionIdRef.current 
+                    ? { ...msg, content: msg.content + transcriptionText }
+                    : msg
+                ));
+              }
+            });
+
+            if (isFinished) {
+              currentInputTranscriptionIdRef.current = null;
+            }
+          }
+        }
+
+        // Handle output transcription (for native audio models)
+        // Text mode: show as regular message (no audio playback)
+        // Audio mode: show as transcription (secondary to audio)
+        if (messageFromServer.outputTranscription && messageFromServer.outputTranscription.text) {
+          const transcriptionText = messageFromServer.outputTranscription.text;
+          const isFinished = messageFromServer.outputTranscription.finished || false;
+          
+          setIsAiTyping(true);
+          
+          // Use requestAnimationFrame for smooth UI updates
+          requestAnimationFrame(() => {
+            if (currentMessageIdRef.current === null) {
+              // Start new message
+              currentMessageIdRef.current = Math.random().toString(36).substring(7);
+              const newMessage: Message = {
+                id: currentMessageIdRef.current,
+                content: transcriptionText,
+                isAi: true,
+                timestamp: new Date()
+              };
+              setMessages(prev => [...prev, newMessage]);
+            } else {
+              // Append to existing message (streaming)
+              // Check if transcription is cumulative (full text) or incremental (new chunk)
+              setMessages(prev => prev.map(msg => {
+                if (msg.id === currentMessageIdRef.current) {
+                  const currentContent = msg.content;
+                  
+                  // If transcription text starts with existing content, it's cumulative (full text)
+                  // In this case, replace the content instead of appending
+                  if (transcriptionText.startsWith(currentContent)) {
+                    console.log("[TRANSCRIPTION] Cumulative text detected, replacing content");
+                    return { ...msg, content: transcriptionText };
+                  }
+                  
+                  // If the transcription text is already at the end, don't append (prevents duplicates)
+                  if (currentContent.endsWith(transcriptionText)) {
+                    console.log("[TRANSCRIPTION] Skipping duplicate text (already at end)");
+                    return msg; // No change needed
+                  }
+                  
+                  // If finished and the full transcription text is already in the message, don't append
+                  if (isFinished && currentContent.includes(transcriptionText) && transcriptionText.length > 10) {
+                    console.log("[TRANSCRIPTION] Skipping duplicate finished text (already in message)");
+                    return msg; // No change needed
+                  }
+                  
+                  // Append new incremental transcription text
+                  return { ...msg, content: currentContent + transcriptionText };
+                }
+                return msg;
+              }));
+            }
+          });
+
+          if (isFinished) {
+            currentMessageIdRef.current = null;
+            setIsAiTyping(false);
+          }
+        }
+
         // Handle audio messages with chunk ordering
-        if (messageFromServer.mime_type === "audio/pcm") {
+        // Only process audio in audio mode - in text mode, ignore audio chunks and show transcriptions only
+        if (messageFromServer.mime_type === "audio/pcm" && isAudio) {
           const sequence = messageFromServer.sequence || 0;
           
           // Detect new response by checking if this is sequence 1 (first chunk of new response)
@@ -340,32 +440,19 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
           setIsPlayingAudio(true);
           handleAudioChunk(messageFromServer);
           console.log("[AGENT TO CLIENT] received audio chunk, sequence:", messageFromServer.sequence);
+        } else if (messageFromServer.mime_type === "audio/pcm" && !isAudio) {
+          // In text mode, ignore audio chunks - we only show transcriptions
+          console.log("[AGENT TO CLIENT] Ignoring audio chunk in text mode (showing transcriptions only)");
         }
 
-        // Handle text messages - only show text in text mode, not in audio mode
+        // Handle text messages (for half-cascade models in text mode)
+        // Note: Native audio models use transcriptions, not text parts
+        // In text mode, skip text messages since we're using transcriptions (prevents duplicates)
         if (messageFromServer.mime_type === "text/plain" && !isAudio) {
-          setIsAiTyping(true);
-          chunkCounterRef.current++;
-          
-          // Add a new message for a new turn
-          if (currentMessageIdRef.current === null) {
-            currentMessageIdRef.current = Math.random().toString(36).substring(7);
-            chunkCounterRef.current = 1; // Reset counter for new message
-            const newAiMessage: Message = {
-              id: currentMessageIdRef.current,
-              content: messageFromServer.data,
-              isAi: true,
-              timestamp: new Date()
-            };
-            setMessages(prev => [...prev, newAiMessage]);
-          } else {
-            // Update existing message - append new chunk
-            setMessages(prev => prev.map(msg => 
-              msg.id === currentMessageIdRef.current 
-                ? { ...msg, content: msg.content + messageFromServer.data }
-                : msg
-            ));
-          }
+          // Skip text messages in text mode - we're using native audio models with transcriptions
+          // This prevents duplicate messages (transcription + text part)
+          console.log("[AGENT TO CLIENT] Skipping text message in text mode (using transcriptions instead)");
+          return;
         }
       } catch (error) {
         console.error('[SSE MESSAGE ERROR]', error);
