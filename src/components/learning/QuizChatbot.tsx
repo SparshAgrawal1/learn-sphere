@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Send, X, Image, Paperclip } from 'lucide-react';
 import { getSseUrl, getSendUrl } from '@/config/api';
+import Scratchpad from './Scratchpad';
 
 interface Message {
   id: string;
@@ -38,6 +39,7 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [imageError, setImageError] = useState<string | null>(null);
+  const [isScratchpadSubmitting, setIsScratchpadSubmitting] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
@@ -330,19 +332,31 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
       }
     };
 
-    eventSourceRef.current.onerror = () => {
-      console.log("Quiz SSE connection error or closed.");
+    eventSourceRef.current.onerror = (error) => {
+      console.log("Quiz SSE connection error or closed.", error);
       setIsConnected(false);
       setIsConnecting(false);
+      
+      // Add error message to chat
+      const errorMessage: Message = {
+        id: Math.random().toString(36).substring(7),
+        content: '⚠️ Connection lost. The session may have been terminated by the server. This can happen due to API limits or content restrictions. Starting a new session...',
+        isAi: true,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+      
       if (eventSourceRef.current) {
         eventSourceRef.current.close();
+        eventSourceRef.current = null;
       }
-      // Attempt to reconnect after 5 seconds
+      
+      // Attempt to reconnect after 3 seconds
       setTimeout(() => {
         console.log("Reconnecting quiz...");
         setIsConnecting(true);
         connectSSE();
-      }, 5000);
+      }, 3000);
     };
   };
 
@@ -467,6 +481,82 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
     }
   };
 
+  // Handle scratchpad submission - sends canvas image as multimodal data
+  const handleScratchpadSubmit = async (imageData: string) => {
+    if (!isConnected || isScratchpadSubmitting) return;
+
+    setIsScratchpadSubmitting(true);
+
+    try {
+      const sendUrl = getSendUrl(sessionIdRef.current);
+      
+      // Build multimodal message payload
+      const messagePayload = {
+        type: 'multimodal',
+        image: imageData,
+        mimeType: 'image/png',
+        text: 'Evaluate this answer from the scratchpad',
+        // Add all the parameters that are sent during SSE connection
+        subject: currentSubject,
+        is_audio: false,
+        is_quiz: true,
+        // Add chapter-specific parameters if provided
+        ...(pdfPath && { pdf_path: pdfPath }),
+        ...(topicName && { chapter_name: topicName }),
+        ...(classNumber && { class_number: classNumber }),
+        ...(subjectName && { subject_name: subjectName })
+      };
+      
+      console.log('[QUIZ SCRATCHPAD] Sending multimodal answer for evaluation');
+      
+      const response = await fetch(sendUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messagePayload)
+      });
+      
+      if (!response.ok) {
+        console.error('[QUIZ SCRATCHPAD] Failed to send scratchpad answer:', response.statusText);
+        
+        // Show error message
+        const errorMessage: Message = {
+          id: Math.random().toString(36).substring(7),
+          content: '⚠️ Failed to submit scratchpad answer. Please try again.',
+          isAi: true,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      } else {
+        console.log('[QUIZ SCRATCHPAD] Successfully sent scratchpad answer for evaluation');
+        
+        // Add a user message to show the scratchpad was submitted with image preview
+        const userMessage: Message = {
+          id: Math.random().toString(36).substring(7),
+          content: '📝 Submitted my answer from the scratchpad',
+          isAi: false,
+          timestamp: new Date(),
+          imageUrl: `data:image/png;base64,${imageData}`
+        };
+        setMessages(prev => [...prev, userMessage]);
+      }
+    } catch (error) {
+      console.error('[QUIZ SCRATCHPAD] Error sending scratchpad answer:', error);
+      
+      // Show error message
+      const errorMessage: Message = {
+        id: Math.random().toString(36).substring(7),
+        content: '⚠️ Error submitting scratchpad answer. Please try again.',
+        isAi: true,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsScratchpadSubmitting(false);
+    }
+  };
+
   // Cleanup function for SSE
   const cleanupConnections = () => {
     console.log('QuizChatbot - Cleaning up connections');
@@ -544,8 +634,8 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
       {/* Backdrop with blur effect */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-md" />
       
-      {/* Quiz Chatbot Container */}
-      <div className="relative w-full h-full max-w-4xl max-h-[90vh] mx-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col">
+      {/* Quiz Container - Wider to accommodate both panels */}
+      <div className="relative w-full h-full max-w-7xl max-h-[95vh] mx-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col">
         {/* Fixed Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-orange-400/80 to-orange-500/80 text-white flex-shrink-0">
           <div className="flex items-center gap-3">
@@ -570,6 +660,11 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
             <X className="w-6 h-6" />
           </button>
         </div>
+        
+        {/* Main Content - Split Layout: Chatbot + Scratchpad */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Left Panel - Quiz Chatbot */}
+          <div className="flex-1 flex flex-col border-r border-gray-200 min-w-0">
         
         {/* Chat Interface - Takes remaining space */}
         <div className="flex-1 flex flex-col overflow-hidden">
@@ -820,6 +915,19 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
             )}
           </div>
         </div>
+        {/* End of Chat Interface */}
+        </div>
+        {/* End of Left Panel - Quiz Chatbot */}
+          
+        {/* Right Panel - Scratchpad */}
+          <div className="w-[45%] min-w-[350px] max-w-[500px] flex-shrink-0 p-4 bg-gray-50 hidden lg:block">
+            <Scratchpad 
+              onSubmit={handleScratchpadSubmit}
+              isSubmitting={isScratchpadSubmitting}
+            />
+          </div>
+        </div>
+        {/* End of Main Content - Split Layout */}
       </div>
     </div>
   );
