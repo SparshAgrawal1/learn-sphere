@@ -1,0 +1,41 @@
+name: Build and Deploy to S3
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Create .env file
+        run: |
+          echo "VITE_BACKEND_URL=https://smart-content-backend.calance.work" > .env
+
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1 
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync dist/ s3://learn-sphere.calance-labs.calance.work --delete
