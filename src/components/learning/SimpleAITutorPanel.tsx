@@ -858,23 +858,15 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     };
   }, []);
 
-  // Cleanup on page navigation or refresh
+  // Cleanup on page navigation or refresh (but NOT on tab switch)
   useEffect(() => {
     const handleBeforeUnload = () => {
       cleanupConnections();
     };
 
-    // More targeted visibility handling - only cleanup on actual navigation away
-    const handleVisibilityChange = () => {
-      // Only cleanup if hidden for more than 5 seconds (indicates navigation away)
-      if (document.hidden) {
-        setTimeout(() => {
-          if (document.hidden) {
-            cleanupConnections();
-          }
-        }, 5000);
-      }
-    };
+    // NOTE: Removed visibilitychange handler - we want to keep the connection
+    // alive when user switches tabs, as they may be looking at other resources
+    // while waiting for AI responses
 
     // Handle popstate for browser back/forward navigation
     const handlePopState = () => {
@@ -882,12 +874,10 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('popstate', handlePopState);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('popstate', handlePopState);
     };
   }, []);

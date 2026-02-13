@@ -509,24 +509,20 @@ const BackendAITutorPanel: React.FC<BackendAITutorPanelProps> = ({
     };
   }, []);
 
-  // Cleanup on page navigation or refresh
+  // Cleanup on page navigation or refresh (but NOT on tab switch)
   useEffect(() => {
     const handleBeforeUnload = () => {
       cleanupConnections();
     };
 
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        cleanupConnections();
-      }
-    };
+    // NOTE: Removed visibilitychange handler - we want to keep the connection
+    // alive when user switches tabs, as they may be looking at other resources
+    // while waiting for AI responses
 
     window.addEventListener('beforeunload', handleBeforeUnload);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

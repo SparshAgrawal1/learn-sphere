@@ -229,6 +229,34 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
         const messageFromServer = JSON.parse(event.data);
         console.log("[QUIZ AGENT TO CLIENT]", messageFromServer);
         
+        // Handle backend reconnection events (1011 timeout handling)
+        if (messageFromServer.reconnecting) {
+          console.log('[QUIZ] Backend is reconnecting session...');
+          setIsConnecting(true);
+          const reconnectMessage: Message = {
+            id: Math.random().toString(36).substring(7),
+            content: '⏳ Session refreshing, please wait...',
+            isAi: true,
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, reconnectMessage]);
+          return;
+        }
+        
+        if (messageFromServer.reconnected) {
+          console.log('[QUIZ] Backend successfully reconnected session!');
+          setIsConnecting(false);
+          setIsConnected(true);
+          const reconnectedMessage: Message = {
+            id: Math.random().toString(36).substring(7),
+            content: '✅ Session resumed. You can continue your quiz!',
+            isAi: true,
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, reconnectedMessage]);
+          return;
+        }
+        
         // Handle error messages
         if (messageFromServer.error) {
           console.error('[QUIZ ERROR]', messageFromServer.error, messageFromServer.message);
@@ -333,30 +361,66 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
     };
 
     eventSourceRef.current.onerror = (error) => {
-      console.log("Quiz SSE connection error or closed.", error);
-      setIsConnected(false);
-      setIsConnecting(false);
+      console.log("[QUIZ] SSE connection error detected", error);
       
-      // Add error message to chat
-      const errorMessage: Message = {
-        id: Math.random().toString(36).substring(7),
-        content: '⚠️ Connection lost. The session may have been terminated by the server. This can happen due to API limits or content restrictions. Starting a new session...',
-        isAi: true,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      // Check the connection state
+      const readyState = eventSourceRef.current?.readyState;
       
-      if (eventSourceRef.current) {
-        eventSourceRef.current.close();
-        eventSourceRef.current = null;
+      // CONNECTING (0): SSE is trying to reconnect - let it continue
+      if (readyState === EventSource.CONNECTING) {
+        console.log("[QUIZ] SSE is reconnecting, waiting...");
+        setIsConnecting(true);
+        return;
       }
       
-      // Attempt to reconnect after 3 seconds
-      setTimeout(() => {
-        console.log("Reconnecting quiz...");
+      // CLOSED (2): Connection is truly closed - need to handle
+      // Note: Backend now handles 1011 timeouts internally and sends reconnecting/reconnected events
+      // So this error handler only fires for true connection failures (network issues, server restart)
+      if (readyState === EventSource.CLOSED) {
+        console.log("[QUIZ] SSE connection closed, waiting briefly for backend to recover...");
         setIsConnecting(true);
-        connectSSE();
-      }, 3000);
+        
+        // Wait 5 seconds to see if backend recovers (for transient network issues)
+        setTimeout(() => {
+          // Check if connection was restored
+          if (eventSourceRef.current?.readyState === EventSource.OPEN) {
+            console.log("[QUIZ] Connection restored!");
+            setIsConnecting(false);
+            setIsConnected(true);
+            return;
+          }
+          
+          console.log("[QUIZ] Connection still closed, starting new session...");
+          setIsConnected(false);
+          setIsConnecting(false);
+          
+          if (eventSourceRef.current) {
+            eventSourceRef.current.close();
+            eventSourceRef.current = null;
+          }
+          
+          // Add a friendly message
+          const errorMessage: Message = {
+            id: Math.random().toString(36).substring(7),
+            content: '⚠️ Connection lost. Starting a new session...',
+            isAi: true,
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, errorMessage]);
+          
+          // Generate new session ID for the new session
+          sessionIdRef.current = Math.random().toString().substring(10);
+          // Reset initial message flag so we send "Start Quiz" again for new session
+          setHasSentInitialMessage(false);
+          
+          // Start a new session
+          setTimeout(() => {
+            console.log("[QUIZ] Starting new session with ID:", sessionIdRef.current);
+            setIsConnecting(true);
+            connectSSE();
+          }, 1000);
+        }, 5000); // Wait 5 seconds (backend handles longer reconnections internally)
+      }
     };
   };
 
@@ -597,24 +661,20 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
     };
   }, []);
 
-  // Cleanup on page navigation or refresh
+  // Cleanup on page navigation or refresh (but NOT on tab switch)
   useEffect(() => {
     const handleBeforeUnload = () => {
       cleanupConnections();
     };
 
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        cleanupConnections();
-      }
-    };
+    // NOTE: Removed visibilitychange handler - we want to keep the connection
+    // alive when user switches tabs, as they may be looking at other resources
+    // while waiting for quiz responses
 
     window.addEventListener('beforeunload', handleBeforeUnload);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
