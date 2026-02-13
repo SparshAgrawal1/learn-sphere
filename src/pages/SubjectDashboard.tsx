@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ChevronRight, ArrowLeft, BookOpen, Zap, Brain, GraduationCap } from 'lucide-react';
+import { ChevronRight, ArrowLeft, BookOpen, Zap, Brain, GraduationCap, FlaskConical, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/ui/Header';
 import TopicTimeline from '@/components/dashboard/TopicTimeline';
@@ -710,6 +710,36 @@ const SubjectDashboard: React.FC = () => {
                   </div>
                 </div>
               </motion.div>
+              
+              {/* Reinforcement Learning Button - Only for Science Subject (Mobile) */}
+              {classSpecificSubject.id?.toLowerCase() === 'science' && (
+                <motion.div 
+                  className="backdrop-blur-xl bg-gradient-to-r from-cyan-500/30 to-blue-500/20 rounded-2xl p-3 border border-cyan-400/30 hover:border-cyan-400/50 transition-all duration-300 shadow-lg shadow-cyan-500/20 cursor-pointer"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  onClick={() => window.open('https://physics-lab-simulations.vercel.app/', '_blank')}
+                >
+                  <div className="flex items-center gap-3">
+                    <div 
+                      className="w-10 h-10 rounded-xl flex items-center justify-center"
+                      style={{ 
+                        background: `linear-gradient(135deg, #06B6D480, #3B82F660)`,
+                      }}
+                    >
+                      <FlaskConical size={20} className="text-white" />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-white text-sm font-bold">Reinforcement Learning</h3>
+                        <ExternalLink size={12} className="text-cyan-400" />
+                      </div>
+                      <p className="text-white/60 text-xs">Interactive 3D simulations</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
             
             {/* Mobile TopicTimeline */}
@@ -823,6 +853,69 @@ const SubjectDashboard: React.FC = () => {
                 </div>
               </div>
             </motion.div>
+            
+            {/* Reinforcement Learning Button - Only for Science Subject */}
+            {classSpecificSubject.id?.toLowerCase() === 'science' && (
+              <motion.div 
+                className="backdrop-blur-xl bg-gradient-to-r from-cyan-500/30 to-blue-500/20 rounded-2xl p-4 border border-cyan-400/30 hover:border-cyan-400/50 transition-all duration-300 shadow-lg shadow-cyan-500/20 cursor-pointer group"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                onClick={() => window.open('https://physics-lab-simulations.vercel.app/', '_blank')}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div 
+                      className="w-12 h-12 rounded-xl flex items-center justify-center relative overflow-hidden"
+                      style={{ 
+                        background: `linear-gradient(135deg, #06B6D480, #3B82F660)`,
+                        boxShadow: `0 4px 12px #06B6D430`
+                      }}
+                    >
+                      <FlaskConical size={24} className="text-white" />
+                      {/* Animated glow effect */}
+                      <motion.div 
+                        className="absolute inset-0 rounded-xl"
+                        style={{ 
+                          background: `radial-gradient(circle, #06B6D440 0%, transparent 70%)`
+                        }}
+                        animate={{ 
+                          scale: [1, 1.2, 1],
+                          opacity: [0.3, 0.7, 0.3]
+                        }}
+                        transition={{ 
+                          duration: 2, 
+                          repeat: Infinity
+                        }}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-white text-base font-bold">Reinforcement Learning</h3>
+                      <ExternalLink size={14} className="text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
+                    <p className="text-white/60 text-xs mt-0.5">Interactive 3D simulations for deeper understanding</p>
+                  </div>
+                </div>
+                
+                {/* Features */}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-medium">
+                    NCERT Aligned
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-medium">
+                    3D Simulations
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-medium">
+                    AI Narration
+                  </span>
+                </div>
+              </motion.div>
+            )}
             
             {/* Compact AI Insights Panel */}
             <div className="flex-grow overflow-hidden">

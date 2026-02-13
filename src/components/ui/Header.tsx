@@ -102,7 +102,7 @@ const Header: React.FC<HeaderProps> = ({
                 variant="default"
                 size="sm"
                 className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white text-xs px-2.5 py-1 h-auto flex items-center gap-1 pointer-events-auto cursor-pointer"
-                onClick={() => window.open('https://learnwithai.calance.work/', '_blank')}
+                onClick={() => window.open('https://learnwithai.calance-labs.calance.work/', '_blank')}
               >
                 <Sparkles size={14} />
                 AI Content Generator
