@@ -906,7 +906,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
           width: 3px;
           height: 14px;
           border-radius: 2px;
-          background: linear-gradient(180deg, #FF6B35, #0D9B96);
+          background: linear-gradient(180deg, #0891B2, #1E3A5F);
           transform-origin: bottom;
           animation: svgai-wave 0.9s ease-in-out infinite;
         }
@@ -919,26 +919,26 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
       <motion.div
         className="flex-1 flex flex-col overflow-hidden"
         style={{
-          background: '#100E08',
-          borderLeft: '1px solid rgba(255,107,53,0.1)',
+          background: '#FFFFFF',
+          borderLeft: '1px solid rgba(8,145,178,0.1)',
         }}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
       >
         {/* Header */}
-        <div className="flex-shrink-0 flex items-center justify-between px-4 py-3 border-b border-white/[0.05]">
+        <div className="flex-shrink-0 flex items-center justify-between px-4 py-3 border-b border-slate-200">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.25), rgba(13,155,150,0.2))' }}>
-              <BrainCog className="h-3.5 w-3.5 text-[#FF8C5A]" />
+              style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.25), rgba(30,58,95,0.2))' }}>
+              <BrainCog className="h-3.5 w-3.5 text-[#0891B2]" />
             </div>
             <div>
-              <h3 className="text-xs font-semibold text-white/80 leading-none">AI Tutor</h3>
+              <h3 className="text-xs font-semibold text-slate-700 leading-none">AI Tutor</h3>
               <div className="flex items-center gap-1 mt-0.5">
-                <div className={`w-1.5 h-1.5 rounded-full ${isConnected ? 'bg-emerald-400' : 'bg-white/20'}`}
+                <div className={`w-1.5 h-1.5 rounded-full ${isConnected ? 'bg-emerald-400' : 'bg-slate-200'}`}
                   style={{ boxShadow: isConnected ? '0 0 6px rgba(52,211,153,0.6)' : 'none' }} />
-                <span className="text-[9px] text-white/25">{isConnected ? 'Connected' : 'Connecting...'}</span>
+                <span className="text-[9px] text-slate-400">{isConnected ? 'Connected' : 'Connecting...'}</span>
               </div>
             </div>
           </div>
@@ -947,7 +947,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
             <button
               onClick={() => { resetForNewConversation(); }}
               title="Reset conversation"
-              className="w-6 h-6 rounded-md flex items-center justify-center text-white/25 hover:text-white/50 hover:bg-white/[0.05] transition-all"
+              className="w-6 h-6 rounded-md flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all"
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
@@ -959,7 +959,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
             {isMobile && (
               <button
                 onClick={() => { cleanupConnections(); if (onClose) onClose(); }}
-                className="w-6 h-6 rounded-md flex items-center justify-center text-white/25 hover:text-white/50 hover:bg-white/[0.05] transition-all"
+                className="w-6 h-6 rounded-md flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all"
               >
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -971,10 +971,10 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
 
         {/* Topic badge */}
         {subtopicTitle && subtopicTitle !== 'Learning' && (
-          <div className="px-4 py-2 border-b border-white/[0.04]">
-            <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-violet-500/[0.07] border border-violet-500/[0.12]">
-              <div className="w-1 h-4 rounded-full" style={{ background: 'linear-gradient(180deg, #FF6B35, #0D9B96)' }} />
-              <span className="text-[11px] text-orange-300/70 leading-snug line-clamp-1">{subtopicTitle}</span>
+          <div className="px-4 py-2 border-b border-slate-200">
+            <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
+              <div className="w-1 h-4 rounded-full" style={{ background: 'linear-gradient(180deg, #0891B2, #1E3A5F)' }} />
+              <span className="text-[11px] text-slate-700/70 leading-snug line-clamp-1">{subtopicTitle}</span>
             </div>
           </div>
         )}
@@ -984,10 +984,10 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full py-8 text-center">
               <div className="w-10 h-10 rounded-xl mb-3 flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.15), rgba(13,155,150,0.1))' }}>
-                <BrainCog className="h-5 w-5 text-[#FF8C5A]/60" />
+                style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.15), rgba(30,58,95,0.1))' }}>
+                <BrainCog className="h-5 w-5 text-[#0891B2]/60" />
               </div>
-              <p className="text-xs text-white/30 leading-relaxed max-w-[180px]">
+              <p className="text-xs text-slate-400 leading-relaxed max-w-[180px]">
                 {isAudio
                   ? 'Voice mode active. Click the mic to start speaking.'
                   : `Ask me anything about this topic, or use voice mode.`}
@@ -1005,20 +1005,20 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
             >
               {message.isAi && (
                 <div className="w-5 h-5 rounded-md mr-1.5 mt-0.5 flex-shrink-0 flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.15))' }}>
-                  <BrainCog className="h-2.5 w-2.5 text-[#FF8C5A]/70" />
+                  style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.2), rgba(30,58,95,0.15))' }}>
+                  <BrainCog className="h-2.5 w-2.5 text-[#0891B2]/70" />
                 </div>
               )}
               <div
                 className={`max-w-[80%] px-3 py-2 rounded-xl text-xs leading-relaxed ${message.isAi ? '' : 'text-white'}`}
                 style={message.isAi ? {
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  color: 'rgba(255,255,255,0.75)',
+                  background: '#F1F5F9',
+                  border: '1px solid rgba(30,58,95,0.1)',
+                  color: '#1E293B',
                   borderRadius: '0.75rem 0.75rem 0.75rem 0.2rem',
                 } : {
-                  background: 'linear-gradient(135deg, #FF6B35, #E0521A)',
-                  boxShadow: '0 4px 15px rgba(255,107,53,0.2)',
+                  background: 'linear-gradient(135deg, #0891B2, #1E3A5F)',
+                  boxShadow: '0 4px 15px rgba(8,145,178,0.2)',
                   borderRadius: '0.75rem 0.75rem 0.2rem 0.75rem',
                 }}
               >
@@ -1031,14 +1031,14 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
           {isAiTyping && !isAudio && (
             <motion.div className="flex justify-start" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <div className="w-5 h-5 rounded-md mr-1.5 mt-0.5 flex-shrink-0 flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.15))' }}>
-                <BrainCog className="h-2.5 w-2.5 text-[#FF8C5A]/70" />
+                style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.2), rgba(30,58,95,0.15))' }}>
+                <BrainCog className="h-2.5 w-2.5 text-[#0891B2]/70" />
               </div>
-              <div className="px-3 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="px-3 py-2.5 rounded-xl" style={{ background: 'rgba(30,58,95,0.04)', border: '1px solid rgba(30,58,95,0.08)' }}>
                 <div className="flex items-end gap-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" style={{ animationDelay: '0.15s' }} />
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" style={{ animationDelay: '0.3s' }} />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#0891B2]/50 animate-bounce" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#0891B2]/50 animate-bounce" style={{ animationDelay: '0.15s' }} />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#0891B2]/50 animate-bounce" style={{ animationDelay: '0.3s' }} />
                 </div>
               </div>
             </motion.div>
@@ -1047,11 +1047,11 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
           {isPlayingAudio && isAudio && (
             <motion.div className="flex justify-start" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <div className="px-3 py-2 rounded-xl flex items-center gap-2"
-                style={{ background: 'rgba(13,155,150,0.06)', border: '1px solid rgba(13,155,150,0.12)' }}>
+                style={{ background: 'rgba(30,58,95,0.06)', border: '1px solid rgba(30,58,95,0.12)' }}>
                 <div className="flex items-end gap-0.5">
                   {[1,2,3,4,5].map(i => <div key={i} className="voice-wave-bar" style={{ animationDelay: `${(i-1)*0.12}s` }} />)}
                 </div>
-                <span className="text-[10px] text-cyan-300/60">Speaking...</span>
+                <span className="text-[10px] text-teal-600/60">Speaking...</span>
               </div>
             </motion.div>
           )}
@@ -1060,18 +1060,18 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
         </div>
 
         {/* Voice section */}
-        <div className="flex-shrink-0 px-4 py-3 border-t border-white/[0.05]">
+        <div className="flex-shrink-0 px-4 py-3 border-t border-slate-200">
           <button
             onClick={isAudio ? handleVoiceButtonClick : toggleVoiceMode}
             disabled={!isConnected}
             className="w-full flex items-center justify-center gap-2.5 py-2.5 rounded-xl transition-all duration-300"
             style={isVoiceActive ? {
-              background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.15))',
-              border: '1px solid rgba(255,107,53,0.25)',
-              boxShadow: '0 0 20px rgba(255,107,53,0.15)',
+              background: 'linear-gradient(135deg, rgba(8,145,178,0.2), rgba(30,58,95,0.15))',
+              border: '1px solid rgba(8,145,178,0.25)',
+              boxShadow: '0 0 20px rgba(8,145,178,0.15)',
             } : {
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.06)',
+              background: 'rgba(30,58,95,0.03)',
+              border: '1px solid rgba(30,58,95,0.08)',
             }}
           >
             {isVoiceActive ? (
@@ -1079,25 +1079,25 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
                 <div className="flex items-end gap-0.5">
                   {[1,2,3,4,5].map(i => <div key={i} className="voice-wave-bar" style={{ height: '12px', animationDelay: `${(i-1)*0.12}s` }} />)}
                 </div>
-                <span className="text-xs font-medium text-orange-300">Stop Voice</span>
+                <span className="text-xs font-medium text-slate-700">Stop Voice</span>
               </>
             ) : (
               <>
-                <Mic className="h-3.5 w-3.5 text-white/30" />
-                <span className="text-xs font-medium text-white/40">
+                <Mic className="h-3.5 w-3.5 text-slate-400" />
+                <span className="text-xs font-medium text-slate-400">
                   {!isConnected ? 'Connecting...' : isAudio ? 'Start Speaking' : 'Enable Voice'}
                 </span>
               </>
             )}
           </button>
           {isVoiceActive && (
-            <p className="text-[9px] text-[#FF8C5A]/40 text-center mt-1.5">{voiceStatus}</p>
+            <p className="text-[9px] text-[#0891B2]/40 text-center mt-1.5">{voiceStatus}</p>
           )}
         </div>
 
         {/* Text input */}
         <div className="flex-shrink-0 px-3 pb-3">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/[0.06] bg-white/[0.025]">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50">
             <input
               type="text"
               placeholder={
@@ -1105,7 +1105,7 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
                 isAudio ? "Voice mode active..." :
                 "Ask about this topic..."
               }
-              className="flex-1 bg-transparent text-white/75 text-xs focus:outline-none placeholder:text-white/20"
+              className="flex-1 bg-transparent text-slate-700 text-xs focus:outline-none placeholder:text-slate-400"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -1116,15 +1116,15 @@ const SimpleAITutorPanel: React.FC<SimpleAITutorPanelProps> = ({
               className="w-6 h-6 rounded-lg flex items-center justify-center transition-all disabled:opacity-30"
               style={{
                 background: newMessage.trim() && !isAudio && isConnected
-                  ? 'linear-gradient(135deg, #FF6B35, #0D9B96)'
-                  : 'rgba(255,255,255,0.06)',
+                  ? 'linear-gradient(135deg, #0891B2, #1E3A5F)'
+                  : 'rgba(30,58,95,0.08)',
               }}
               onClick={handleSendMessage}
               disabled={!newMessage.trim() || !isConnected || isAudio}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Send className="h-3 w-3 text-white" />
+              <Send className={`h-3 w-3 ${newMessage.trim() && !isAudio && isConnected ? 'text-white' : 'text-slate-500'}`} />
             </motion.button>
           </div>
         </div>

@@ -9,13 +9,13 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-          <div className="flex min-h-screen items-center justify-center bg-[#0F0D08]">
+    <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC]">
       <div className="text-center">
-        <h1 className="text-6xl font-bold svg-gradient-text mb-4">404</h1>
-        <p className="text-lg text-white/40 mb-6">Page not found</p>
+        <h1 className="text-6xl font-bold pioneer-gradient-text mb-4">404</h1>
+        <p className="text-lg mb-6" style={{ color: '#64748B' }}>Page not found</p>
         <Link
           to="/"
-          className="svg-btn-primary inline-flex items-center gap-2"
+          className="pioneer-btn-primary inline-flex items-center gap-2"
         >
           Return Home
         </Link>

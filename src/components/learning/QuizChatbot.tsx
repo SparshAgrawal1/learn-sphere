@@ -692,28 +692,28 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div className="absolute inset-0" style={{ background: 'rgba(7,7,16,0.88)', backdropFilter: 'blur(14px)' }} />
+      <div className="absolute inset-0" style={{ background: 'rgba(30,58,95,0.88)', backdropFilter: 'blur(14px)' }} />
 
       {/* Quiz Container */}
       <div className="relative w-full h-full max-w-7xl max-h-[95vh] mx-4 rounded-2xl overflow-hidden flex flex-col"
-        style={{ background: '#100E08', border: '1px solid rgba(255,107,53,0.12)', boxShadow: '0 40px 80px rgba(0,0,0,0.6)' }}>
+        style={{ background: '#FFFFFF', border: '1px solid rgba(8,145,178,0.12)', boxShadow: '0 40px 80px rgba(0,0,0,0.6)' }}>
         {/* Fixed Header */}
         {/* Header */}
-        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3.5 border-b border-white/[0.05]">
+        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3.5 border-b border-slate-200/[0.05]">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.25), rgba(13,155,150,0.15))' }}>
+              style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.25), rgba(30,58,95,0.15))' }}>
               <svg className="w-4 h-4" style={{ color: '#A78BFA' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white/85">Deep Mastery Quiz</h2>
-              <p className="text-[10px] text-white/30">{subjectName || 'General'} · {topicName}</p>
+              <h2 className="text-sm font-bold text-slate-800/85">Deep Mastery Quiz</h2>
+              <p className="text-[10px] text-slate-800/30">{subjectName || 'General'} · {topicName}</p>
             </div>
           </div>
           <button onClick={handleClose}
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-white/25 hover:text-white/50 hover:bg-white/[0.05] transition-all">
+            className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-800/25 hover:text-slate-800/50 hover:bg-white/[0.05] transition-all">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -721,22 +721,22 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
         {/* Main Content Split */}
         <div className="flex-1 flex overflow-hidden">
           {/* Chat panel */}
-          <div className="flex-1 flex flex-col overflow-hidden border-r border-white/[0.04]">
+          <div className="flex-1 flex flex-col overflow-hidden border-r border-slate-200/[0.04]">
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2 scrollbar-hide">
               {isConnecting && (
                 <div className="flex flex-col items-center justify-center h-full text-center py-8">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
-                    style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.15), rgba(13,155,150,0.1))', border: '1px solid rgba(255,107,53,0.15)' }}>
-                    <div className="w-5 h-5 border-2 border-[#FF6B35] border-t-transparent rounded-full animate-spin" />
+                    style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.15), rgba(30,58,95,0.1))', border: '1px solid rgba(8,145,178,0.15)' }}>
+                    <div className="w-5 h-5 border-2 border-[#0891B2] border-t-transparent rounded-full animate-spin" />
                   </div>
-                  <h3 className="text-sm font-semibold text-white/70 mb-2">Preparing your quiz...</h3>
+                  <h3 className="text-sm font-semibold text-slate-800/70 mb-2">Preparing your quiz...</h3>
                   <div className="space-y-2 w-full max-w-[240px]">
                     {['Analyzing chapter content', 'Generating questions', 'Setting up environment'].map((text, i) => (
                       <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-lg"
-                        style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.04)' }}>
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35] animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
-                        <span className="text-[11px] text-white/35">{text}</span>
+                        style={{ background: 'rgba(30,58,95,0.025)', border: '1px solid rgba(30,58,95,0.04)' }}>
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#0891B2] animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
+                        <span className="text-[11px] text-slate-800/35">{text}</span>
                       </div>
                     ))}
                   </div>
@@ -746,12 +746,12 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
               {!isConnecting && messages.length === 0 && (
                 <div className="flex flex-col items-center justify-center h-full text-center py-8">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
-                    style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.15), rgba(13,155,150,0.1))' }}>
-                    <svg className="w-6 h-6 text-[#FF8C5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.15), rgba(30,58,95,0.1))' }}>
+                    <svg className="w-6 h-6 text-[#0891B2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <p className="text-xs text-white/30 max-w-[200px] leading-relaxed">
+                  <p className="text-xs text-slate-800/30 max-w-[200px] leading-relaxed">
                     Quiz ready. Start answering questions or ask for a hint.
                   </p>
                 </div>
@@ -763,20 +763,20 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
                   {message.isAi && (
                     <div className="w-6 h-6 rounded-lg mr-2 mt-0.5 flex-shrink-0 flex items-center justify-center"
-                      style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.12))' }}>
-                      <svg className="w-3 h-3 text-[#FF8C5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.2), rgba(30,58,95,0.12))' }}>
+                      <svg className="w-3 h-3 text-[#0891B2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                   )}
                   <div className="max-w-[78%] px-3 py-2 rounded-xl text-xs leading-relaxed"
                     style={message.isAi ? {
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(255,255,255,0.06)',
-                      color: 'rgba(255,255,255,0.72)',
+                      background: 'rgba(30,58,95,0.04)',
+                      border: '1px solid rgba(30,58,95,0.06)',
+                      color: 'rgba(30,58,95,0.72)',
                       borderRadius: '0.75rem 0.75rem 0.75rem 0.2rem',
                     } : {
-                      background: 'linear-gradient(135deg, #E0521A, #FF6B35)',
+                      background: 'linear-gradient(135deg, #1E3A5F, #0891B2)',
                       color: 'white',
                       boxShadow: '0 4px 15px rgba(224,82,26,0.2)',
                       borderRadius: '0.75rem 0.75rem 0.2rem 0.75rem',
@@ -793,16 +793,16 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
               {isAiTyping && (
                 <motion.div className="flex justify-start" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <div className="w-6 h-6 rounded-lg mr-2 mt-0.5 flex-shrink-0 flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.12))' }}>
-                    <svg className="w-3 h-3 text-[#FF8C5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    style={{ background: 'linear-gradient(135deg, rgba(8,145,178,0.2), rgba(30,58,95,0.12))' }}>
+                    <svg className="w-3 h-3 text-[#0891B2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <div className="px-3 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className="px-3 py-2.5 rounded-xl" style={{ background: 'rgba(30,58,95,0.04)', border: '1px solid rgba(30,58,95,0.06)' }}>
                     <div className="flex items-end gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" style={{ animationDelay: '0.15s' }} />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" style={{ animationDelay: '0.3s' }} />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#0891B2]/50 animate-bounce" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#0891B2]/50 animate-bounce" style={{ animationDelay: '0.15s' }} />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#0891B2]/50 animate-bounce" style={{ animationDelay: '0.3s' }} />
                     </div>
                   </div>
                 </motion.div>
@@ -813,14 +813,14 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
 
             {/* Image Preview */}
             {imagePreview && (
-              <div className="flex-shrink-0 px-4 py-2.5 border-t border-white/[0.05]">
+              <div className="flex-shrink-0 px-4 py-2.5 border-t border-slate-200/[0.05]">
                 <div className="flex items-center gap-3 px-3 py-2 rounded-lg"
-                  style={{ background: 'rgba(255,107,53,0.07)', border: '1px solid rgba(255,107,53,0.12)' }}>
+                  style={{ background: 'rgba(8,145,178,0.07)', border: '1px solid rgba(8,145,178,0.12)' }}>
                   <img src={imagePreview} alt="Preview" className="w-10 h-10 object-cover rounded-lg" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-white/50 truncate">{selectedImage?.name}</p>
+                    <p className="text-xs text-slate-800/50 truncate">{selectedImage?.name}</p>
                   </div>
-                  <button onClick={removeSelectedImage} className="text-white/25 hover:text-red-400 transition-colors">
+                  <button onClick={removeSelectedImage} className="text-slate-800/25 hover:text-red-400 transition-colors">
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -829,7 +829,7 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
 
             {/* Image Error */}
             {imageError && (
-              <div className="flex-shrink-0 px-4 py-2.5 border-t border-white/[0.05]">
+              <div className="flex-shrink-0 px-4 py-2.5 border-t border-slate-200/[0.05]">
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-red-400/70 text-xs"
                   style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.12)' }}>
                   <span className="flex-1">{imageError}</span>
@@ -841,20 +841,20 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
             )}
 
             {/* Input */}
-            <div className="flex-shrink-0 px-3 pb-3 pt-2 border-t border-white/[0.04]"
+            <div className="flex-shrink-0 px-3 pb-3 pt-2 border-t border-slate-200/[0.04]"
               onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
               <div className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all ${
-                isDragOver ? 'border-violet-500/30 bg-violet-500/[0.06]' : 'border-white/[0.06] bg-white/[0.025]'
+                isDragOver ? 'border-violet-500/30 bg-violet-500/[0.06]' : 'border-slate-200/[0.06] bg-white/[0.025]'
               }`}>
                 {isDragOver && (
                   <div className="absolute inset-0 flex items-center justify-center rounded-xl">
-                    <Image className="h-5 w-5 text-[#FF8C5A]/60" />
+                    <Image className="h-5 w-5 text-[#0891B2]/60" />
                   </div>
                 )}
                 <input
                   type="text"
                   placeholder={isConnecting ? "Preparing..." : !isConnected ? "Connecting..." : isDragOver ? "Drop image..." : "Answer or ask a question..."}
-                  className="flex-1 bg-transparent text-white/75 text-xs focus:outline-none placeholder:text-white/20"
+                  className="flex-1 bg-transparent text-slate-800/75 text-xs focus:outline-none placeholder:text-slate-800/20"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
@@ -862,25 +862,25 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
                 />
                 <input type="file" ref={fileInputRef} onChange={handleImageSelect} accept="image/*" className="hidden" />
                 <button onClick={() => fileInputRef.current?.click()} disabled={!isConnected || isConnecting}
-                  className={`w-6 h-6 rounded-md flex items-center justify-center transition-all disabled:opacity-30 ${selectedImage ? 'text-[#FF8C5A]' : 'text-white/25 hover:text-white/45'}`}>
+                  className={`w-6 h-6 rounded-md flex items-center justify-center transition-all disabled:opacity-30 ${selectedImage ? 'text-[#0891B2]' : 'text-slate-800/25 hover:text-slate-800/45'}`}>
                   <Image className="h-3 w-3" />
                 </button>
                 <button onClick={handleSendMessage}
                   disabled={(!newMessage.trim() && !selectedImage) || !isConnected || isConnecting}
                   className="w-6 h-6 rounded-md flex items-center justify-center transition-all disabled:opacity-30"
-                  style={{ background: (newMessage.trim() || selectedImage) && isConnected && !isConnecting ? 'linear-gradient(135deg, #FF6B35, #0D9B96)' : 'rgba(255,255,255,0.06)' }}>
+                  style={{ background: (newMessage.trim() || selectedImage) && isConnected && !isConnecting ? 'linear-gradient(135deg, #0891B2, #1E3A5F)' : 'rgba(30,58,95,0.06)' }}>
                   {isConnecting
-                    ? <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />
-                    : <Send className="h-3 w-3 text-white" />}
+                    ? <div className="w-3 h-3 border border-slate-200/30 border-t-white rounded-full animate-spin" />
+                    : <Send className="h-3 w-3 text-slate-800" />}
                 </button>
               </div>
             </div>
           </div>
 
           {/* Scratchpad */}
-          <div className="w-[42%] min-w-[320px] max-w-[420px] flex-shrink-0 hidden lg:flex flex-col border-l border-white/[0.04]">
-            <div className="px-4 py-3 border-b border-white/[0.05]">
-              <h3 className="text-xs font-semibold text-white/50 uppercase tracking-wider">Scratchpad</h3>
+          <div className="w-[42%] min-w-[320px] max-w-[420px] flex-shrink-0 hidden lg:flex flex-col border-l border-slate-200/[0.04]">
+            <div className="px-4 py-3 border-b border-slate-200/[0.05]">
+              <h3 className="text-xs font-semibold text-slate-800/50 uppercase tracking-wider">Scratchpad</h3>
             </div>
             <div className="flex-1 p-4 overflow-hidden">
               <Scratchpad onSubmit={handleScratchpadSubmit} isSubmitting={isScratchpadSubmitting} />

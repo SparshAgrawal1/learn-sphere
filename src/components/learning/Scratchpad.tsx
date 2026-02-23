@@ -11,7 +11,7 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState('#FFFFFF');
+  const [color, setColor] = useState('#1E3A5F');
   const [brushSize, setBrushSize] = useState(3);
   const [tool, setTool] = useState<'pen' | 'eraser'>('pen');
   const [history, setHistory] = useState<ImageData[]>([]);
@@ -19,17 +19,17 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
 
   // Colors that work on dark background
   const colors = [
-    '#FFFFFF', // White
-    '#FF6B35', // Orange (brand)
-    '#F9C326', // Yellow (brand)
-    '#0D9B96', // Teal (brand)
+    '#1E3A5F', // Navy (brand)
+    '#0891B2', // Teal (brand)
+    '#F97316', // Orange (brand)
+    '#059669', // Green (brand)
     '#EF4444', // Red
-    '#A78BFA', // Soft violet
+    '#6366F1', // Indigo
   ];
 
   const brushSizes = [2, 4, 6, 8];
 
-  const CANVAS_BG = '#1A1712';
+  const CANVAS_BG = '#FAFBFC';
 
   const initCanvas = useCallback(() => {
     const canvas = canvasRef.current;
@@ -154,23 +154,23 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
 
   return (
     <div className="flex flex-col h-full overflow-hidden rounded-xl"
-      style={{ background: '#131108', border: '1px solid rgba(255,107,53,0.12)' }}>
+      style={{ background: '#FFFFFF', border: '1px solid rgba(8,145,178,0.12)' }}>
       {/* Header */}
       <div className="flex-shrink-0 flex items-center gap-2.5 px-4 py-3 border-b"
-        style={{ borderColor: 'rgba(255,107,53,0.1)', background: 'rgba(255,107,53,0.06)' }}>
+        style={{ borderColor: 'rgba(8,145,178,0.1)', background: 'rgba(8,145,178,0.06)' }}>
         <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-          style={{ background: 'linear-gradient(135deg, #FF6B35, #E0521A)' }}>
-          <Pen className="w-3.5 h-3.5 text-white" />
+          style={{ background: 'linear-gradient(135deg, #0891B2, #1E3A5F)' }}>
+          <Pen className="w-3.5 h-3.5 text-slate-700" />
         </div>
         <div>
-          <h3 className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>Scratchpad</h3>
-          <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>Draw or write your answer here</p>
+          <h3 className="text-sm font-semibold" style={{ color: 'rgba(30,58,95,0.85)' }}>Scratchpad</h3>
+          <p className="text-[10px]" style={{ color: 'rgba(30,58,95,0.3)' }}>Draw or write your answer here</p>
         </div>
       </div>
 
       {/* Toolbar */}
       <div className="flex-shrink-0 px-3 py-2.5 border-b flex items-center justify-between gap-2 flex-wrap"
-        style={{ borderColor: 'rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.02)' }}>
+        style={{ borderColor: 'rgba(30,58,95,0.05)', background: 'rgba(30,58,95,0.02)' }}>
         {/* Color swatches */}
         <div className="flex items-center gap-1.5">
           {colors.map((c) => (
@@ -179,8 +179,8 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
               style={{
                 backgroundColor: c,
                 border: color === c && tool === 'pen'
-                  ? '2px solid #FF6B35'
-                  : '2px solid rgba(255,255,255,0.12)',
+                  ? '2px solid #0891B2'
+                  : '2px solid rgba(30,58,95,0.12)',
                 transform: color === c && tool === 'pen' ? 'scale(1.2)' : 'scale(1)',
                 boxShadow: color === c && tool === 'pen' ? `0 0 8px ${c}70` : 'none',
               }}
@@ -195,11 +195,11 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
             <button key={size} onClick={() => setBrushSize(size)}
               className="w-6 h-6 rounded-md flex items-center justify-center transition-all"
               style={{
-                background: brushSize === size ? 'rgba(255,107,53,0.15)' : 'rgba(255,255,255,0.04)',
-                border: brushSize === size ? '1px solid rgba(255,107,53,0.35)' : '1px solid rgba(255,255,255,0.07)',
+                background: brushSize === size ? 'rgba(8,145,178,0.15)' : 'rgba(30,58,95,0.04)',
+                border: brushSize === size ? '1px solid rgba(8,145,178,0.35)' : '1px solid rgba(30,58,95,0.07)',
               }}
               title={`Size ${size}`}>
-              <Circle style={{ width: size + 3, height: size + 3, fill: brushSize === size ? '#FF8C5A' : 'rgba(255,255,255,0.3)' }} />
+              <Circle style={{ width: size + 3, height: size + 3, fill: brushSize === size ? '#FF8C5A' : 'rgba(30,58,95,0.3)' }} />
             </button>
           ))}
         </div>
@@ -209,9 +209,9 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
           <button onClick={() => setTool('pen')}
             className="w-6 h-6 rounded-md flex items-center justify-center transition-all"
             style={{
-              background: tool === 'pen' ? 'rgba(255,107,53,0.15)' : 'rgba(255,255,255,0.04)',
-              border: tool === 'pen' ? '1px solid rgba(255,107,53,0.35)' : '1px solid rgba(255,255,255,0.07)',
-              color: tool === 'pen' ? '#FF8C5A' : 'rgba(255,255,255,0.3)',
+              background: tool === 'pen' ? 'rgba(8,145,178,0.15)' : 'rgba(30,58,95,0.04)',
+              border: tool === 'pen' ? '1px solid rgba(8,145,178,0.35)' : '1px solid rgba(30,58,95,0.07)',
+              color: tool === 'pen' ? '#FF8C5A' : 'rgba(30,58,95,0.3)',
             }}
             title="Pen">
             <Pen className="w-3 h-3" />
@@ -219,9 +219,9 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
           <button onClick={() => setTool('eraser')}
             className="w-6 h-6 rounded-md flex items-center justify-center transition-all"
             style={{
-              background: tool === 'eraser' ? 'rgba(255,107,53,0.15)' : 'rgba(255,255,255,0.04)',
-              border: tool === 'eraser' ? '1px solid rgba(255,107,53,0.35)' : '1px solid rgba(255,255,255,0.07)',
-              color: tool === 'eraser' ? '#FF8C5A' : 'rgba(255,255,255,0.3)',
+              background: tool === 'eraser' ? 'rgba(8,145,178,0.15)' : 'rgba(30,58,95,0.04)',
+              border: tool === 'eraser' ? '1px solid rgba(8,145,178,0.35)' : '1px solid rgba(30,58,95,0.07)',
+              color: tool === 'eraser' ? '#FF8C5A' : 'rgba(30,58,95,0.3)',
             }}
             title="Eraser">
             <Eraser className="w-3 h-3" />
@@ -229,9 +229,9 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
           <button onClick={handleUndo} disabled={historyIndex <= 0}
             className="w-6 h-6 rounded-md flex items-center justify-center transition-all disabled:opacity-30"
             style={{
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.07)',
-              color: 'rgba(255,255,255,0.3)',
+              background: 'rgba(30,58,95,0.04)',
+              border: '1px solid rgba(30,58,95,0.07)',
+              color: 'rgba(30,58,95,0.3)',
             }}
             title="Undo">
             <Undo2 className="w-3 h-3" />
@@ -253,7 +253,7 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
       <div ref={containerRef} className="flex-1 relative" style={{ cursor: tool === 'eraser' ? 'cell' : 'crosshair', minHeight: '200px' }}>
         {/* Subtle dot grid overlay (decorative, non-blocking) */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.04]" style={{
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(30,58,95,0.8) 1px, transparent 1px)',
           backgroundSize: '20px 20px',
         }} />
         <canvas
@@ -271,13 +271,13 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
 
       {/* Submit */}
       <div className="flex-shrink-0 px-4 py-3 border-t"
-        style={{ borderColor: 'rgba(255,107,53,0.1)', background: 'rgba(255,107,53,0.04)' }}>
+        style={{ borderColor: 'rgba(8,145,178,0.1)', background: 'rgba(8,145,178,0.04)' }}>
         <motion.button
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className="w-full py-2.5 rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-          style={{ background: 'linear-gradient(135deg, #FF6B35, #E0521A)', boxShadow: '0 4px 16px rgba(255,107,53,0.25)' }}
-          whileHover={{ scale: isSubmitting ? 1 : 1.01, boxShadow: isSubmitting ? undefined : '0 6px 22px rgba(255,107,53,0.38)' }}
+          className="w-full py-2.5 rounded-lg font-semibold text-sm text-slate-700 flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{ background: 'linear-gradient(135deg, #0891B2, #1E3A5F)', boxShadow: '0 4px 16px rgba(8,145,178,0.25)' }}
+          whileHover={{ scale: isSubmitting ? 1 : 1.01, boxShadow: isSubmitting ? undefined : '0 6px 22px rgba(8,145,178,0.38)' }}
           whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
         >
           {isSubmitting ? (
@@ -292,7 +292,7 @@ const Scratchpad: React.FC<ScratchpadProps> = ({ onSubmit, isSubmitting = false 
             </>
           )}
         </motion.button>
-        <p className="text-[10px] text-center mt-2" style={{ color: 'rgba(255,255,255,0.2)' }}>
+        <p className="text-[10px] text-center mt-2" style={{ color: 'rgba(30,58,95,0.2)' }}>
           Your drawing will be sent to the AI for evaluation
         </p>
       </div>

@@ -1,41 +1,42 @@
-/* SVG Ai - Unified Theme */
+/* Pioneer AI - Unified Theme */
 
 .glass-header {
   padding: 0.75rem 1.5rem;
-  background: rgba(10, 10, 15, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(30, 58, 95, 0.08);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #FFFFFF;
+  border: 1px solid rgba(30, 58, 95, 0.1);
   border-radius: 0.75rem;
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border-color: rgba(30, 58, 95, 0.15);
+  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.08);
 }
 
 .glass-text-primary {
-  color: rgba(255, 255, 255, 0.85);
+  color: #1E3A5F;
 }
 
-.glass-text-orange {
-  color: #00D4AA;
+.glass-text-teal {
+  color: #0891B2;
 }
 
-.glass-badge-orange {
+.glass-badge-teal {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 500;
-  background: rgba(0, 212, 170, 0.1);
-  color: #00D4AA;
-  border: 1px solid rgba(0, 212, 170, 0.15);
+  background: rgba(8, 145, 178, 0.1);
+  color: #0891B2;
+  border: 1px solid rgba(8, 145, 178, 0.15);
 }
 
 .glass-button {
@@ -45,16 +46,16 @@
   padding: 0.375rem 0.75rem;
   border-radius: 0.5rem;
   font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #64748B;
+  background: #F8FAFC;
+  border: 1px solid rgba(30, 58, 95, 0.1);
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
 }
 
 .glass-button:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
+  background: #F1F5F9;
+  border-color: rgba(30, 58, 95, 0.2);
+  color: #1E3A5F;
 }

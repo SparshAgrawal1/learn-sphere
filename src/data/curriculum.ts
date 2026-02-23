@@ -61,8 +61,8 @@ export const curriculum: ClassContent = {
       id: 'Science',
       name: 'Science',
       icon: Microscope,
-      color: '#FF6B35',
-      themeColor: 'orange',
+      color: '#1E3A5F',
+      themeColor: 'navy',
       progress: 0,
       natureElement: 'atom',
       description: 'Explore physics, chemistry, and biology through interactive simulations',
@@ -72,7 +72,7 @@ export const curriculum: ClassContent = {
           id: 'Physics',
           name: 'Physics',
           icon: Flame,
-          color: '#FF6B35',
+          color: '#1E3A5F',
           topics: [
             {
               id: 'Motion',
@@ -127,7 +127,7 @@ export const curriculum: ClassContent = {
       id: 'Mathematics',
       name: 'Mathematics',
       icon: Calculator,
-      color: '#0D9B96',
+      color: '#0891B2',
       themeColor: 'teal',
       progress: 0,
       natureElement: 'geometry',
@@ -138,7 +138,7 @@ export const curriculum: ClassContent = {
           id: 'Number-Systems',
           name: 'Number Systems',
           icon: Sigma,
-          color: '#0D9B96',
+          color: '#0891B2',
           topics: [
             {
               id: 'Number-Systems-Topic',
@@ -186,7 +186,7 @@ export const curriculum: ClassContent = {
       id: 'English',
       name: 'English',
       icon: BookOpen,
-      color: '#F9C326',
+      color: '#F97316',
       themeColor: 'yellow',
       progress: 0,
       natureElement: 'quill',
@@ -197,7 +197,7 @@ export const curriculum: ClassContent = {
           id: 'Beehive',
           name: 'Beehive — Prose',
           icon: BookOpen,
-          color: '#F9C326',
+          color: '#F97316',
           topics: [
             {
               id: 'The-Fun-They-Had',
@@ -216,7 +216,7 @@ export const curriculum: ClassContent = {
       id: 'Hindi',
       name: 'Hindi',
       icon: Languages,
-      color: '#EC4899',
+      color: '#059669',
       themeColor: 'pink',
       progress: 0,
       natureElement: 'script',
@@ -227,7 +227,7 @@ export const curriculum: ClassContent = {
           id: 'Sparsh',
           name: 'स्पर्श (Sparsh)',
           icon: Languages,
-          color: '#EC4899',
+          color: '#059669',
           topics: [
             {
               id: 'Dukh-Ka-Adhikar',
@@ -246,7 +246,7 @@ export const curriculum: ClassContent = {
       id: 'Social-Science',
       name: 'Social Science',
       icon: Globe,
-      color: '#14C4BE',
+      color: '#F97316',
       themeColor: 'teal',
       progress: 0,
       natureElement: 'globe',
@@ -257,7 +257,7 @@ export const curriculum: ClassContent = {
           id: 'Democratic-Politics',
           name: 'Democratic Politics',
           icon: Globe,
-          color: '#14C4BE',
+          color: '#F97316',
           topics: [
             {
               id: 'What-is-Democracy',

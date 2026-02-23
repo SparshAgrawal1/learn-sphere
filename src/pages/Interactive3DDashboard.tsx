@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
-import Header from '@/components/ui/Header';
+import { ArrowRight, BookOpen, User, Bell, LogOut } from 'lucide-react';
+import Logo from '@/components/landing/Logo';
 import curriculum, { getClassCurriculum } from '@/data/curriculum';
 
 const Interactive3DDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [classCurriculum, setClassCurriculum] = useState(curriculum['9th']);
 
   useEffect(() => {
@@ -20,85 +19,88 @@ const Interactive3DDashboard: React.FC = () => {
     navigate(`/learn/${encodeURIComponent(subjectId)}`);
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('selectedClass');
+    navigate('/');
+  };
+
   return (
-    <div className="h-screen w-screen overflow-hidden relative" style={{ background: '#0F0D08' }}>
-      {/* Grid */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundSize: '60px 60px',
-        backgroundImage: `linear-gradient(to right, rgba(255,107,53,0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,107,53,0.5) 1px, transparent 1px)`
-      }} />
-
-      {/* Orange orb top-left */}
-      <div className="absolute -top-20 -left-10 w-[500px] h-[500px] rounded-full opacity-10 blur-[150px]"
-        style={{ background: 'radial-gradient(circle, #FF6B35 0%, transparent 65%)' }} />
-      {/* Teal orb bottom-right */}
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-8 blur-[130px]"
-        style={{ background: 'radial-gradient(circle, #0D9B96 0%, transparent 65%)' }} />
-
-      <Header currentPage="dashboard" />
-
-      <main className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-16">
-        {/* Title */}
-        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-          className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-5"
-            style={{ background: 'rgba(255,107,53,0.1)', border: '1px solid rgba(255,107,53,0.18)', color: 'rgba(255,107,53,0.85)' }}>
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#FF6B35' }} />
-            9th Grade · 5 Subjects
+    <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-white border-b border-slate-200/80 shadow-sm">
+        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+          <Logo size="md" variant="dark" />
+          <div className="flex items-center gap-3">
+            <button className="w-9 h-9 rounded-lg flex items-center justify-center border border-slate-200 hover:bg-slate-50 transition-colors">
+              <Bell size={17} style={{ color: '#64748B' }} />
+            </button>
+            <button className="w-9 h-9 rounded-lg flex items-center justify-center border border-slate-200 hover:bg-slate-50 transition-colors">
+              <User size={17} style={{ color: '#64748B' }} />
+            </button>
+            <button onClick={handleLogout}
+              className="w-9 h-9 rounded-lg flex items-center justify-center border border-slate-200 hover:bg-red-50 hover:border-red-200 transition-colors">
+              <LogOut size={17} style={{ color: '#EF4444' }} />
+            </button>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 tracking-tight" style={{ color: 'rgba(255,255,255,0.92)' }}>
-            What would you like to{' '}
-            <span className="svg-gradient-text">learn today?</span>
+        </div>
+      </header>
+
+      {/* Main */}
+      <main className="max-w-6xl mx-auto px-6 py-10">
+        {/* Welcome */}
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4"
+            style={{ background: 'rgba(8,145,178,0.1)', color: '#0891B2' }}>
+            <BookOpen size={14} />
+            <span className="text-xs font-semibold">9th Grade</span>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#1E3A5F' }}>
+            Welcome back, Student
           </h1>
-          <p className="text-sm max-w-md mx-auto" style={{ color: 'rgba(255,255,255,0.3)' }}>
-            Each subject is powered by AI simulations, voice tutoring, and deep mastery quizzes.
+          <p className="text-base" style={{ color: '#64748B' }}>
+            Pick a subject and continue your learning journey.
           </p>
         </motion.div>
 
-        {/* Subject grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 max-w-6xl w-full">
+        {/* Subject Cards */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {classCurriculum.map((subject, index) => {
             const Icon = subject.icon;
-            const isHovered = hoveredId === subject.id;
-
             return (
-              <motion.div key={subject.id}
+              <motion.div
+                key={subject.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.07 }}
-                onMouseEnter={() => setHoveredId(subject.id)}
-                onMouseLeave={() => setHoveredId(null)}
+                transition={{ duration: 0.35, delay: index * 0.07 }}
                 onClick={() => handleSubjectSelect(subject.id)}
-                className="group cursor-pointer">
-                <div className="relative p-6 rounded-2xl border transition-all duration-300 h-full overflow-hidden"
-                  style={{
-                    background: isHovered ? `${subject.color}08` : '#191510',
-                    borderColor: isHovered ? `${subject.color}25` : 'rgba(255,107,53,0.08)',
-                    boxShadow: isHovered ? `0 20px 50px ${subject.color}0F` : 'none',
-                  }}>
-                  {/* Top line glow on hover */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[1px] transition-all duration-400"
-                    style={{ width: isHovered ? '70%' : '0%', background: `linear-gradient(90deg, transparent, ${subject.color}80, transparent)` }} />
+                className="group cursor-pointer"
+              >
+                <div className="rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 bg-white border border-slate-200/80 hover:border-slate-300">
+                  {/* Colored top bar */}
+                  <div className="h-2" style={{ background: subject.color }} />
 
-                  {/* Icon */}
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-all duration-300"
-                    style={{ background: `${subject.color}15`, boxShadow: isHovered ? `0 4px 20px ${subject.color}18` : 'none' }}>
-                    <Icon size={19} style={{ color: subject.color }} />
-                  </div>
+                  <div className="p-5">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ background: `${subject.color}15` }}>
+                        <Icon size={22} style={{ color: subject.color }} />
+                      </div>
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-slate-100 group-hover:bg-slate-200 transition-colors">
+                        <ArrowRight size={16} style={{ color: '#64748B' }} className="transition-transform group-hover:translate-x-0.5" />
+                      </div>
+                    </div>
 
-                  <h3 className="text-[15px] font-semibold mb-1.5" style={{ color: 'rgba(255,255,255,0.88)' }}>{subject.name}</h3>
-                  <p className="text-xs leading-relaxed mb-5 line-clamp-2" style={{ color: 'rgba(255,255,255,0.28)' }}>{subject.description}</p>
+                    <h3 className="text-lg font-bold mb-1" style={{ color: '#1E3A5F' }}>{subject.name}</h3>
+                    <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: '#64748B' }}>{subject.description}</p>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-medium" style={{ color: 'rgba(255,255,255,0.2)' }}>
-                      {subject.chapters.length} {subject.chapters.length === 1 ? 'chapter' : 'chapters'}
-                    </span>
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300"
-                      style={{ background: isHovered ? `${subject.color}18` : 'rgba(255,255,255,0.03)' }}>
-                      <ChevronRight size={13}
-                        style={{ color: isHovered ? subject.color : 'rgba(255,255,255,0.18)' }}
-                        className="transition-all duration-300 group-hover:translate-x-0.5"
-                      />
+                    {/* Progress */}
+                    <div className="flex items-center justify-between text-xs mb-2" style={{ color: '#94A3B8' }}>
+                      <span>{subject.chapters.length} {subject.chapters.length === 1 ? 'chapter' : 'chapters'}</span>
+                      <span>{subject.progress || 0}% complete</span>
+                    </div>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#E2E8F0' }}>
+                      <div className="h-full rounded-full transition-all duration-500"
+                        style={{ width: `${subject.progress || 0}%`, background: subject.color }} />
                     </div>
                   </div>
                 </div>
@@ -107,21 +109,31 @@ const Interactive3DDashboard: React.FC = () => {
           })}
         </div>
 
-        {/* Footer tag */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="mt-12 flex items-center gap-3">
-          <div className="h-[1px] w-8" style={{ background: 'rgba(255,107,53,0.15)' }} />
-          <span className="text-[10px] font-semibold tracking-[0.25em] uppercase" style={{ color: 'rgba(255,255,255,0.12)' }}>
-            Multimodal · Simulation-Driven · Adaptive AI
-          </span>
-          <div className="h-[1px] w-8" style={{ background: 'rgba(255,107,53,0.15)' }} />
+        {/* Quick stats */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { label: 'Subjects', value: '5', color: '#1E3A5F' },
+            { label: 'Chapters', value: '5', color: '#0891B2' },
+            { label: 'AI Tutoring', value: '24/7', color: '#F97316' },
+            { label: 'Quizzes', value: 'Adaptive', color: '#059669' },
+          ].map((stat, i) => (
+            <div key={i} className="p-4 rounded-xl bg-white border border-slate-200/80 text-center">
+              <div className="text-2xl font-bold mb-1" style={{ color: stat.color }}>{stat.value}</div>
+              <div className="text-xs font-medium" style={{ color: '#94A3B8' }}>{stat.label}</div>
+            </div>
+          ))}
         </motion.div>
       </main>
 
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
-        <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.12)' }}>
-          © {new Date().getFullYear()} SVG Ai — Visualize · Interact · Master
-        </p>
-      </div>
+      {/* Footer */}
+      <footer className="py-6 border-t border-slate-200 bg-white mt-10">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-xs" style={{ color: '#94A3B8' }}>
+            © {new Date().getFullYear()} Pioneer AI — Transforming Education
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

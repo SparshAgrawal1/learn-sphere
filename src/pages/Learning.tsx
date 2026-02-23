@@ -6,6 +6,7 @@ import QuizModal from '@/components/learning/QuizModal';
 import { ArrowLeft, Home, ChevronLeft, ChevronRight, PanelLeft, PanelRight, FileText, Monitor } from 'lucide-react';
 import { YouTubeEmbed } from '../components/ui/YouTubeEmbed';
 import { isYouTubeURL } from '../utils/youtube-utils';
+import Logo from '@/components/landing/Logo';
 
 const Learning = () => {
   const { subject, chapter, topic } = useParams();
@@ -58,10 +59,10 @@ const Learning = () => {
 
   if (!selectedClass) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[#0F0D08]">
+      <div className="h-screen flex items-center justify-center" style={{ background: '#F8FAFC' }}>
         <div className="text-center">
-          <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white/40 text-sm">Loading...</p>
+          <div className="w-8 h-8 border-2 border-[#0891B2] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-sm" style={{ color: '#64748B' }}>Loading...</p>
         </div>
       </div>
     );
@@ -80,187 +81,140 @@ const Learning = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#0F0D08]">
-      {/* Header bar */}
-      <header className="flex-shrink-0 h-14 flex items-center justify-between px-4 border-b border-white/[0.06]">
+    <div className="h-screen flex flex-col" style={{ background: '#F8FAFC' }}>
+      {/* Header */}
+      <header className="flex-shrink-0 h-14 flex items-center justify-between px-4 bg-white border-b border-slate-200">
         <div className="flex items-center gap-4">
-          <Link
-            to={getBackUrl()}
-            onClick={handleBackClick}
-            className="flex items-center gap-1.5 text-white/35 hover:text-orange-400/80 text-sm transition-colors"
-          >
+          <Logo size="sm" variant="dark" />
+          <div className="h-5 w-[1px] bg-slate-200" />
+          <Link to={getBackUrl()} onClick={handleBackClick}
+            className="flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-[#0891B2]"
+            style={{ color: '#64748B' }}>
             <ArrowLeft className="h-4 w-4" />
             Back
           </Link>
-          <div className="h-4 w-[1px] bg-white/[0.08]" />
-          <div>
-            <h1 className="text-sm font-semibold text-white/80 leading-none">
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="text-right hidden sm:block">
+            <h1 className="text-sm font-semibold leading-none" style={{ color: '#1E3A5F' }}>
               {currentContent?.subject?.name || subject || 'Learning'}
             </h1>
-            <p className="text-[11px] text-orange-400/50 leading-none mt-1">
+            <p className="text-[11px] leading-none mt-1" style={{ color: '#0891B2' }}>
               {currentContent?.topic?.name || currentContent?.chapter?.name || 'Select a topic'}
             </p>
           </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {currentContent?.topic?.pdfPath && (
-            <div className="flex items-center gap-2 px-2 py-1 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-              <Monitor className={`h-3.5 w-3.5 transition-colors ${!showPdf ? 'text-orange-400' : 'text-white/25'}`} />
+          {(currentContent?.topic?.pdfPath || currentContent?.pdfPath) && (
+            <div className="flex items-center gap-2 px-2 py-1 rounded-lg border border-slate-200 bg-slate-50">
+              <Monitor className={`h-3.5 w-3.5 transition-colors ${!showPdf ? 'text-[#0891B2]' : 'text-slate-400'}`} />
               <button
-                onClick={() => {
-                  if (!showPdf) stopAllNarrations();
-                  setShowPdf(!showPdf);
-                }}
-                className={`relative w-9 h-5 rounded-full transition-all duration-200 ${showPdf ? 'bg-orange-500' : 'bg-white/10'}`}
+                onClick={() => { if (!showPdf) stopAllNarrations(); setShowPdf(!showPdf); }}
+                className={`relative w-9 h-5 rounded-full transition-all duration-200 ${showPdf ? 'bg-[#0891B2]' : 'bg-slate-300'}`}
               >
-                <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-200 ${showPdf ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
+                <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${showPdf ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
               </button>
-              <FileText className={`h-3.5 w-3.5 transition-colors ${showPdf ? 'text-orange-400' : 'text-white/25'}`} />
+              <FileText className={`h-3.5 w-3.5 transition-colors ${showPdf ? 'text-[#0891B2]' : 'text-slate-400'}`} />
             </div>
           )}
-
-          <Link to="/dashboard" className="flex items-center gap-1.5 text-white/25 hover:text-orange-400/60 text-xs transition-colors">
+          <Link to="/dashboard" className="flex items-center gap-1.5 text-xs font-medium transition-colors hover:text-[#0891B2]"
+            style={{ color: '#64748B' }}>
             <Home className="h-3.5 w-3.5" />
             Dashboard
           </Link>
         </div>
       </header>
 
-      {/* Main learning area */}
-      <div className="flex-1 flex overflow-hidden gap-0 relative">
-        {/* Left - Navigation */}
-        <div className={`flex-shrink-0 border-r border-white/[0.06] bg-[#0F0D08] overflow-hidden transition-all duration-300 ease-in-out relative ${
-          isLeftPanelOpen ? 'w-72' : 'w-0'
-        }`}>
-          <ClassBasedContentRenderer
-            selectedClass={selectedClass}
-            subjectId={subject}
-            chapterId={chapter}
-            topicId={topic}
-            onContentLoad={handleContentLoad}
-          />
-
+      {/* Main content area */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left panel - Navigation */}
+        <div className={`flex-shrink-0 border-r border-slate-200 bg-white overflow-hidden transition-all duration-300 ease-in-out relative ${isLeftPanelOpen ? 'w-72' : 'w-0'}`}>
           {isLeftPanelOpen && (
-            <button
-              onClick={() => setIsLeftPanelOpen(false)}
-              className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center z-10 border border-orange-500/20 bg-[#0F0D08] hover:bg-orange-500/10 transition-colors"
-            >
-              <ChevronLeft className="h-3 w-3 text-white/40" />
-            </button>
-          )}
-        </div>
-
-        {!isLeftPanelOpen && (
-          <button
-            onClick={() => setIsLeftPanelOpen(true)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center z-20 border border-orange-500/20 bg-[#0F0D08] hover:bg-orange-500/10 transition-colors"
-          >
-            <PanelLeft className="h-4 w-4 text-white/40" />
-          </button>
-        )}
-
-        {/* Center - Content */}
-        <div className={`flex-1 overflow-hidden bg-[#0D0D12] transition-all duration-300 ${
-          !isLeftPanelOpen ? 'ml-12' : ''
-        } ${!isRightPanelOpen ? 'mr-12' : ''}`}>
-          {currentContent?.contentPath ? (
-            (showPdf && currentContent?.topic?.pdfPath) ? (
-              <iframe
-                key={currentContent.topic.pdfPath}
-                src={`${currentContent.topic.pdfPath}#toolbar=1&navpanes=1&scrollbar=1`}
-                className="w-full h-full border-none"
-                title={`${currentContent.topic?.name || 'Content'} - PDF`}
+            <div className="w-72 h-full overflow-y-auto p-4 scrollbar-thin">
+              <ClassBasedContentRenderer
+                selectedClass={selectedClass}
+                subjectId={subject}
+                chapterId={chapter}
+                topicId={topic}
+                onContentLoad={handleContentLoad}
               />
-            ) :
-            (currentContent.contentType === 'video' || isYouTubeURL(currentContent.contentPath)) ? (
-              <YouTubeEmbed
-                url={currentContent.contentPath}
-                title={currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Video'}
-                className="w-full h-full"
-                showThumbnail={false}
-                autoplay={false}
-              />
-            ) : (
-              <iframe
-                key={currentContent.contentPath}
-                src={currentContent.contentPath}
-                className="w-full h-full border-none"
-                title={currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Content'}
-                sandbox="allow-same-origin allow-scripts allow-forms"
-              />
-            )
-          ) : (
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center max-w-sm">
-                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, rgba(0,212,170,0.1), rgba(14,165,233,0.1))' }}
-                >
-                  <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-                    <path d="M20 4L35 12V28L20 36L5 28V12L20 4Z" stroke="url(#empty-grad)" strokeWidth="2" fill="none" />
-                    <path d="M20 10L30 16V26L20 32L10 26V16L20 10Z" fill="url(#empty-grad)" fillOpacity="0.1" />
-                    <defs>
-                      <linearGradient id="empty-grad" x1="5" y1="4" x2="35" y2="36" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#00D4AA" />
-                        <stop offset="1" stopColor="#0EA5E9" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-white/70 mb-2">Select a topic</h3>
-                <p className="text-sm text-white/30">Choose from the navigation panel to begin your learning journey</p>
-              </div>
             </div>
           )}
-        </div>
-
-        {/* Right - AI Tutor */}
-        <div className={`flex-shrink-0 border-l border-white/[0.06] bg-[#0F0D08] overflow-hidden transition-all duration-300 ease-in-out relative ${
-          isRightPanelOpen ? 'w-80' : 'w-0'
-        }`}>
-          <SimpleAITutorPanel
-            subtopicTitle={currentContent?.topic?.name || currentContent?.subject?.name || 'Learning'}
-            themeColor={{ accent: '#FF6B35', bg: '#1C0E06' }}
-            pdfPath={currentContent?.topic?.pdfPath}
-            chapterName={currentContent?.topic?.name}
-            classNumber={selectedClass}
-            subjectName={currentContent?.chapter?.name || currentContent?.subject?.name}
-            onTogglePdfMode={() => {
-              if (!showPdf) stopAllNarrations();
-              setShowPdf(!showPdf);
-            }}
-          />
-
-          {isRightPanelOpen && (
-            <button
-              onClick={() => setIsRightPanelOpen(false)}
-              className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center z-10 border border-teal-500/20 bg-[#0F0D08] hover:bg-teal-500/10 transition-colors"
-            >
-              <ChevronRight className="h-3 w-3 text-white/40" />
+          {!isLeftPanelOpen && (
+            <button onClick={() => setIsLeftPanelOpen(true)}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center z-20 bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">
+              <PanelLeft className="h-4 w-4" style={{ color: '#64748B' }} />
             </button>
           )}
+          <button onClick={() => setIsLeftPanelOpen(!isLeftPanelOpen)}
+            className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center z-10 bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">
+            {isLeftPanelOpen ? <ChevronLeft className="h-3 w-3" style={{ color: '#64748B' }} /> : <ChevronRight className="h-3 w-3" style={{ color: '#64748B' }} />}
+          </button>
         </div>
 
-        {!isRightPanelOpen && (
-          <button
-            onClick={() => setIsRightPanelOpen(true)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center z-20 border border-teal-500/20 bg-[#0F0D08] hover:bg-teal-500/10 transition-colors"
-          >
-            <PanelRight className="h-4 w-4 text-white/40" />
+        {/* Center - Content */}
+        <div className="flex-1 flex flex-col min-w-0 bg-slate-50">
+          <div className="flex-1 relative">
+            {currentContent?.contentPath ? (
+              showPdf && (currentContent.topic?.pdfPath || currentContent.pdfPath) ? (
+                <iframe src={currentContent.topic?.pdfPath || currentContent.pdfPath} className="w-full h-full border-0" title="PDF Content" style={{ background: 'white' }} />
+              ) : isYouTubeURL(currentContent.contentPath) ? (
+                <div className="w-full h-full flex items-center justify-center p-8">
+                  <YouTubeEmbed url={currentContent.contentPath} className="w-full max-w-4xl aspect-video rounded-xl shadow-lg" />
+                </div>
+              ) : (
+                <iframe src={currentContent.contentPath} className="w-full h-full border-0 bg-white" title="Learning Content" sandbox="allow-scripts allow-same-origin allow-popups allow-forms" />
+              )
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <div className="text-center p-8">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center"
+                    style={{ background: 'rgba(8,145,178,0.1)' }}>
+                    <FileText className="h-8 w-8" style={{ color: '#0891B2' }} />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#1E3A5F' }}>Select a Topic</h3>
+                  <p className="text-sm" style={{ color: '#64748B' }}>Choose a topic from the left panel to start learning</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right panel - AI Tutor */}
+        <div className={`flex-shrink-0 border-l border-slate-200 bg-white overflow-hidden transition-all duration-300 ease-in-out relative ${isRightPanelOpen ? 'w-80' : 'w-0'}`}>
+          {isRightPanelOpen && (
+            <div className="w-80 h-full overflow-hidden">
+              <SimpleAITutorPanel
+                subtopicTitle={currentContent?.topic?.name || currentContent?.chapter?.name || 'Learning'}
+                themeColor={{ accent: '#0891B2', bg: '#E0F2FE' }}
+                pdfPath={currentContent?.topic?.pdfPath || currentContent?.pdfPath}
+                chapterName={currentContent?.chapter?.name}
+                classNumber={selectedClass}
+                subjectName={currentContent?.subject?.name}
+              />
+            </div>
+          )}
+          {!isRightPanelOpen && (
+            <button onClick={() => setIsRightPanelOpen(true)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center z-20 bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">
+              <PanelRight className="h-4 w-4" style={{ color: '#64748B' }} />
+            </button>
+          )}
+          <button onClick={() => setIsRightPanelOpen(!isRightPanelOpen)}
+            className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center z-10 bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-sm">
+            {isRightPanelOpen ? <ChevronRight className="h-3 w-3" style={{ color: '#64748B' }} /> : <ChevronLeft className="h-3 w-3" style={{ color: '#64748B' }} />}
           </button>
-        )}
+        </div>
       </div>
 
       {/* Quiz Modal */}
       <QuizModal
         isOpen={showQuizModal}
         onClose={() => setShowQuizModal(false)}
-        onStartQuiz={() => setShowQuizModal(true)}
-        topicName={currentContent?.topic?.name}
-        chapterName={currentContent?.chapter?.name}
-        subjectName={currentContent?.chapter?.name || currentContent?.subject?.name}
-        classNumber={selectedClass}
-        pdfPath={currentContent?.topic?.pdfPath}
+        onStartQuiz={() => {}}
+        topicName={currentContent?.topic?.name || 'Topic'}
+        chapterName={currentContent?.chapter?.name || 'Chapter'}
+        subjectName={currentContent?.subject?.name}
+        classNumber={selectedClass || '9th'}
+        pdfPath={currentContent?.topic?.pdfPath || currentContent?.pdfPath}
       />
     </div>
   );

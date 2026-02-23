@@ -317,8 +317,8 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-full p-8">
-        <div className="w-8 h-8 border-2 border-[#FF6B35] border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-white/40 text-sm">Loading content...</p>
+        <div className="w-8 h-8 border-2 border-[#0891B2] border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-slate-400 text-sm">Loading content...</p>
       </div>
     );
   }
@@ -327,7 +327,7 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
     return (
       <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="text-red-400 text-base mb-3">Error Loading Content</div>
-        <div className="text-white/40 text-sm mb-6">{error}</div>
+        <div className="text-slate-400 text-sm mb-6">{error}</div>
         <button 
           className="svg-btn-primary"
           onClick={() => navigate('/dashboard')}
@@ -346,10 +346,10 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
         <div className="h-full flex flex-col">
           {/* Fixed header section */}
           <div className="p-5 pb-0 flex-shrink-0">
-            <h2 className="text-lg font-bold text-white/90 mb-1">
+            <h2 className="text-lg font-bold text-slate-800/90 mb-1">
               {currentContent.topic.name}
             </h2>
-            <p className="text-white/30 text-xs mb-5">
+            <p className="text-slate-400 text-xs mb-5">
               {selectedSubtopicId ? 'Select a subtopic' : 'Choose a subtopic to begin'}
             </p>
           </div>
@@ -359,8 +359,8 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
             <div className="h-full px-6 pb-6 overflow-y-auto scrollbar-hide">
               {isInitializing ? (
                 <div className="flex items-center justify-center py-8">
-                  <div className="w-5 h-5 border-2 border-[#FF6B35] border-t-transparent rounded-full animate-spin"></div>
-                  <span className="ml-3 text-white/40 text-sm">Loading...</span>
+                  <div className="w-5 h-5 border-2 border-[#0891B2] border-t-transparent rounded-full animate-spin"></div>
+                  <span className="ml-3 text-slate-400 text-sm">Loading...</span>
                 </div>
               ) : (
                 <>
@@ -370,8 +370,8 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                       key={subtopic.id}
                       className={`p-3 rounded-lg cursor-pointer transition-all duration-200 border ${
                         selectedSubtopicId === subtopic.id 
-                          ? 'border-[#FF6B35]/30 bg-[#FF6B35]/10' 
-                          : 'border-white/[0.05] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.1]'
+                          ? 'border-[#0891B2]/30 bg-[#0891B2]/10' 
+                          : 'border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300'
                       }`}
                       onClick={(e) => {
                         e.preventDefault();
@@ -380,25 +380,25 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h4 className="text-sm text-white/80 font-medium">{subtopic.name}</h4>
+                        <h4 className="text-sm text-slate-700 font-medium">{subtopic.name}</h4>
                         {selectedSubtopicId === subtopic.id && (
-                          <span className="text-[10px] bg-[#FF6B35]/20 text-[#FF6B35] px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 bg-[#FF6B35] rounded-full"></span>
+                          <span className="text-[10px] bg-[#0891B2]/20 text-[#0891B2] px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 bg-[#0891B2] rounded-full"></span>
                             Active
                           </span>
                         )}
                       </div>
                       <div className="flex items-center justify-between mt-1.5">
-                        <p className="text-white/30 text-xs">Interactive content</p>
+                        <p className="text-slate-400 text-xs">Interactive content</p>
                         {subtopic.progress !== undefined && subtopic.progress > 0 && (
                           <div className="flex items-center">
-                            <div className="w-10 h-1 bg-white/10 rounded-full mr-1.5">
+                            <div className="w-10 h-1 bg-slate-100 rounded-full mr-1.5">
                               <div 
                                 className="h-full rounded-full"
-                                style={{ width: `${subtopic.progress}%`, background: 'linear-gradient(90deg, #FF6B35, #0D9B96)' }}
+                                style={{ width: `${subtopic.progress}%`, background: 'linear-gradient(90deg, #0891B2, #1E3A5F)' }}
                               />
                             </div>
-                            <span className="text-white/40 text-[10px]">{subtopic.progress}%</span>
+                            <span className="text-slate-400 text-[10px]">{subtopic.progress}%</span>
                           </div>
                         )}
                       </div>
@@ -412,8 +412,8 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                       <button 
                         className={`w-full p-3 rounded-lg transition-colors flex items-center justify-between text-sm ${
                           selectedSubtopicId === null 
-                            ? 'bg-[#FF6B35]/10 border border-[#FF6B35]/20 text-white' 
-                            : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06]'
+                            ? 'bg-[#0891B2]/10 border border-[#0891B2]/20 text-slate-800' 
+                            : 'bg-slate-50 border border-slate-200 text-slate-500 hover:bg-slate-100'
                         }`}
                         onClick={() => {
                           // Use state updater to prevent stale closures
@@ -443,7 +443,7 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                       >
                         <span>View Main Topic Overview</span>
                         {selectedSubtopicId === null && (
-                          <span className="text-[10px] bg-[#FF6B35]/20 text-[#FF6B35] px-2 py-0.5 rounded-full">
+                          <span className="text-[10px] bg-[#0891B2]/20 text-[#0891B2] px-2 py-0.5 rounded-full">
                             Active
                           </span>
                         )}
@@ -452,10 +452,10 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                   )}
                   
                   {/* Quiz Button */}
-                  <div className="pt-4 border-t border-white/[0.06]">
+                  <div className="pt-4 border-t border-slate-200">
                     <button 
                       className="w-full p-3 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-90"
-                      style={{ background: 'linear-gradient(135deg, #FF6B35, #0D9B96)', color: 'white' }}
+                      style={{ background: 'linear-gradient(135deg, #0891B2, #1E3A5F)', color: 'white' }}
                       onClick={() => {
                         // This will be handled by the parent component
                         if (onContentLoad) {
@@ -486,10 +486,10 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
     return (
       <div className="h-full flex flex-col">
         <div className="p-6 pb-0 flex-shrink-0">
-          <h2 className="text-2xl font-bold text-white mb-4">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">
             {currentContent.topic.name}
           </h2>
-          <p className="text-white/70">
+          <p className="text-slate-800/70">
             Content is loading in the main area...
           </p>
         </div>
@@ -499,7 +499,7 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
           <div className="w-full">
             <button 
               className="w-full p-3 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-90"
-              style={{ background: 'linear-gradient(135deg, #FF6B35, #0D9B96)', color: 'white' }}
+              style={{ background: 'linear-gradient(135deg, #0891B2, #1E3A5F)', color: 'white' }}
               onClick={() => {
                 if (onContentLoad) {
                   onContentLoad({
@@ -525,14 +525,14 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
   if (currentContent.chapter) {
     return (
       <div className="p-6">
-        <h2 className="text-2xl font-bold text-white mb-4">
+        <h2 className="text-2xl font-bold text-slate-800 mb-4">
           {currentContent.chapter.name}
         </h2>
         <div className="grid gap-4">
           {currentContent.chapter.topics?.map((topic) => (
             <div 
               key={topic.id}
-              className="p-4 bg-white/10 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
+              className="p-4 bg-slate-100 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
               onClick={() => {
                 // Navigate to topic
                 if (currentContent.subject) {
@@ -540,15 +540,15 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                 }
               }}
             >
-              <h3 className="text-lg font-semibold text-white">{topic.name}</h3>
+              <h3 className="text-lg font-semibold text-slate-800">{topic.name}</h3>
               <div className="flex items-center mt-2">
                 <div className="flex-1 bg-white/20 rounded-full h-2 mr-4">
                   <div 
                     className="h-full rounded-full"
-                    style={{ width: `${topic.progress}%`, background: 'linear-gradient(90deg, #FF6B35, #0D9B96)' }}
+                    style={{ width: `${topic.progress}%`, background: 'linear-gradient(90deg, #0891B2, #1E3A5F)' }}
                   />
                 </div>
-                <span className="text-white/70 text-sm">{topic.progress}%</span>
+                <span className="text-slate-800/70 text-sm">{topic.progress}%</span>
               </div>
             </div>
           ))}
@@ -560,22 +560,22 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
   if (currentContent.subject) {
     return (
       <div className="p-6">
-        <h1 className="text-3xl font-bold text-white mb-2">
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">
           {currentContent.subject.name}
         </h1>
-        <p className="text-white/70 mb-6">{currentContent.subject.description}</p>
+        <p className="text-slate-800/70 mb-6">{currentContent.subject.description}</p>
         <div className="grid gap-4">
           {currentContent.subject.chapters?.map((chapter) => (
             <div 
               key={chapter.id}
-              className="p-4 bg-white/10 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
+              className="p-4 bg-slate-100 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
               onClick={() => {
                 // Navigate to chapter
                 navigate(`/learn/${currentContent.subject?.id}/${chapter.id}`);
               }}
             >
-              <h3 className="text-lg font-semibold text-white">{chapter.name}</h3>
-              <p className="text-white/60 text-sm mt-1">
+              <h3 className="text-lg font-semibold text-slate-800">{chapter.name}</h3>
+              <p className="text-slate-500 text-sm mt-1">
                 {chapter.topics?.length || 0} topics
               </p>
             </div>
@@ -588,17 +588,17 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
   // Show curriculum overview
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold text-white mb-2">
+      <h1 className="text-3xl font-bold text-slate-800 mb-2">
         {selectedClass} Grade Curriculum
       </h1>
-      <p className="text-white/70 mb-6">
+      <p className="text-slate-800/70 mb-6">
         Select a subject to begin your learning journey
       </p>
       <div className="grid gap-4">
         {currentContent.curriculum?.map((subject) => (
           <div 
             key={subject.id}
-            className="p-4 bg-white/10 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
+            className="p-4 bg-slate-100 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
             onClick={() => {
               navigate(`/learn/${subject.id}`);
             }}
@@ -606,11 +606,11 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
             <div className="flex items-center">
               <subject.icon className="w-8 h-8 mr-3" style={{ color: subject.color }} />
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-white">{subject.name}</h3>
-                <p className="text-white/60 text-sm">{subject.description}</p>
+                <h3 className="text-lg font-semibold text-slate-800">{subject.name}</h3>
+                <p className="text-slate-500 text-sm">{subject.description}</p>
               </div>
               <div className="text-right">
-                <div className="text-white font-semibold">{subject.progress}%</div>
+                <div className="text-slate-800 font-semibold">{subject.progress}%</div>
                 <div className="w-16 h-2 bg-white/20 rounded-full mt-1">
                   <div 
                     className="h-full rounded-full"
