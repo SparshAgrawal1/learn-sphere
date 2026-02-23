@@ -13,92 +13,63 @@ const Logo: React.FC<LogoProps> = ({
   size = 'md',
   animated = true
 }) => {
-  // Size mappings
   const sizeMap = {
-    sm: { text: 'text-lg', icon: 'w-5 h-5' },
-    md: { text: 'text-xl', icon: 'w-6 h-6' },
-    lg: { text: 'text-2xl', icon: 'w-7 h-7' }
+    sm: { text: 'text-lg', sub: 'text-[8px]', icon: 28, gap: 'gap-2' },
+    md: { text: 'text-xl', sub: 'text-[9px]', icon: 32, gap: 'gap-2.5' },
+    lg: { text: 'text-3xl', sub: 'text-[11px]', icon: 40, gap: 'gap-3' }
   };
-  
-  // Color mappings
-  const colorMap = {
-    default: {
-      text: 'text-white',
-      gradient: 'from-blue-500 to-teal-400'
-    },
-    light: {
-      text: 'text-gray-900',
-      gradient: 'from-blue-600 to-teal-500'
-    },
-    dark: {
-      text: 'text-white',
-      gradient: 'from-blue-400 to-teal-300'
-    }
-  };
-  
-  const selectedSize = sizeMap[size];
-  const selectedColor = colorMap[variant];
-  
+
+  const s = sizeMap[size];
+
   return (
-    <Link to="/" className="flex items-center gap-2 no-underline">
+    <Link to="/" className={`flex items-center ${s.gap} no-underline group`}>
       <div className="relative">
-        <motion.div 
-          className={`${selectedSize.icon} rounded-lg bg-gradient-to-br ${selectedColor.gradient} flex items-center justify-center`}
+        <motion.div
+          className="flex items-center justify-center"
           animate={animated ? { 
-            boxShadow: [
-              '0 0 0 rgba(59, 130, 246, 0.4)', 
-              '0 0 8px rgba(59, 130, 246, 0.6)', 
-              '0 0 0 rgba(59, 130, 246, 0.4)'
-            ] 
+            filter: [
+              'drop-shadow(0 0 4px rgba(0, 212, 170, 0.3))',
+              'drop-shadow(0 0 8px rgba(0, 212, 170, 0.5))',
+              'drop-shadow(0 0 4px rgba(0, 212, 170, 0.3))'
+            ]
           } : undefined}
-          transition={animated ? { 
-            duration: 2, 
-            repeat: Infinity,
-            repeatType: 'reverse'
-          } : undefined}
+          transition={animated ? { duration: 3, repeat: Infinity } : undefined}
         >
-          <svg 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            className="w-3/4 h-3/4 text-white"
-          >
-            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-            <path d="M2 17l10 5 10-5"></path>
-            <path d="M2 12l10 5 10-5"></path>
+          <svg width={s.icon} height={s.icon} viewBox="0 0 40 40" fill="none">
+            <path
+              d="M20 4L35 12V28L20 36L5 28V12L20 4Z"
+              stroke="url(#logo-grad)"
+              strokeWidth="2"
+              fill="none"
+            />
+            <path
+              d="M20 10L30 16V26L20 32L10 26V16L20 10Z"
+              fill="url(#logo-grad)"
+              fillOpacity="0.12"
+              stroke="url(#logo-grad)"
+              strokeWidth="1.5"
+            />
+            <circle cx="20" cy="21" r="4" fill="url(#logo-grad)" />
+            <defs>
+              <linearGradient id="logo-grad" x1="5" y1="4" x2="35" y2="36" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#FF6B35" />
+                <stop offset="1" stopColor="#F9C326" />
+              </linearGradient>
+            </defs>
           </svg>
         </motion.div>
-        
-        {animated && (
-          <motion.div
-            className="absolute inset-0 rounded-lg"
-            style={{ 
-              border: '2px solid rgba(59, 130, 246, 0.6)',
-              opacity: 0.6
-            }}
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.6, 0.2, 0.6]
-            }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              repeatType: 'reverse'
-            }}
-          />
-        )}
       </div>
       
-      <div className={`font-bold ${selectedSize.text} ${selectedColor.text}`}>
-        LearnSphere
+      <div className="flex flex-col leading-none">
+        <div className={`font-bold ${s.text} text-white tracking-tight`}>
+          SVG <span className="svg-gradient-text">Ai</span>
+        </div>
+        <div className={`${s.sub} font-medium tracking-[0.25em] text-white/40 uppercase`}>
+          Visualize · Interact · Master
+        </div>
       </div>
     </Link>
   );
 };
 
 export default Logo;
-
-

@@ -1,252 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Agentic Learning Platform Design System - Spline-Inspired Dark Theme */
 @layer base {
   :root {
-    /* Main Background Colors - Dark modern aesthetic */
-    --background: 222 20% 8%; /* Deep dark background */
-    --foreground: 210 15% 95%; /* Light text */
-
-    /* Card and Surface Colors - Glass morphism */
-    --card: 222 15% 12%; /* Dark glass cards */
-    --card-foreground: 210 15% 95%;
-
-    --popover: 222 15% 12%;
-    --popover-foreground: 210 15% 95%;
-
-    /* Primary Colors - Vibrant neon accents */
-    --primary: 280 100% 65%; /* Bright purple/magenta */
+    /* SVG Ai — Orange · Teal · Yellow palette */
+    --background: 30 20% 5%;
+    --foreground: 40 15% 90%;
+    --card: 30 15% 7%;
+    --card-foreground: 40 15% 90%;
+    --popover: 30 15% 7%;
+    --popover-foreground: 40 15% 90%;
+    --primary: 20 100% 59%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 280 100% 75%; /* Lighter glow variant */
-
-    /* Secondary Colors - Complementary cyan */
-    --secondary: 180 100% 60%; /* Bright cyan */
+    --secondary: 178 84% 32%;
     --secondary-foreground: 0 0% 100%;
-
-    /* Muted Interface Colors */
-    --muted: 222 15% 15%; /* Slightly lighter dark */
-    --muted-foreground: 210 10% 70%;
-
-    /* Accent Colors - Electric blue */
-    --accent: 200 100% 60%; /* Electric blue */
-    --accent-foreground: 0 0% 100%;
-
-    /* Status Colors */
-    --destructive: 0 100% 65%; /* Bright red */
+    --muted: 30 12% 10%;
+    --muted-foreground: 40 8% 45%;
+    --accent: 45 95% 56%;
+    --accent-foreground: 30 20% 5%;
+    --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 100%;
+    --border: 30 10% 12%;
+    --input: 30 10% 12%;
+    --ring: 20 100% 59%;
+    --radius: 0.75rem;
 
-    --success: 120 100% 60%; /* Bright green */
-    --success-foreground: 0 0% 100%;
+    /* SVG Ai brand tokens */
+    --svg-orange: #FF6B35;
+    --svg-orange-dark: #E0521A;
+    --svg-orange-light: #FF8C5A;
+    --svg-teal: #0D9B96;
+    --svg-teal-dark: #076B67;
+    --svg-teal-light: #14C4BE;
+    --svg-yellow: #F9C326;
+    --svg-yellow-dark: #D9A10E;
+    --svg-cream: #F5EDD8;
+    --svg-dark: #0F0D08;
+    --svg-charcoal: #1C1810;
+    --svg-card: #191510;
 
-    /* Border and Input Colors - Subtle glow effects */
-    --border: 222 20% 20%;
-    --input: 222 20% 20%;
-    --ring: 280 100% 65%;
-    --glow: 280 100% 65%; /* Neon glow color */
-
-    /* AI Chat Colors */
-    --chat-user: 280 100% 65%; /* Purple for user */
-    --chat-ai: 222 15% 18%; /* Dark for AI */
-    --chat-bg: 222 15% 12%; /* Dark chat background */
-
-    /* Progress & Achievement Colors */
-    --progress-incomplete: 222 15% 25%;
-    --progress-complete: 280 100% 65%;
-    --achievement-gold: 45 100% 60%;
-    --achievement-silver: 210 15% 65%;
-    --achievement-bronze: 25 100% 55%;
-
-    /* Knowledge Sphere Colors - Neon spectrum */
-    --sphere-physics: 280 100% 65%;    /* Purple */
-    --sphere-chemistry: 120 100% 60%;  /* Green */
-    --sphere-math: 45 100% 60%;        /* Orange */
-    --sphere-biology: 180 100% 60%;    /* Cyan */
-
-    /* Glass morphism and effects */
-    --glass: 222 15% 12% / 0.8; /* Semi-transparent glass */
-    --glass-border: 210 15% 30% / 0.3;
-
-    /* Gradients - Neon inspired */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
-    --gradient-sphere: linear-gradient(135deg, hsl(var(--sphere-physics)), hsl(var(--sphere-chemistry)));
-    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(222 15% 15%));
-    --gradient-glow: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--secondary) / 0.2));
-
-    /* Shadows - Neon glow effects */
-    --shadow-card: 0 8px 32px hsl(222 20% 8% / 0.6);
-    --shadow-spline: 0 0 40px hsl(var(--primary) / 0.3), 0 0 80px hsl(var(--secondary) / 0.2);
-    --shadow-interactive: 0 0 20px hsl(var(--primary) / 0.4);
-    --shadow-glow: 0 0 30px hsl(var(--glow) / 0.5);
-
-    /* Border Radius */
-    --radius: 1rem;
-
-    /* Sidebar Navigation Colors */
-    --sidebar-background: 222 15% 10%; /* Dark sidebar */
-    --sidebar-foreground: 210 15% 95%;
-    --sidebar-primary: 280 100% 65%;
+    /* Sidebar */
+    --sidebar-background: 30 18% 5%;
+    --sidebar-foreground: 40 15% 88%;
+    --sidebar-primary: 20 100% 59%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 15% 15%;
-    --sidebar-accent-foreground: 210 15% 95%;
-    --sidebar-border: 222 20% 20%;
-    --sidebar-ring: 280 100% 65%;
-
-    /* Animation and Transitions */
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.2s ease-out;
-    --transition-glow: all 0.3s ease-in-out;
+    --sidebar-accent: 30 12% 10%;
+    --sidebar-accent-foreground: 40 15% 88%;
+    --sidebar-border: 30 10% 12%;
+    --sidebar-ring: 20 100% 59%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
+  * { @apply border-border; }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  }
-
-  /* Smooth animations for learning platform */
-  * {
-    transition: var(--transition-fast);
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #0F0D08;
   }
 }
 
 @layer components {
-  /* Spline Container */
-  .spline-container {
-    @apply relative;
-    box-shadow: var(--shadow-spline);
-    border-radius: var(--radius);
+  /* Card base */
+  .svg-card {
+    @apply rounded-xl border;
+    background: #191510;
+    border-color: rgba(255, 107, 53, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .svg-card:hover {
+    border-color: rgba(255, 107, 53, 0.2);
+    background: #1E1912;
   }
 
-  /* Glass morphism effects */
-  .bg-glass {
-    background: hsl(var(--glass));
-    backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--glass-border));
+  /* Gradient text — orange to yellow */
+  .svg-gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--svg-orange), var(--svg-yellow));
   }
 
-  .border-glow {
-    border-color: hsl(var(--glow) / 0.3);
-    box-shadow: 0 0 15px hsl(var(--glow) / 0.2);
+  /* Teal variant */
+  .svg-gradient-text-teal {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--svg-teal), var(--svg-yellow));
   }
 
-  /* Progress Cards - Glass morphism */
-  .progress-card {
-    @apply bg-glass backdrop-blur-md rounded-2xl p-6 border border-glow/30;
-    background: hsl(var(--card));
-    box-shadow: var(--shadow-card), 0 0 20px hsl(var(--primary) / 0.1);
+  /* Glow effects */
+  .svg-glow-orange {
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.2), 0 0 80px rgba(255, 107, 53, 0.07);
+  }
+  .svg-glow-teal {
+    box-shadow: 0 0 40px rgba(13, 155, 150, 0.18), 0 0 80px rgba(13, 155, 150, 0.06);
   }
 
-  /* Achievement Badge - Neon glow */
-  .achievement-badge {
-    @apply inline-flex items-center justify-center w-12 h-12 rounded-full;
-    box-shadow: var(--shadow-interactive);
-    transition: var(--transition-glow);
+  /* Primary CTA — orange */
+  .svg-btn-primary {
+    @apply px-6 py-2.5 rounded-lg font-semibold text-sm text-white inline-flex items-center justify-center transition-all duration-300;
+    background: linear-gradient(135deg, var(--svg-orange), var(--svg-orange-dark));
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.25);
+  }
+  .svg-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
   }
 
-  .achievement-badge:hover {
-    box-shadow: var(--shadow-glow);
-    transform: scale(1.05);
+  /* Secondary CTA */
+  .svg-btn-secondary {
+    @apply px-6 py-2.5 rounded-lg font-semibold text-sm inline-flex items-center justify-center transition-all duration-300;
+    background: rgba(255, 107, 53, 0.08);
+    border: 1px solid rgba(255, 107, 53, 0.15);
+    color: rgba(255,255,255,0.65);
+  }
+  .svg-btn-secondary:hover {
+    background: rgba(255, 107, 53, 0.13);
+    border-color: rgba(255, 107, 53, 0.28);
+    color: rgba(255,255,255,0.85);
   }
 
-  .achievement-badge.gold {
-    background: hsl(var(--achievement-gold));
-    box-shadow: 0 0 20px hsl(var(--achievement-gold) / 0.4);
-  }
-
-  .achievement-badge.silver {
-    background: hsl(var(--achievement-silver));
-    box-shadow: 0 0 20px hsl(var(--achievement-silver) / 0.4);
-  }
-
-  .achievement-badge.bronze {
-    background: hsl(var(--achievement-bronze));
-    box-shadow: 0 0 20px hsl(var(--achievement-bronze) / 0.4);
-  }
-
-  /* Chat Bubbles - Dark theme */
+  /* Chat bubbles */
   .chat-bubble-user {
-    @apply rounded-2xl px-4 py-3 ml-8 mb-3;
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
-    border-radius: 1.5rem 1.5rem 0.25rem 1.5rem;
-    box-shadow: 0 0 15px hsl(var(--primary) / 0.3);
+    @apply rounded-2xl px-4 py-3 ml-8 mb-3 text-white;
+    background: linear-gradient(135deg, var(--svg-orange), var(--svg-orange-dark));
+    border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
   }
-
   .chat-bubble-ai {
     @apply rounded-2xl px-4 py-3 mr-8 mb-3;
-    background: hsl(var(--chat-ai));
-    color: hsl(var(--foreground));
-    border: 1px solid hsl(var(--border));
-    border-radius: 1.5rem 1.5rem 1.5rem 0.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
   }
 
-  /* Progress Bar - Neon style */
-  .progress-bar {
-    @apply h-3 rounded-full overflow-hidden;
-    background: hsl(var(--progress-incomplete));
-    border: 1px solid hsl(var(--border));
-  }
-
+  /* Progress bar */
+  .progress-bar { @apply h-1.5 rounded-full overflow-hidden; background: rgba(255,255,255,0.06); }
   .progress-fill {
     @apply h-full rounded-full transition-all duration-500 ease-out;
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+    background: linear-gradient(90deg, var(--svg-orange), var(--svg-yellow));
   }
 
-  /* Interactive Lesson Frame - Dark theme */
-  .lesson-frame {
-    @apply w-full h-full border rounded-2xl overflow-hidden;
-    background: hsl(var(--card));
-    border-color: hsl(var(--border));
-    box-shadow: var(--shadow-card);
+  /* Glass header */
+  .glass-header {
+    padding: 0.5rem 1rem;
+    background: rgba(15, 13, 8, 0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 107, 53, 0.07);
   }
-
-  /* Button hover effects */
-  .btn-glow {
-    transition: var(--transition-glow);
+  .glass-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 107, 53, 0.08);
+    border-radius: 0.75rem;
   }
+  .glass-text-primary { color: rgba(255, 255, 255, 0.85); }
+  .glass-text-orange  { color: var(--svg-orange); }
 
-  .btn-glow:hover {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
-    transform: translateY(-2px);
+  .glass-badge-orange {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(255, 107, 53, 0.12);
+    color: var(--svg-orange-light);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+  }
+  .glass-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .glass-button:hover {
+    background: rgba(255, 107, 53, 0.07);
+    border-color: rgba(255, 107, 53, 0.15);
+    color: rgba(255, 255, 255, 0.65);
   }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-10px) rotate(1deg); }
-  66% { transform: translateY(5px) rotate(-1deg); }
-}
+/* Animations */
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+@keyframes glow-pulse-orange { 0%, 100% { box-shadow: 0 0 20px rgba(255,107,53,0.2); } 50% { box-shadow: 0 0 50px rgba(255,107,53,0.5), 0 0 100px rgba(255,107,53,0.18); } }
+@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@keyframes svgai-wave { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1.2); } }
 
-@keyframes pulse-success {
-  0% { box-shadow: 0 0 0 0 hsl(var(--success) / 0.7); }
-  70% { box-shadow: 0 0 0 10px hsl(var(--success) / 0); }
-  100% { box-shadow: 0 0 0 0 hsl(var(--success) / 0); }
-}
-
-@keyframes shake-error {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-/* Scrollbar Hide Utility */
 @layer utilities {
-  .scrollbar-hide {
-    /* Hide scrollbar for IE, Edge and Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }

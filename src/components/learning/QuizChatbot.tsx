@@ -691,303 +691,202 @@ const QuizChatbot: React.FC<QuizChatbotProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop with blur effect */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-md" />
-      
-      {/* Quiz Container - Wider to accommodate both panels */}
-      <div className="relative w-full h-full max-w-7xl max-h-[95vh] mx-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col">
+      {/* Backdrop */}
+      <div className="absolute inset-0" style={{ background: 'rgba(7,7,16,0.88)', backdropFilter: 'blur(14px)' }} />
+
+      {/* Quiz Container */}
+      <div className="relative w-full h-full max-w-7xl max-h-[95vh] mx-4 rounded-2xl overflow-hidden flex flex-col"
+        style={{ background: '#100E08', border: '1px solid rgba(255,107,53,0.12)', boxShadow: '0 40px 80px rgba(0,0,0,0.6)' }}>
         {/* Fixed Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-orange-400/80 to-orange-500/80 text-white flex-shrink-0">
+        {/* Header */}
+        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3.5 border-b border-white/[0.05]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.25), rgba(13,155,150,0.15))' }}>
+              <svg className="w-4 h-4" style={{ color: '#A78BFA' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div>
-              <h2 className="text-xl font-bold">Quiz Mode - {subjectName || 'General'}</h2>
-              <p className="text-sm text-white/80">{topicName}</p>
-              {chapterName && chapterName !== subjectName && (
-                <p className="text-xs text-white/60">Chapter: {chapterName}</p>
-              )}
+              <h2 className="text-sm font-bold text-white/85">Deep Mastery Quiz</h2>
+              <p className="text-[10px] text-white/30">{subjectName || 'General'} · {topicName}</p>
             </div>
           </div>
-          <button
-            onClick={handleClose}
-            className="p-3 bg-red-400/90 hover:bg-red-500 text-white rounded-full transition-all duration-200 hover:scale-110 shadow-lg border-2 border-white/30"
-            title="Close Quiz"
-          >
-            <X className="w-6 h-6" />
+          <button onClick={handleClose}
+            className="w-7 h-7 flex items-center justify-center rounded-lg text-white/25 hover:text-white/50 hover:bg-white/[0.05] transition-all">
+            <X className="w-4 h-4" />
           </button>
         </div>
-        
-        {/* Main Content - Split Layout: Chatbot + Scratchpad */}
+
+        {/* Main Content Split */}
         <div className="flex-1 flex overflow-hidden">
-          {/* Left Panel - Quiz Chatbot */}
-          <div className="flex-1 flex flex-col border-r border-gray-200 min-w-0">
-        
-        {/* Chat Interface - Takes remaining space */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {isConnecting && (
-              <div className="text-center text-gray-600 text-sm">
-                <div className="w-20 h-20 bg-gradient-to-r from-orange-400/80 to-orange-500/80 rounded-full flex items-center justify-center mx-auto mb-6 relative">
-                  <div className="absolute inset-0 rounded-full border-4 border-orange-200 animate-ping"></div>
-                  <div className="absolute inset-0 rounded-full border-4 border-orange-300 animate-pulse"></div>
-                  <svg className="w-10 h-10 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
+          {/* Chat panel */}
+          <div className="flex-1 flex flex-col overflow-hidden border-r border-white/[0.04]">
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2 scrollbar-hide">
+              {isConnecting && (
+                <div className="flex flex-col items-center justify-center h-full text-center py-8">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
+                    style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.15), rgba(13,155,150,0.1))', border: '1px solid rgba(255,107,53,0.15)' }}>
+                    <div className="w-5 h-5 border-2 border-[#FF6B35] border-t-transparent rounded-full animate-spin" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-white/70 mb-2">Preparing your quiz...</h3>
+                  <div className="space-y-2 w-full max-w-[240px]">
+                    {['Analyzing chapter content', 'Generating questions', 'Setting up environment'].map((text, i) => (
+                      <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-lg"
+                        style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35] animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
+                        <span className="text-[11px] text-white/35">{text}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">Preparing Your Quiz</h3>
-                <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-xl p-6 text-left mb-4">
-                  <div className="flex items-center mb-3">
-                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              )}
+
+              {!isConnecting && messages.length === 0 && (
+                <div className="flex flex-col items-center justify-center h-full text-center py-8">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
+                    style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.15), rgba(13,155,150,0.1))' }}>
+                    <svg className="w-6 h-6 text-[#FF8C5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-xs text-white/30 max-w-[200px] leading-relaxed">
+                    Quiz ready. Start answering questions or ask for a hint.
+                  </p>
+                </div>
+              )}
+
+              {messages.map((message) => (
+                <motion.div key={message.id}
+                  className={`flex ${message.isAi ? 'justify-start' : 'justify-end'}`}
+                  initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
+                  {message.isAi && (
+                    <div className="w-6 h-6 rounded-lg mr-2 mt-0.5 flex-shrink-0 flex items-center justify-center"
+                      style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.12))' }}>
+                      <svg className="w-3 h-3 text-[#FF8C5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <h4 className="font-semibold text-orange-800">Extracting Chapter Content</h4>
-                  </div>
-                  <p className="text-sm text-orange-700 mb-3">
-                    Analyzing <span className="font-semibold">{chapterName || 'chapter'}</span> content for {subjectName || 'subject'} quiz questions...
-                  </p>
-                  <div className="space-y-2 text-xs text-orange-600">
-                    <div className="flex items-center">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse"></div>
-                      Processing PDF content and key concepts
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                      Generating personalized quiz questions
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                      Setting up interactive learning environment
-                    </div>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-500">This may take a few moments...</p>
-              </div>
-            )}
-
-            {!isConnecting && messages.length === 0 && (
-              <div className="text-center text-gray-600 text-sm">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-400/80 to-orange-500/80 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Quiz Mode Ready</h3>
-                <p className="text-gray-600 mb-4">Test your knowledge with interactive questions</p>
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 text-left">
-                  <h4 className="font-semibold text-orange-800 mb-2">What to expect:</h4>
-                  <ul className="text-sm text-orange-700 space-y-1">
-                    <li>• Interactive questions based on your current topic</li>
-                    <li>• Immediate feedback on your answers</li>
-                    <li>• Visual problem-solving with image uploads</li>
-                    <li>• Adaptive difficulty based on your responses</li>
-                  </ul>
-                </div>
-                <p className="text-xs text-gray-500 mt-4">Ask questions to begin your quiz</p>
-              </div>
-            )}
-            
-            {messages.map((message) => (
-              <motion.div
-                key={message.id}
-                className={`flex ${message.isAi ? 'justify-start' : 'justify-end'}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div
-                  className={`max-w-[80%] p-3 rounded-2xl text-sm ${
-                    message.isAi
-                      ? 'bg-gray-100 text-gray-800'
-                      : 'bg-gradient-to-r from-orange-500 to-red-500 text-white'
-                  }`}
-                >
-                  {message.imageUrl && (
-                    <div className="mb-2">
-                      <img 
-                        src={message.imageUrl} 
-                        alt="Attached image" 
-                        className="max-w-full h-auto max-h-48 rounded-lg object-contain"
-                      />
-                    </div>
                   )}
-                  <p className="whitespace-pre-wrap">{message.content}</p>
-                  <p className="text-xs opacity-60 mt-1">{formatTime(message.timestamp)}</p>
-                </div>
-              </motion.div>
-            ))}
-            
-            {isAiTyping && (
-              <motion.div
-                className="flex justify-start"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <div className="bg-gray-100 p-3 rounded-2xl text-gray-800 text-sm">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                  <div className="max-w-[78%] px-3 py-2 rounded-xl text-xs leading-relaxed"
+                    style={message.isAi ? {
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      color: 'rgba(255,255,255,0.72)',
+                      borderRadius: '0.75rem 0.75rem 0.75rem 0.2rem',
+                    } : {
+                      background: 'linear-gradient(135deg, #E0521A, #FF6B35)',
+                      color: 'white',
+                      boxShadow: '0 4px 15px rgba(224,82,26,0.2)',
+                      borderRadius: '0.75rem 0.75rem 0.2rem 0.75rem',
+                    }}>
+                    {message.imageUrl && (
+                      <img src={message.imageUrl} alt="Attached" className="max-w-full h-auto max-h-36 rounded-lg mb-2 object-contain" />
+                    )}
+                    <p className="whitespace-pre-wrap">{message.content}</p>
+                    <p className="text-[9px] mt-1 opacity-40">{formatTime(message.timestamp)}</p>
                   </div>
+                </motion.div>
+              ))}
+
+              {isAiTyping && (
+                <motion.div className="flex justify-start" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <div className="w-6 h-6 rounded-lg mr-2 mt-0.5 flex-shrink-0 flex items-center justify-center"
+                    style={{ background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.12))' }}>
+                    <svg className="w-3 h-3 text-[#FF8C5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="px-3 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <div className="flex items-end gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" style={{ animationDelay: '0.15s' }} />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]/50 animate-bounce" style={{ animationDelay: '0.3s' }} />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Image Preview */}
+            {imagePreview && (
+              <div className="flex-shrink-0 px-4 py-2.5 border-t border-white/[0.05]">
+                <div className="flex items-center gap-3 px-3 py-2 rounded-lg"
+                  style={{ background: 'rgba(255,107,53,0.07)', border: '1px solid rgba(255,107,53,0.12)' }}>
+                  <img src={imagePreview} alt="Preview" className="w-10 h-10 object-cover rounded-lg" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-white/50 truncate">{selectedImage?.name}</p>
+                  </div>
+                  <button onClick={removeSelectedImage} className="text-white/25 hover:text-red-400 transition-colors">
+                    <X className="h-3.5 w-3.5" />
+                  </button>
                 </div>
-              </motion.div>
+              </div>
             )}
-            
-            <div ref={messagesEndRef} />
-          </div>
 
-          {/* Image Preview */}
-          {imagePreview && (
-            <div className="p-4 border-t border-gray-200 bg-gray-50">
-              <div className="flex items-center gap-2">
-                <img 
-                  src={imagePreview} 
-                  alt="Preview" 
-                  className="w-16 h-16 object-cover rounded-lg border border-gray-300"
-                />
-                <div className="flex-1">
-                  <p className="text-sm text-gray-600">Image ready to send</p>
-                  <p className="text-xs text-gray-500">{selectedImage?.name}</p>
-                  <p className="text-xs text-gray-400">
-                    {(selectedImage?.size || 0 / 1024 / 1024).toFixed(2)} MB
-                  </p>
+            {/* Image Error */}
+            {imageError && (
+              <div className="flex-shrink-0 px-4 py-2.5 border-t border-white/[0.05]">
+                <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-red-400/70 text-xs"
+                  style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.12)' }}>
+                  <span className="flex-1">{imageError}</span>
+                  <button onClick={() => setImageError(null)} className="text-red-400/50 hover:text-red-400 transition-colors">
+                    <X className="h-3.5 w-3.5" />
+                  </button>
                 </div>
-                <button
-                  onClick={removeSelectedImage}
-                  className="p-1 text-gray-500 hover:text-red-500 transition-colors"
-                  title="Remove image"
-                >
-                  <X className="h-4 w-4" />
-                </button>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Image Error */}
-          {imageError && (
-            <div className="p-4 border-t border-gray-200 bg-red-50">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 text-red-500">⚠️</div>
-                <p className="text-sm text-red-600">{imageError}</p>
-                <button
-                  onClick={() => setImageError(null)}
-                  className="ml-auto p-1 text-red-500 hover:text-red-700 transition-colors"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Input Area */}
-          <div 
-            className={`p-4 border-t border-gray-200 bg-white transition-colors ${
-              isDragOver ? 'bg-orange-50 border-orange-300' : ''
-            }`}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div className="flex items-center gap-2">
-              <div className="flex-1 relative">
+            {/* Input */}
+            <div className="flex-shrink-0 px-3 pb-3 pt-2 border-t border-white/[0.04]"
+              onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
+              <div className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all ${
+                isDragOver ? 'border-violet-500/30 bg-violet-500/[0.06]' : 'border-white/[0.06] bg-white/[0.025]'
+              }`}>
+                {isDragOver && (
+                  <div className="absolute inset-0 flex items-center justify-center rounded-xl">
+                    <Image className="h-5 w-5 text-[#FF8C5A]/60" />
+                  </div>
+                )}
                 <input
                   type="text"
-                  placeholder={
-                    isConnecting
-                      ? "Preparing quiz environment..."
-                      : !isConnected 
-                        ? "Connecting..." 
-                        : isDragOver 
-                          ? "Drop image here..." 
-                          : "Ask a quiz question or drag & drop an image..."
-                  }
-                  className={`w-full bg-gray-100 text-gray-800 border rounded-lg p-3 text-sm focus:outline-none focus:border-orange-500 transition-colors ${
-                    isDragOver ? 'border-orange-400 bg-orange-50' : 
-                    isConnecting ? 'border-orange-300 bg-orange-50' : 'border-gray-300'
-                  }`}
+                  placeholder={isConnecting ? "Preparing..." : !isConnected ? "Connecting..." : isDragOver ? "Drop image..." : "Answer or ask a question..."}
+                  className="flex-1 bg-transparent text-white/75 text-xs focus:outline-none placeholder:text-white/20"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   disabled={!isConnected || isConnecting}
                 />
-                {isDragOver && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-orange-100/80 rounded-lg border-2 border-dashed border-orange-400">
-                    <div className="text-center">
-                      <Image className="h-8 w-8 text-orange-500 mx-auto mb-1" />
-                      <p className="text-sm text-orange-600 font-medium">Drop image here</p>
-                    </div>
-                  </div>
-                )}
+                <input type="file" ref={fileInputRef} onChange={handleImageSelect} accept="image/*" className="hidden" />
+                <button onClick={() => fileInputRef.current?.click()} disabled={!isConnected || isConnecting}
+                  className={`w-6 h-6 rounded-md flex items-center justify-center transition-all disabled:opacity-30 ${selectedImage ? 'text-[#FF8C5A]' : 'text-white/25 hover:text-white/45'}`}>
+                  <Image className="h-3 w-3" />
+                </button>
+                <button onClick={handleSendMessage}
+                  disabled={(!newMessage.trim() && !selectedImage) || !isConnected || isConnecting}
+                  className="w-6 h-6 rounded-md flex items-center justify-center transition-all disabled:opacity-30"
+                  style={{ background: (newMessage.trim() || selectedImage) && isConnected && !isConnecting ? 'linear-gradient(135deg, #FF6B35, #0D9B96)' : 'rgba(255,255,255,0.06)' }}>
+                  {isConnecting
+                    ? <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />
+                    : <Send className="h-3 w-3 text-white" />}
+                </button>
               </div>
-              
-              {/* Image Upload Button */}
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleImageSelect}
-                accept="image/*"
-                className="hidden"
-              />
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className={`h-10 w-10 rounded-lg flex items-center justify-center transition-all hover:scale-105 disabled:opacity-50 ${
-                  selectedImage 
-                    ? 'bg-orange-200 text-orange-600 hover:bg-orange-300' 
-                    : isConnecting
-                      ? 'bg-orange-100 text-orange-400'
-                      : 'bg-gray-200 hover:bg-gray-300 text-gray-600'
-                }`}
-                disabled={!isConnected || isConnecting}
-                title={isConnecting ? "Preparing quiz..." : selectedImage ? "Change image" : "Attach image"}
-              >
-                <Image className="h-4 w-4" />
-              </button>
-              
-              <button
-                className={`h-10 w-10 rounded-lg flex items-center justify-center transition-all hover:scale-105 disabled:opacity-50 ${
-                  isConnecting
-                    ? 'bg-orange-300/80 text-orange-100'
-                    : 'bg-gradient-to-r from-orange-400/90 to-orange-500/90 text-white'
-                }`}
-                onClick={handleSendMessage}
-                disabled={(!newMessage.trim() && !selectedImage) || !isConnected || isConnecting}
-                title={isConnecting ? "Preparing quiz..." : selectedImage ? "Send image" : "Send message"}
-              >
-                {isConnecting ? (
-                  <div className="w-4 h-4 border-2 border-orange-100 border-t-orange-400 rounded-full animate-spin"></div>
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </button>
             </div>
-            
-            {/* Drag and drop hint */}
-            {!selectedImage && !imageError && !isConnecting && (
-              <p className="text-xs text-gray-500 mt-2 text-center">
-                💡 Tip: You can drag & drop images directly into the input area
-              </p>
-            )}
+          </div>
+
+          {/* Scratchpad */}
+          <div className="w-[42%] min-w-[320px] max-w-[420px] flex-shrink-0 hidden lg:flex flex-col border-l border-white/[0.04]">
+            <div className="px-4 py-3 border-b border-white/[0.05]">
+              <h3 className="text-xs font-semibold text-white/50 uppercase tracking-wider">Scratchpad</h3>
+            </div>
+            <div className="flex-1 p-4 overflow-hidden">
+              <Scratchpad onSubmit={handleScratchpadSubmit} isSubmitting={isScratchpadSubmitting} />
+            </div>
           </div>
         </div>
-        {/* End of Chat Interface */}
-        </div>
-        {/* End of Left Panel - Quiz Chatbot */}
-          
-        {/* Right Panel - Scratchpad */}
-          <div className="w-[45%] min-w-[350px] max-w-[500px] flex-shrink-0 p-4 bg-gray-50 hidden lg:block">
-            <Scratchpad 
-              onSubmit={handleScratchpadSubmit}
-              isSubmitting={isScratchpadSubmitting}
-            />
-          </div>
-        </div>
-        {/* End of Main Content - Split Layout */}
       </div>
     </div>
   );

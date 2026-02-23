@@ -1,63 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, User, BookOpen, Sparkles, Rocket, Brain, Star, Zap, Layers, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Mail, Lock, Eye, EyeOff, Sparkles, Mic, Brain, Zap } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import EnhancedBackground from '@/components/landing/EnhancedBackground';
-import Header from '@/components/ui/Header';
+import Logo from '@/components/landing/Logo';
 
 const ModernLandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  });
-  
-  // State for floating particles
-  const [particles, setParticles] = useState<Array<{
-    id: number;
-    x: number;
-    y: number;
-    size: number;
-    speed: number;
-    opacity: number;
-    delay: number;
-    scale: number;
-    color: string;
-  }>>([]);
-
-  // Generate floating particles
-  useEffect(() => {
-    const generateParticles = () => {
-      const newParticles = [];
-      const count = Math.floor(Math.random() * 10) + 25; // 25-35 particles
-      const colors = ['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B'];
-      
-      for (let i = 0; i < count; i++) {
-        newParticles.push({
-          id: i,
-          x: Math.random() * 100,
-          y: Math.random() * 100,
-          size: Math.random() * 30 + 10, // 10-40px
-          speed: Math.random() * 15 + 15, // 15-30s
-          opacity: Math.random() * 0.25 + 0.05, // 0.05-0.3
-          delay: Math.random() * 5, // 0-5s delay
-          scale: Math.random() * 0.5 + 0.8, // 0.8-1.3 scale
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
-      
-      setParticles(newParticles);
-    };
-    
-    generateParticles();
-  }, []);
+  const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -67,444 +20,200 @@ const ModernLandingPage: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/class-selection');
-    }, 1500);
+      sessionStorage.setItem('selectedClass', '9th');
+      navigate('/dashboard');
+    }, 1200);
   };
 
+  const features = [
+    { icon: Sparkles, label: 'Prompt-to-Simulation', desc: 'Describe any concept, get an interactive 3D model instantly', color: '#FF6B35' },
+    { icon: Mic, label: 'AI Voice Tutor', desc: 'Multilingual tutor adapting to your speed and comprehension', color: '#0D9B96' },
+    { icon: Brain, label: 'Deep Mastery Quiz', desc: 'Tests logic and derivations — not just surface answers', color: '#F9C326' },
+    { icon: Zap, label: 'Real-Time Understanding', desc: 'Smart micro-questions ensure continuous comprehension', color: '#FF6B35' },
+  ];
+
   return (
-    <div className="h-screen w-screen overflow-hidden relative">
-      {/* Enhanced Background with animated elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-950/80 to-black/90 z-0"></div>
-      
-      {/* Animated Gradient Overlay */}
-      <motion.div 
-        className="absolute inset-0 opacity-30 z-0"
-        style={{
-          background: 'radial-gradient(circle at center, rgba(29, 78, 216, 0.3) 0%, transparent 70%)'
-        }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.4, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          backgroundSize: '50px 50px',
-          backgroundImage: `
-            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
-          `,
-          opacity: 0.5
-        }}
-      />
-      
-      {/* Accent Lights */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 rounded-full opacity-20 blur-3xl"
-        style={{ 
-          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, transparent 70%)'
-        }}
-      />
-      
-      <motion.div 
-        className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full opacity-15 blur-3xl"
-        style={{ 
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%)'
-        }}
-        animate={{
-          y: [0, -20, 0],
-          opacity: [0.15, 0.25, 0.15]
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      
-      <motion.div 
-        className="absolute top-1/4 left-1/4 w-48 h-48 rounded-full opacity-10 blur-3xl"
-        style={{ 
-          background: 'radial-gradient(circle, rgba(236, 72, 153, 0.5) 0%, transparent 70%)'
-        }}
-        animate={{
-          y: [0, 20, 0],
-          opacity: [0.1, 0.2, 0.1]
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      />
-      
-      {/* Noise Texture */}
-      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-soft-light z-0"></div>
-      
-      {/* Floating particles */}
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full pointer-events-none z-0"
-          style={{
-            width: particle.size,
-            height: particle.size,
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            background: `${particle.color}${Math.floor(particle.opacity * 255).toString(16).padStart(2, '0')}`,
-            boxShadow: `0 0 ${particle.size / 2}px ${particle.color}${Math.floor(particle.opacity * 255).toString(16).padStart(2, '0')}`,
-          }}
-          animate={{
-            y: [0, -30, -10, -25, 0],
-            x: [0, 20, -15, 5, 0],
-            scale: [particle.scale, particle.scale * 1.1, particle.scale],
-            opacity: [particle.opacity, particle.opacity * 1.5, particle.opacity],
-          }}
-          transition={{
-            duration: particle.speed,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: particle.delay
-          }}
-        />
-      ))}
-      
-      {/* Consistent Header */}
-      <Header currentPage="landing" />
+    <div className="h-screen w-screen overflow-hidden relative" style={{ background: '#0F0D08' }}>
+      {/* Warm dark grid */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundSize: '60px 60px',
+        backgroundImage: `linear-gradient(to right, rgba(255,107,53,0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,107,53,0.5) 1px, transparent 1px)`
+      }} />
 
-      {/* Spline 3D Model - Centered and Unobstructed */}
-      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
-        <div className="w-full h-full spline-container">
-          <spline-viewer 
-            url="https://prod.spline.design/87yqiB5Y1Aeo7AL2/scene.splinecode"
-            events-target="global"
-            className="spline-viewer"
-            style={{ minHeight: '200px', minWidth: '200px' }}
-          ></spline-viewer>
+      {/* Orange orb top-left */}
+      <div className="absolute -top-20 -left-20 w-[600px] h-[600px] rounded-full opacity-15 blur-[150px]"
+        style={{ background: 'radial-gradient(circle, #FF6B35 0%, transparent 65%)' }} />
+      {/* Teal orb bottom-right */}
+      <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] rounded-full opacity-12 blur-[120px]"
+        style={{ background: 'radial-gradient(circle, #0D9B96 0%, transparent 65%)' }} />
+      {/* Yellow mid */}
+      <div className="absolute top-[40%] right-[30%] w-[250px] h-[250px] rounded-full opacity-8 blur-[100px]"
+        style={{ background: 'radial-gradient(circle, #F9C326 0%, transparent 70%)' }} />
+
+      {/* Header */}
+      <header className="relative z-20 px-8 py-5">
+        <div className="max-w-[1440px] mx-auto flex justify-between items-center">
+          <Logo size="lg" />
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border"
+            style={{ borderColor: 'rgba(255,107,53,0.15)', background: 'rgba(255,107,53,0.06)' }}>
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#FF6B35' }} />
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: '#FF6B35' }}>Next-Gen EdTech</span>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Main Content - Using the same layout structure as SubjectDashboard */}
-      <main className="relative z-10 w-full h-full">
-        {/* Optimized Floating Layout */}
-        <div className="absolute inset-0 pt-24 pb-16">
-          {/* Left Side - Platform Info Card (SWAPPED) - INCREASED SIZE */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="absolute left-8 top-24 w-96 space-y-3"
-          >
-            {/* Platform Info Card - ENHANCED */}
-            <motion.div 
-              className="backdrop-blur-xl bg-gradient-to-br from-purple-500/20 via-blue-500/15 to-indigo-500/10 rounded-2xl p-6 border border-white/20 hover:border-white/30 transition-all duration-300 shadow-lg"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              style={{
-                boxShadow: '0 10px 30px rgba(79, 70, 229, 0.2), 0 0 0 1px rgba(79, 70, 229, 0.1) inset'
-              }}
-            >
-              {/* Header with Logo */}
-              <div className="flex items-center gap-4 mb-5">
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center relative overflow-hidden"
-                    style={{ 
-                      background: `linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(59, 130, 246, 0.6))`,
-                      boxShadow: `0 4px 12px rgba(139, 92, 246, 0.3), 0 0 0 1px rgba(139, 92, 246, 0.2) inset`
-                    }}
-                  >
-                    <Sparkles size={20} className="text-white" />
-                    {/* Animated glow effect */}
-                    <motion.div 
-                      className="absolute inset-0 rounded-xl"
-                      style={{ 
-                        background: `radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%)`
-                      }}
-                      animate={{ 
-                        scale: [1, 1.1, 1],
-                        opacity: [0.3, 0.7, 0.3]
-                      }}
-                      transition={{ 
-                        duration: 3, 
-                        repeat: Infinity
-                      }}
-                    />
-                  </div>
-                  {/* Indicator */}
-                  <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-purple-500 border-2 border-black/50 flex items-center justify-center">
-                    <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                  </div>
-                </div>
-                
-                <div>
-                  <h1 className="text-2xl font-bold text-white">Learn Sphere Vista</h1>
-                  <div className="flex items-center gap-1 mt-0.5">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} size={12} className="text-yellow-400 fill-yellow-400" />
-                    ))}
-                    <span className="text-xs text-white/60 ml-1">5.0 (2.4k reviews)</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Description */}
+      {/* Main */}
+      <main className="relative z-10 h-[calc(100vh-80px)] flex items-center">
+        <div className="max-w-[1440px] mx-auto px-8 w-full">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+
+            {/* Left — Hero */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <div className="mb-5">
-                <p className="text-white/80 text-sm leading-relaxed">
-                  An immersive AI-powered learning platform designed for 9th grade students across all subjects. Our interactive approach combines cutting-edge technology with proven educational methods.
-                </p>
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest"
+                  style={{ background: 'rgba(255,107,53,0.1)', border: '1px solid rgba(255,107,53,0.2)', color: 'rgba(255,107,53,0.9)' }}>
+                  A New Paradigm in Education
+                </span>
               </div>
-              
-              {/* Feature List */}
-              <div className="space-y-3.5 mb-5">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                    style={{ 
-                      background: `linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 0.4))`,
-                      boxShadow: `0 3px 8px rgba(16, 185, 129, 0.3)`
+
+              <h1 className="text-5xl lg:text-6xl font-bold leading-[1.08] mb-6 tracking-tight" style={{ color: 'rgba(255,255,255,0.92)' }}>
+                Complex concepts,{' '}
+                <span className="svg-gradient-text">visualized</span>{' '}
+                instantly
+              </h1>
+
+              <p className="text-base leading-relaxed mb-10 max-w-lg" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                SVG Ai transforms text into multimodal, simulation-driven learning experiences — 3D models, virtual labs, interactive physics, and an AI tutor that adapts to you.
+              </p>
+
+              {/* Features grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+                {features.map((f, i) => (
+                  <motion.div key={f.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    className="flex items-start gap-3 p-3.5 rounded-xl border transition-all cursor-default"
+                    style={{
+                      background: 'rgba(255,255,255,0.02)',
+                      borderColor: 'rgba(255,255,255,0.05)',
                     }}
                   >
-                    <BookOpen size={15} className="text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-white">Interactive 3D Learning</h3>
-                    <p className="text-xs text-white/60">Engage with immersive 3D models and simulations</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                    style={{ 
-                      background: `linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(59, 130, 246, 0.4))`,
-                      boxShadow: `0 3px 8px rgba(59, 130, 246, 0.3)`
-                    }}
-                  >
-                    <Brain size={15} className="text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-white">AI-Powered Tutoring</h3>
-                    <p className="text-xs text-white/60">Personalized learning assistance available 24/7</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                    style={{ 
-                      background: `linear-gradient(135deg, rgba(236, 72, 153, 0.6), rgba(236, 72, 153, 0.4))`,
-                      boxShadow: `0 3px 8px rgba(236, 72, 153, 0.3)`
-                    }}
-                  >
-                    <Layers size={15} className="text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-white">Curriculum-Aligned</h3>
-                    <p className="text-xs text-white/60">Perfectly matched to your school's requirements</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Stats Row */}
-              <div className="grid grid-cols-3 gap-2 mb-4">
-                <div className="bg-white/5 backdrop-blur-md rounded-lg p-2 text-center">
-                  <div className="text-lg font-bold text-white">6+</div>
-                  <div className="text-xs text-white/60">Subjects</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-md rounded-lg p-2 text-center">
-                  <div className="text-lg font-bold text-white">500+</div>
-                  <div className="text-xs text-white/60">Lessons</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-md rounded-lg p-2 text-center">
-                  <div className="text-lg font-bold text-white">24/7</div>
-                  <div className="text-xs text-white/60">Support</div>
-                </div>
-              </div>
-              
-              {/* CTA Button */}
-              <Button 
-                className="w-full bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white flex items-center justify-center gap-2"
-                onClick={() => navigate('/class-selection')}
-              >
-                <span>Explore Platform</span>
-                <ChevronRight size={16} />
-              </Button>
-              
-              {/* Enhanced Decorative Elements */}
-              <div className="absolute bottom-3 right-3 opacity-40">
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div 
-                      key={i}
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ backgroundColor: '#8B5CF6' }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-          
-          {/* Right Side - Login Card (SWAPPED) */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="absolute right-8 top-32 w-80 space-y-3"
-          >
-            {/* Login Form Card */}
-            <motion.div 
-              className="backdrop-blur-xl bg-gradient-to-br from-blue-500/20 via-indigo-500/15 to-purple-500/10 rounded-2xl p-5 border border-white/20 hover:border-white/30 transition-all duration-300 shadow-lg shadow-blue-500/20"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="relative">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center relative overflow-hidden"
-                    style={{ 
-                      background: `linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0.6))`,
-                      boxShadow: `0 4px 12px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2) inset`
-                    }}
-                  >
-                    <User size={18} className="text-white" />
-                    {/* Animated glow effect */}
-                    <motion.div 
-                      className="absolute inset-0 rounded-xl"
-                      style={{ 
-                        background: `radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%)`
-                      }}
-                      animate={{ 
-                        scale: [1, 1.1, 1],
-                        opacity: [0.3, 0.7, 0.3]
-                      }}
-                      transition={{ 
-                        duration: 3, 
-                        repeat: Infinity
-                      }}
-                    />
-                  </div>
-                  {/* Indicator */}
-                  <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-black/50 flex items-center justify-center">
-                    <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                  </div>
-                </div>
-                
-                <div className="flex-1">
-                  <h2 className="text-lg font-bold text-white">Welcome Back</h2>
-                  <p className="text-white/70 text-xs">Sign in to continue your learning journey</p>
-                </div>
-              </div>
-              
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-white/90 text-sm">Email</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-white/50" />
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter your email"
-                      className="pl-10 glass-card border-white/20 bg-white/5 text-white placeholder:text-white/50 focus:border-blue-500/50"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      autoComplete="email"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-white/90 text-sm">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-white/50" />
-                    <Input
-                      id="password"
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      className="pl-10 pr-10 glass-card border-white/20 bg-white/5 text-white placeholder:text-white/50 focus:border-blue-500/50"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      required
-                      autoComplete="current-password"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-2.5 text-white/50 hover:text-white/80"
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="rememberMe"
-                      checked={formData.rememberMe}
-                      onCheckedChange={(checked) => 
-                        setFormData(prev => ({ ...prev, rememberMe: checked === true }))
-                      }
-                      className="data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-                    />
-                    <Label htmlFor="rememberMe" className="text-white/70 text-xs">Remember me</Label>
-                  </div>
-                  <a href="#" className="text-blue-400 hover:text-blue-300 text-xs">Forgot password?</a>
-                </div>
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                      Signing in...
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{ background: `${f.color}18` }}>
+                      <f.icon size={15} style={{ color: f.color }} />
                     </div>
-                  ) : (
-                    'Sign In'
-                  )}
-                </Button>
-                
-                <div className="text-center text-white/70 text-xs">
-                  Don't have an account? <a href="#" className="text-blue-400 hover:text-blue-300">Register</a>
+                    <div>
+                      <div className="text-sm font-semibold mb-0.5" style={{ color: 'rgba(255,255,255,0.78)' }}>{f.label}</div>
+                      <div className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.3)' }}>{f.desc}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2">
+                {['3D Models', 'Physics Sims', 'Virtual Labs', 'Any Language', 'Voice + Text', 'Adaptive AI'].map(tag => (
+                  <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-medium"
+                    style={{ color: 'rgba(255,255,255,0.22)', border: '1px solid rgba(255,107,53,0.1)', background: 'rgba(255,107,53,0.04)' }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right — Login */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center lg:justify-end">
+              <div className="w-full max-w-sm">
+                <div className="relative rounded-2xl overflow-hidden p-8"
+                  style={{ background: '#191510', border: '1px solid rgba(255,107,53,0.12)', backdropFilter: 'blur(20px)', boxShadow: '0 30px 60px rgba(0,0,0,0.4)' }}>
+                  {/* Top glow line */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[1px]"
+                    style={{ background: 'linear-gradient(90deg, transparent, rgba(255,107,53,0.6), rgba(249,195,38,0.4), transparent)' }} />
+
+                  {/* Corner dots */}
+                  <div className="absolute top-4 right-4 flex gap-1">
+                    {[0,1,2].map(i => <div key={i} className="w-1 h-1 rounded-full" style={{ background: `rgba(255,107,53,${0.2 + i*0.15})` }} />)}
+                  </div>
+
+                  <div className="mb-6">
+                    <h2 className="text-xl font-bold mb-1" style={{ color: 'rgba(255,255,255,0.9)' }}>Welcome back</h2>
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>Sign in to continue learning</p>
+                  </div>
+
+                  <form onSubmit={handleLogin} className="space-y-4">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="email" className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.38)' }}>Email</Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-[11px] h-3.5 w-3.5" style={{ color: 'rgba(255,255,255,0.18)' }} />
+                        <Input id="email" name="email" type="email" placeholder="you@email.com"
+                          className="pl-9 h-10 text-sm focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                          style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,107,53,0.12)', color: 'rgba(255,255,255,0.8)' }}
+                          value={formData.email} onChange={handleInputChange} required />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="password" className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.38)' }}>Password</Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-[11px] h-3.5 w-3.5" style={{ color: 'rgba(255,255,255,0.18)' }} />
+                        <Input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Your password"
+                          className="pl-9 pr-9 h-10 text-sm focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                          style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,107,53,0.12)', color: 'rgba(255,255,255,0.8)' }}
+                          value={formData.password} onChange={handleInputChange} required />
+                        <button type="button" onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-[11px] transition-colors"
+                          style={{ color: 'rgba(255,255,255,0.18)' }}>
+                          {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end pt-0.5">
+                      <a href="#" className="text-xs transition-colors" style={{ color: 'rgba(255,107,53,0.4)' }}>Forgot password?</a>
+                    </div>
+
+                    <button type="submit" disabled={isLoading}
+                      className="w-full h-10 rounded-lg font-semibold text-sm text-white transition-all duration-300 disabled:opacity-60"
+                      style={{ background: 'linear-gradient(135deg, #FF6B35, #E0521A)', boxShadow: '0 4px 20px rgba(255,107,53,0.3)' }}>
+                      {isLoading ? (
+                        <div className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Signing in...
+                        </div>
+                      ) : 'Sign In'}
+                    </button>
+
+                    <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                      New here?{' '}
+                      <a href="#" className="transition-colors" style={{ color: 'rgba(255,107,53,0.55)' }}>Create account</a>
+                    </p>
+                  </form>
                 </div>
-              </form>
-              
-              {/* Enhanced Decorative Elements */}
-              <div className="absolute bottom-2 right-2 opacity-40">
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div 
-                      key={i}
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{ backgroundColor: '#3B82F6' }}
-                    />
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-3 mt-3">
+                  {[{ v: '5', l: 'Subjects' }, { v: 'AI', l: 'Powered' }, { v: '24/7', l: 'Access' }].map(s => (
+                    <div key={s.l} className="text-center py-3 rounded-xl border"
+                      style={{ borderColor: 'rgba(255,107,53,0.08)', background: 'rgba(255,107,53,0.04)' }}>
+                      <div className="text-sm font-bold" style={{ color: 'rgba(255,107,53,0.7)' }}>{s.v}</div>
+                      <div className="text-[10px] mt-0.5" style={{ color: 'rgba(255,255,255,0.2)' }}>{s.l}</div>
+                    </div>
                   ))}
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+
+          </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10">
-        <p className="text-sm text-white/40">
-          © {new Date().getFullYear()} Learn with AI by Calance. All rights reserved.
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
+        <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.12)' }}>
+          © {new Date().getFullYear()} SVG Ai — Visualize · Interact · Master
         </p>
       </div>
     </div>

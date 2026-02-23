@@ -95,7 +95,7 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
         setError(null);
 
         if (!selectedClass) {
-          navigate('/class-selection');
+          navigate('/dashboard');
           return;
         }
 
@@ -317,8 +317,8 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-full p-8">
-        <div className="w-16 h-16 border-4 border-t-purple-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-white/70 text-lg">Loading {selectedClass} Grade Content...</p>
+        <div className="w-8 h-8 border-2 border-[#FF6B35] border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-white/40 text-sm">Loading content...</p>
       </div>
     );
   }
@@ -326,13 +326,13 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-full p-8">
-        <div className="text-red-500 text-xl mb-4">Error Loading Content</div>
-        <div className="text-white/70 mb-6">{error}</div>
+        <div className="text-red-400 text-base mb-3">Error Loading Content</div>
+        <div className="text-white/40 text-sm mb-6">{error}</div>
         <button 
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-          onClick={() => navigate('/class-selection')}
+          className="svg-btn-primary"
+          onClick={() => navigate('/dashboard')}
         >
-          Select Different Class
+          Back to Dashboard
         </button>
       </div>
     );
@@ -345,12 +345,12 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
       return (
         <div className="h-full flex flex-col">
           {/* Fixed header section */}
-          <div className="p-6 pb-0 flex-shrink-0">
-            <h2 className="text-2xl font-bold text-white mb-2">
+          <div className="p-5 pb-0 flex-shrink-0">
+            <h2 className="text-lg font-bold text-white/90 mb-1">
               {currentContent.topic.name}
             </h2>
-            <p className="text-white/70 mb-6">
-              {selectedSubtopicId ? 'Select a different subtopic or view the overview' : 'Select a subtopic to view the content'}
+            <p className="text-white/30 text-xs mb-5">
+              {selectedSubtopicId ? 'Select a subtopic' : 'Choose a subtopic to begin'}
             </p>
           </div>
           
@@ -359,19 +359,19 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
             <div className="h-full px-6 pb-6 overflow-y-auto scrollbar-hide">
               {isInitializing ? (
                 <div className="flex items-center justify-center py-8">
-                  <div className="w-6 h-6 border-2 border-t-purple-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-                  <span className="ml-3 text-white/70">Loading subtopics...</span>
+                  <div className="w-5 h-5 border-2 border-[#FF6B35] border-t-transparent rounded-full animate-spin"></div>
+                  <span className="ml-3 text-white/40 text-sm">Loading...</span>
                 </div>
               ) : (
                 <>
-                  <div className="grid gap-3 pb-4">
+                  <div className="grid gap-2 pb-4">
                   {currentContent.topic.subtopics.map((subtopic) => (
                     <div 
                       key={subtopic.id}
                       className={`p-3 rounded-lg cursor-pointer transition-all duration-200 border ${
                         selectedSubtopicId === subtopic.id 
-                          ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-purple-400 shadow-lg transform scale-[1.02]' 
-                          : 'bg-white/10 border-white/10 hover:bg-white/20 hover:border-white/20'
+                          ? 'border-[#FF6B35]/30 bg-[#FF6B35]/10' 
+                          : 'border-white/[0.05] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.1]'
                       }`}
                       onClick={(e) => {
                         e.preventDefault();
@@ -380,25 +380,25 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                       }}
                     >
                       <div className="flex items-center justify-between">
-                        <h4 className="text-white font-medium">{subtopic.name}</h4>
+                        <h4 className="text-sm text-white/80 font-medium">{subtopic.name}</h4>
                         {selectedSubtopicId === subtopic.id && (
-                          <span className="text-xs bg-white/20 text-white px-3 py-1 rounded-full font-medium flex items-center gap-1">
-                            <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                            Current
+                          <span className="text-[10px] bg-[#FF6B35]/20 text-[#FF6B35] px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 bg-[#FF6B35] rounded-full"></span>
+                            Active
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center justify-between mt-2">
-                        <p className="text-white/60 text-sm">Interactive content</p>
-                        {subtopic.progress !== undefined && (
+                      <div className="flex items-center justify-between mt-1.5">
+                        <p className="text-white/30 text-xs">Interactive content</p>
+                        {subtopic.progress !== undefined && subtopic.progress > 0 && (
                           <div className="flex items-center">
-                            <div className="w-12 h-1 bg-white/20 rounded-full mr-2">
+                            <div className="w-10 h-1 bg-white/10 rounded-full mr-1.5">
                               <div 
-                                className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
-                                style={{ width: `${subtopic.progress}%` }}
+                                className="h-full rounded-full"
+                                style={{ width: `${subtopic.progress}%`, background: 'linear-gradient(90deg, #FF6B35, #0D9B96)' }}
                               />
                             </div>
-                            <span className="text-white/70 text-xs">{subtopic.progress}%</span>
+                            <span className="text-white/40 text-[10px]">{subtopic.progress}%</span>
                           </div>
                         )}
                       </div>
@@ -410,10 +410,10 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                   {!isInitializing && currentContent.topic.contentPath && (
                     <div className="pb-4">
                       <button 
-                        className={`w-full p-3 rounded-lg transition-colors flex items-center justify-between ${
+                        className={`w-full p-3 rounded-lg transition-colors flex items-center justify-between text-sm ${
                           selectedSubtopicId === null 
-                            ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white' 
-                            : 'bg-white/10 text-white/70 hover:bg-white/20'
+                            ? 'bg-[#FF6B35]/10 border border-[#FF6B35]/20 text-white' 
+                            : 'bg-white/[0.03] border border-white/[0.06] text-white/60 hover:bg-white/[0.06]'
                         }`}
                         onClick={() => {
                           // Use state updater to prevent stale closures
@@ -443,8 +443,8 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                       >
                         <span>View Main Topic Overview</span>
                         {selectedSubtopicId === null && (
-                          <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full">
-                            Current
+                          <span className="text-[10px] bg-[#FF6B35]/20 text-[#FF6B35] px-2 py-0.5 rounded-full">
+                            Active
                           </span>
                         )}
                       </button>
@@ -452,9 +452,10 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
                   )}
                   
                   {/* Quiz Button */}
-                  <div className="pt-4 border-t border-white/10">
+                  <div className="pt-4 border-t border-white/[0.06]">
                     <button 
-                      className="w-full p-4 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-lg"
+                      className="w-full p-3 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-90"
+                      style={{ background: 'linear-gradient(135deg, #FF6B35, #0D9B96)', color: 'white' }}
                       onClick={() => {
                         // This will be handled by the parent component
                         if (onContentLoad) {
@@ -494,10 +495,11 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
         </div>
         
         {/* Quiz Button for topics without subtopics */}
-        <div className="flex-1 flex items-end p-6">
+          <div className="flex-1 flex items-end p-6">
           <div className="w-full">
             <button 
-              className="w-full p-4 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold transition-all duration-200 transform hover:scale-[1.02] shadow-lg"
+              className="w-full p-3 rounded-lg font-semibold text-sm transition-all duration-200 hover:opacity-90"
+              style={{ background: 'linear-gradient(135deg, #FF6B35, #0D9B96)', color: 'white' }}
               onClick={() => {
                 if (onContentLoad) {
                   onContentLoad({
@@ -542,8 +544,8 @@ const ClassBasedContentRenderer: React.FC<ClassBasedContentRendererProps> = ({
               <div className="flex items-center mt-2">
                 <div className="flex-1 bg-white/20 rounded-full h-2 mr-4">
                   <div 
-                    className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
-                    style={{ width: `${topic.progress}%` }}
+                    className="h-full rounded-full"
+                    style={{ width: `${topic.progress}%`, background: 'linear-gradient(90deg, #FF6B35, #0D9B96)' }}
                   />
                 </div>
                 <span className="text-white/70 text-sm">{topic.progress}%</span>

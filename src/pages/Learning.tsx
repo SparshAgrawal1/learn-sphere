@@ -1,305 +1,137 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ModernNavigationTree } from '@/components/learning/ModernNavigationTree';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import SimpleAITutorPanel from '@/components/learning/SimpleAITutorPanel';
-import ContentFrame from '@/components/learning/ContentFrame';
-import { getLessonContentPath } from '@/utils/content-path-resolver';
-import curriculum, { getClassCurriculum } from '@/data/curriculum';
 import ClassBasedContentRenderer from '@/components/learning/ClassBasedContentRenderer';
 import QuizModal from '@/components/learning/QuizModal';
-import { Button } from '@/components/ui/button';
 import { ArrowLeft, Home, ChevronLeft, ChevronRight, PanelLeft, PanelRight, FileText, Monitor } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { YouTubeEmbed } from '../components/ui/YouTubeEmbed';
 import { isYouTubeURL } from '../utils/youtube-utils';
-
-// Mock curriculum data
-const mockCurriculum = {
-  physics: {
-    id: 'physics',
-    name: 'Physics',
-    chapters: [
-      {
-        id: 'mechanics',
-        title: 'Mechanics',
-        subtopics: [
-          { id: 'gravity', title: 'Gravity and Universal Gravitation', progress: 80, completed: false },
-          { id: 'motion', title: 'Newton\'s Laws of Motion', progress: 100, completed: true },
-          { id: 'energy', title: 'Work, Energy and Power', progress: 45, completed: false },
-          { id: 'momentum', title: 'Momentum and Impulse', progress: 0, completed: false },
-        ]
-      },
-      {
-        id: 'thermodynamics',
-        title: 'Thermodynamics',
-        subtopics: [
-          { id: 'heat', title: 'Heat and Temperature', progress: 60, completed: false },
-          { id: 'laws', title: 'Laws of Thermodynamics', progress: 0, completed: false },
-        ]
-      }
-    ]
-  },
-  hindi: {
-    id: 'hindi',
-    name: 'Hindi',
-    chapters: [
-      {
-        id: 'grammar',
-        title: 'Grammar',
-        subtopics: [
-          { id: 'prefixes-suffixes', title: 'Prefixes and Suffixes', progress: 75, completed: false },
-          { id: 'tenses', title: 'Tenses in Hindi', progress: 0, completed: false },
-          { id: 'pronouns', title: 'Pronouns and Their Usage', progress: 0, completed: false }
-        ]
-      },
-      {
-        id: 'vocabulary',
-        title: 'Vocabulary',
-        subtopics: [
-          { id: 'common-words', title: 'Common Words and Phrases', progress: 0, completed: false },
-          { id: 'idioms', title: 'Hindi Idioms and Expressions', progress: 0, completed: false }
-        ]
-      }
-    ]
-  }
-};
-
-const lessonUrls = {
-  gravity: '/lessons/gravity-physics.html',
-  motion: '/lessons/gravity-physics.html', // Using same lesson for demo
-  energy: '/lessons/gravity-physics.html',
-  heat: '/lessons/gravity-physics.html',
-  'prefixes-suffixes': '/lessons/hindi-prefixes-suffixes.html',
-};
 
 const Learning = () => {
   const { subject, chapter, topic } = useParams();
   const navigate = useNavigate();
-  
+
   const [selectedClass, setSelectedClass] = useState<string | null>(null);
   const [currentContent, setCurrentContent] = useState<any>(null);
-  
-  // Panel visibility states
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(true);
-  
-  // PDF/Visual content toggle state
   const [showPdf, setShowPdf] = useState(false);
-  
-  // Quiz modal state
   const [showQuizModal, setShowQuizModal] = useState(false);
-  
-  // Get selected class from session storage
+
   useEffect(() => {
     const classFromStorage = sessionStorage.getItem('selectedClass');
     if (classFromStorage) {
       setSelectedClass(classFromStorage);
     } else {
-      // If no class is selected, redirect to class selection page
-      navigate('/class-selection');
+      sessionStorage.setItem('selectedClass', '9th');
+      setSelectedClass('9th');
     }
 
-    // Cleanup function to stop any ongoing narrations when component unmounts or navigates
     return () => {
-      // Stop any speech synthesis
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-      
-      // Stop any audio elements
-      const audioElements = document.querySelectorAll('audio');
-      audioElements.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-      });
-      
-      // Call any global narration stop functions that might exist
-      if (typeof (window as any).stopNarration === 'function') {
-        (window as any).stopNarration();
-      }
-      
-      // Force cleanup of any AI Tutor SSE connections
-      // This will close any hanging EventSource connections when navigating away
-      if (typeof (window as any).forceCleanupAITutor === 'function') {
-        (window as any).forceCleanupAITutor();
-      }
-      
-      // Stop any story narration
-      if (typeof (window as any).stopStoryNarration === 'function') {
-        (window as any).stopStoryNarration();
-      }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+      if (typeof (window as any).stopNarration === 'function') (window as any).stopNarration();
+      if (typeof (window as any).forceCleanupAITutor === 'function') (window as any).forceCleanupAITutor();
+      if (typeof (window as any).stopStoryNarration === 'function') (window as any).stopStoryNarration();
     };
   }, [navigate]);
-  
+
   const handleContentLoad = (content: any) => {
-    // Check if this is a quiz modal trigger
     if (content.showQuizModal) {
       setShowQuizModal(true);
       return;
     }
-    
     setCurrentContent(content);
-    // Reset PDF toggle to visual content when new content is loaded
     setShowPdf(false);
   };
 
-  // Helper function to stop all narrations
   const stopAllNarrations = () => {
-    // Stop speech synthesis
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-    }
-    
-    // Stop any audio elements
-    const audioElements = document.querySelectorAll('audio');
-    audioElements.forEach(audio => {
-      audio.pause();
-      audio.currentTime = 0;
-    });
-    
-    // Call any global narration stop functions that might exist
-    if (typeof (window as any).stopNarration === 'function') {
-      (window as any).stopNarration();
-    }
-    
-    // Stop any story narration
-    if (typeof (window as any).stopStoryNarration === 'function') {
-      (window as any).stopStoryNarration();
-    }
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+    if (typeof (window as any).stopNarration === 'function') (window as any).stopNarration();
+    if (typeof (window as any).stopStoryNarration === 'function') (window as any).stopStoryNarration();
   };
 
-  // Cleanup narrations when content changes
   useEffect(() => {
-    // Stop any ongoing narrations when content changes
     stopAllNarrations();
   }, [currentContent?.contentPath]);
 
-  // Add early return if no class is selected
   if (!selectedClass) {
     return (
-      <div className="h-screen flex items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
+      <div className="h-screen flex items-center justify-center bg-[#0F0D08]">
         <div className="text-center">
-          <h2 className="text-xl text-white mb-4">Loading...</h2>
-          <p className="text-white/70">Please wait while we load your class information</p>
+          <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-white/40 text-sm">Loading...</p>
         </div>
       </div>
     );
   }
 
-
-  const handleProgress = (progress: number) => {
-    // In a real app, you'd save this progress to your backend
-  };
-
-  // Get the appropriate back navigation URL
   const getBackUrl = () => {
-    if (topic && chapter && subject) {
-      // If viewing a topic, go back to chapter/subject view (the Science page with chapters)
-      return `/subject/${subject}`;
-    } else if (chapter && subject) {
-      // If viewing a chapter, go back to subject view  
-      return `/subject/${subject}`;
-    } else if (subject) {
-      // If viewing a subject, go back to dashboard
-      return '/dashboard';
-    }
-    // Default fallback
+    if (topic && chapter && subject) return `/learn/${subject}`;
+    if (chapter && subject) return `/learn/${subject}`;
     return '/dashboard';
   };
 
-  const getBackLabel = () => {
-    if (topic || chapter) {
-      return 'Back to Chapters';
-    } else if (subject) {
-      return 'Back to Dashboard';
-    }
-    return 'Dashboard';
-  };
-
-  // Handle back button click with cleanup
   const handleBackClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    
-    // Force cleanup of AI Tutor connections before navigation
-    if (typeof (window as any).forceCleanupAITutor === 'function') {
-      console.log('Back button: Calling AI Tutor cleanup before navigation');
-      (window as any).forceCleanupAITutor();
-    }
-    
-    // Small delay to ensure cleanup completes
-    setTimeout(() => {
-      navigate(getBackUrl());
-    }, 100);
+    if (typeof (window as any).forceCleanupAITutor === 'function') (window as any).forceCleanupAITutor();
+    setTimeout(() => navigate(getBackUrl()), 100);
   };
 
   return (
-    <div className="h-screen flex flex-col" style={{ background: 'var(--bg-primary)' }}>
-      {/* Glassmorphic Header */}
-      <header className="glass-header sticky top-0 z-50">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link 
-              to={getBackUrl()} 
-              onClick={handleBackClick}
-              className="glass-button flex items-center gap-2 text-sm"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              {getBackLabel()}
-            </Link>
-            <div className="h-6 w-px" style={{ background: 'var(--border-subtle)' }}></div>
-            <div>
-              <h1 className="glass-text-primary text-xl font-semibold tracking-tight">
-                {currentContent?.subject?.name || `${selectedClass} Grade`}
-              </h1>
-              <p className="glass-text-orange text-sm font-medium">
-                {currentContent?.topic?.name || currentContent?.chapter?.name || 'Learning Dashboard'}
-              </p>
-            </div>
+    <div className="h-screen flex flex-col bg-[#0F0D08]">
+      {/* Header bar */}
+      <header className="flex-shrink-0 h-14 flex items-center justify-between px-4 border-b border-white/[0.06]">
+        <div className="flex items-center gap-4">
+          <Link
+            to={getBackUrl()}
+            onClick={handleBackClick}
+            className="flex items-center gap-1.5 text-white/35 hover:text-orange-400/80 text-sm transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Link>
+          <div className="h-4 w-[1px] bg-white/[0.08]" />
+          <div>
+            <h1 className="text-sm font-semibold text-white/80 leading-none">
+              {currentContent?.subject?.name || subject || 'Learning'}
+            </h1>
+            <p className="text-[11px] text-orange-400/50 leading-none mt-1">
+              {currentContent?.topic?.name || currentContent?.chapter?.name || 'Select a topic'}
+            </p>
           </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="glass-badge-orange">
-              Progress: {currentContent?.topic?.progress || currentContent?.subject?.progress || 0}%
+        </div>
+
+        <div className="flex items-center gap-3">
+          {currentContent?.topic?.pdfPath && (
+            <div className="flex items-center gap-2 px-2 py-1 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+              <Monitor className={`h-3.5 w-3.5 transition-colors ${!showPdf ? 'text-orange-400' : 'text-white/25'}`} />
+              <button
+                onClick={() => {
+                  if (!showPdf) stopAllNarrations();
+                  setShowPdf(!showPdf);
+                }}
+                className={`relative w-9 h-5 rounded-full transition-all duration-200 ${showPdf ? 'bg-orange-500' : 'bg-white/10'}`}
+              >
+                <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-200 ${showPdf ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
+              </button>
+              <FileText className={`h-3.5 w-3.5 transition-colors ${showPdf ? 'text-orange-400' : 'text-white/25'}`} />
             </div>
-            
-            {/* PDF/Visual Toggle Button - only show if topic has PDF */}
-            {currentContent?.topic?.pdfPath && (
-              <div className="flex items-center gap-2 glass-card p-2">
-                <Monitor className={`h-4 w-4 transition-colors ${!showPdf ? 'text-orange-400' : 'text-white/50'}`} />
-                <button
-                  onClick={() => {
-                    // Stop all narrations when switching to PDF
-                    if (!showPdf) {
-                      stopAllNarrations();
-                    }
-                    setShowPdf(!showPdf);
-                  }}
-                  className={`relative w-12 h-6 rounded-full transition-all duration-200 ${
-                    showPdf ? 'bg-orange-500' : 'bg-white/20'
-                  }`}
-                  title={showPdf ? 'Switch to Visual Content' : 'Switch to PDF'}
-                >
-                  <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ${
-                    showPdf ? 'translate-x-7' : 'translate-x-1'
-                  }`} />
-                </button>
-                <FileText className={`h-4 w-4 transition-colors ${showPdf ? 'text-orange-400' : 'text-white/50'}`} />
-              </div>
-            )}
-            
-            <Link to="/" className="glass-button flex items-center gap-2 text-sm">
-              <Home className="h-4 w-4" />
-              Home
-            </Link>
-          </div>
+          )}
+
+          <Link to="/dashboard" className="flex items-center gap-1.5 text-white/25 hover:text-orange-400/60 text-xs transition-colors">
+            <Home className="h-3.5 w-3.5" />
+            Dashboard
+          </Link>
         </div>
       </header>
 
-      {/* Main Learning Interface */}
-      <div className="flex-1 flex overflow-hidden gap-4 p-4 relative">
-        {/* Left Panel - Navigation */}
-        <div className={`flex-shrink-0 glass-card p-0 overflow-hidden transition-all duration-300 ease-in-out relative ${
-          isLeftPanelOpen ? 'w-72' : 'w-0 opacity-0 pointer-events-none'
+      {/* Main learning area */}
+      <div className="flex-1 flex overflow-hidden gap-0 relative">
+        {/* Left - Navigation */}
+        <div className={`flex-shrink-0 border-r border-white/[0.06] bg-[#0F0D08] overflow-hidden transition-all duration-300 ease-in-out relative ${
+          isLeftPanelOpen ? 'w-72' : 'w-0'
         }`}>
           <ClassBasedContentRenderer
             selectedClass={selectedClass}
@@ -308,134 +140,122 @@ const Learning = () => {
             topicId={topic}
             onContentLoad={handleContentLoad}
           />
-          
-          {/* Left Panel Toggle Button - positioned on the right side */}
+
           {isLeftPanelOpen && (
             <button
               onClick={() => setIsLeftPanelOpen(false)}
-              className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 z-10 border-2 border-white/20"
-              title="Collapse navigation panel"
+              className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center z-10 border border-orange-500/20 bg-[#0F0D08] hover:bg-orange-500/10 transition-colors"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-3 w-3 text-white/40" />
             </button>
           )}
         </div>
 
-        {/* Left Panel Collapsed Toggle Button */}
         {!isLeftPanelOpen && (
           <button
             onClick={() => setIsLeftPanelOpen(true)}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg transition-all duration-200 z-20 border-2 border-white/20"
-            title="Expand navigation panel"
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center z-20 border border-orange-500/20 bg-[#0F0D08] hover:bg-orange-500/10 transition-colors"
           >
-            <PanelLeft className="h-5 w-5" />
+            <PanelLeft className="h-4 w-4 text-white/40" />
           </button>
         )}
 
-        {/* Center Panel - Learning Content */}
-        <div className={`flex-1 overflow-hidden glass-card p-0 transition-all duration-300 ease-in-out ${
-          !isLeftPanelOpen && !isRightPanelOpen ? 'mx-16' : 
-          !isLeftPanelOpen ? 'ml-16' : 
-          !isRightPanelOpen ? 'mr-16' : ''
-        }`}>
+        {/* Center - Content */}
+        <div className={`flex-1 overflow-hidden bg-[#0D0D12] transition-all duration-300 ${
+          !isLeftPanelOpen ? 'ml-12' : ''
+        } ${!isRightPanelOpen ? 'mr-12' : ''}`}>
           {currentContent?.contentPath ? (
-            // Check if user wants to view PDF and PDF exists
             (showPdf && currentContent?.topic?.pdfPath) ? (
-              <iframe 
-                key={currentContent.topic.pdfPath} // Force reload when PDF path changes
+              <iframe
+                key={currentContent.topic.pdfPath}
                 src={`${currentContent.topic.pdfPath}#toolbar=1&navpanes=1&scrollbar=1`}
                 className="w-full h-full border-none"
-                title={`${currentContent.topic?.name || 'Learning Content'} - PDF Guide - ${selectedClass} Grade`}
-                onLoad={() => {/* PDF loaded successfully */}}
-                onError={() => console.error('Error loading PDF:', currentContent.topic.pdfPath)}
+                title={`${currentContent.topic?.name || 'Content'} - PDF`}
               />
-              
-            ) : 
-            // Check if it's a YouTube video
+            ) :
             (currentContent.contentType === 'video' || isYouTubeURL(currentContent.contentPath)) ? (
               <YouTubeEmbed
                 url={currentContent.contentPath}
-                title={`${currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Learning Content'} - ${selectedClass} Grade`}
+                title={currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Video'}
                 className="w-full h-full"
                 showThumbnail={false}
                 autoplay={false}
               />
             ) : (
-              <iframe 
-                key={currentContent.contentPath} // Force reload when path changes
+              <iframe
+                key={currentContent.contentPath}
                 src={currentContent.contentPath}
                 className="w-full h-full border-none"
-                title={`${currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Learning Content'} - ${selectedClass} Grade`}
+                title={currentContent.selectedSubtopic?.name || currentContent.topic?.name || 'Content'}
                 sandbox="allow-same-origin allow-scripts allow-forms"
-                onLoad={() => {/* Content loaded */}}
-                onError={() => console.error('Error loading content:', currentContent.contentPath)}
               />
             )
           ) : (
             <div className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <h3 className="text-xl text-white mb-4">Select a topic to begin learning</h3>
-                <p className="text-white/70">Choose from the navigation panel on the left</p>
+              <div className="text-center max-w-sm">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center"
+                  style={{ background: 'linear-gradient(135deg, rgba(0,212,170,0.1), rgba(14,165,233,0.1))' }}
+                >
+                  <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+                    <path d="M20 4L35 12V28L20 36L5 28V12L20 4Z" stroke="url(#empty-grad)" strokeWidth="2" fill="none" />
+                    <path d="M20 10L30 16V26L20 32L10 26V16L20 10Z" fill="url(#empty-grad)" fillOpacity="0.1" />
+                    <defs>
+                      <linearGradient id="empty-grad" x1="5" y1="4" x2="35" y2="36" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#00D4AA" />
+                        <stop offset="1" stopColor="#0EA5E9" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-white/70 mb-2">Select a topic</h3>
+                <p className="text-sm text-white/30">Choose from the navigation panel to begin your learning journey</p>
               </div>
             </div>
           )}
         </div>
 
-        {/* Right Panel - AI Tutor */}
-        <div className={`flex-shrink-0 glass-card p-0 overflow-hidden transition-all duration-300 ease-in-out relative ${
-          isRightPanelOpen ? 'w-80' : 'w-0 opacity-0 pointer-events-none'
+        {/* Right - AI Tutor */}
+        <div className={`flex-shrink-0 border-l border-white/[0.06] bg-[#0F0D08] overflow-hidden transition-all duration-300 ease-in-out relative ${
+          isRightPanelOpen ? 'w-80' : 'w-0'
         }`}>
           <SimpleAITutorPanel
             subtopicTitle={currentContent?.topic?.name || currentContent?.subject?.name || 'Learning'}
-            themeColor={{
-              accent: '#06B6D4',
-              bg: '#155e75'
-            }}
+            themeColor={{ accent: '#FF6B35', bg: '#1C0E06' }}
             pdfPath={currentContent?.topic?.pdfPath}
             chapterName={currentContent?.topic?.name}
             classNumber={selectedClass}
             subjectName={currentContent?.chapter?.name || currentContent?.subject?.name}
             onTogglePdfMode={() => {
-              // Stop all narrations when switching to PDF
-              if (!showPdf) {
-                stopAllNarrations();
-              }
+              if (!showPdf) stopAllNarrations();
               setShowPdf(!showPdf);
             }}
           />
-          
-          {/* Right Panel Toggle Button - positioned on the left side */}
+
           {isRightPanelOpen && (
             <button
               onClick={() => setIsRightPanelOpen(false)}
-              className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-cyan-600 hover:bg-cyan-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 z-10 border-2 border-white/20"
-              title="Collapse AI assistant panel"
+              className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center z-10 border border-teal-500/20 bg-[#0F0D08] hover:bg-teal-500/10 transition-colors"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-3 w-3 text-white/40" />
             </button>
           )}
         </div>
 
-        {/* Right Panel Collapsed Toggle Button */}
         {!isRightPanelOpen && (
           <button
             onClick={() => setIsRightPanelOpen(true)}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-600 hover:bg-cyan-700 text-white p-3 rounded-full shadow-lg transition-all duration-200 z-20 border-2 border-white/20"
-            title="Expand AI assistant panel"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg flex items-center justify-center z-20 border border-teal-500/20 bg-[#0F0D08] hover:bg-teal-500/10 transition-colors"
           >
-            <PanelRight className="h-5 w-5" />
+            <PanelRight className="h-4 w-4 text-white/40" />
           </button>
         )}
       </div>
-      
+
       {/* Quiz Modal */}
       <QuizModal
         isOpen={showQuizModal}
         onClose={() => setShowQuizModal(false)}
-        onStartQuiz={() => {
-          // TODO: Implement quiz functionality
-          setShowQuizModal(true);
-        }}
+        onStartQuiz={() => setShowQuizModal(true)}
         topicName={currentContent?.topic?.name}
         chapterName={currentContent?.chapter?.name}
         subjectName={currentContent?.chapter?.name || currentContent?.subject?.name}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { X, Play, RotateCcw } from 'lucide-react';
+import { X, Play, RotateCcw, Brain, CheckCircle, Clock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import QuizChatbot from './QuizChatbot';
 
 interface QuizModalProps {
@@ -25,55 +25,19 @@ const QuizModal: React.FC<QuizModalProps> = ({
   pdfPath
 }) => {
   const [showChatbot, setShowChatbot] = useState(false);
-  // Stop all audio and narration when modal opens
+
   useEffect(() => {
     if (isOpen) {
-      // Stop speech synthesis
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-      
-      // Stop all audio elements
-      const audioElements = document.querySelectorAll('audio');
-      audioElements.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-      });
-      
-      // Call any global narration stop functions that might exist
-      if (typeof (window as any).stopNarration === 'function') {
-        (window as any).stopNarration();
-      }
-      
-      // Stop any story narration
-      if (typeof (window as any).stopStoryNarration === 'function') {
-        (window as any).stopStoryNarration();
-      }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+      if (typeof (window as any).stopNarration === 'function') (window as any).stopNarration();
+      if (typeof (window as any).stopStoryNarration === 'function') (window as any).stopStoryNarration();
     }
-    
-    // Return cleanup function to ensure narrations are stopped
     return () => {
-      // Stop speech synthesis
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-      
-      // Stop all audio elements
-      const audioElements = document.querySelectorAll('audio');
-      audioElements.forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-      });
-      
-      // Call any global narration stop functions that might exist
-      if (typeof (window as any).stopNarration === 'function') {
-        (window as any).stopNarration();
-      }
-      
-      // Stop any story narration
-      if (typeof (window as any).stopStoryNarration === 'function') {
-        (window as any).stopStoryNarration();
-      }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+      if (typeof (window as any).stopNarration === 'function') (window as any).stopNarration();
+      if (typeof (window as any).stopStoryNarration === 'function') (window as any).stopStoryNarration();
     };
   }, [isOpen]);
 
@@ -89,7 +53,6 @@ const QuizModal: React.FC<QuizModalProps> = ({
     onClose();
   };
 
-  // If chatbot is shown, render the QuizChatbot component
   if (showChatbot) {
     return (
       <QuizChatbot
@@ -104,72 +67,120 @@ const QuizModal: React.FC<QuizModalProps> = ({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop with blur effect */}
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-md"
-        onClick={onClose}
-      />
-      
-      {/* Modal content */}
-      <div className="relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-100">
-        {/* Close button */}
-        <button
+    <AnimatePresence>
+      <div className="fixed inset-0 z-50 flex items-center justify-center">
+        {/* Backdrop */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0"
+          style={{ background: 'rgba(7,7,16,0.85)', backdropFilter: 'blur(12px)' }}
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+        />
+
+        {/* Modal */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 10 }}
+          transition={{ duration: 0.2 }}
+          className="relative w-full max-w-md mx-4 rounded-2xl overflow-hidden"
+          style={{
+            background: '#100E08',
+            border: '1px solid rgba(255,107,53,0.15)',
+            boxShadow: '0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,107,53,0.08) inset',
+          }}
         >
-          <X className="w-5 h-5 text-gray-600" />
-        </button>
-        
-        {/* Quiz icon and title */}
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Ready for Quiz?</h2>
-          <p className="text-gray-600">
-            Test your knowledge on <span className="font-semibold text-orange-600">{topicName}</span>
-          </p>
-          {chapterName && (
-            <p className="text-sm text-gray-500 mt-1">
-              Chapter: {chapterName}
-            </p>
-          )}
-        </div>
-        
-        {/* Quiz description */}
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <h3 className="font-semibold text-gray-800 mb-2">What to expect:</h3>
-          <ul className="text-sm text-gray-600 space-y-1">
-            <li>• Multiple choice questions</li>
-            <li>• Instant feedback on answers</li>
-            <li>• Progress tracking</li>
-            <li>• Score at the end</li>
-          </ul>
-        </div>
-        
-        {/* Action buttons */}
-        <div className="flex gap-3">
-          <Button
-            variant="outline"
+          {/* Top glow line */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[1px]"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,107,53,0.5), rgba(13,155,150,0.3), transparent)' }} />
+
+          {/* Close */}
+          <button
             onClick={onClose}
-            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+            className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-lg text-white/25 hover:text-white/50 hover:bg-white/[0.05] transition-all"
           >
-            <RotateCcw className="w-4 h-4 mr-2" />
-            Cancel
-          </Button>
-          <Button
-            onClick={handleStartQuiz}
-            className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold"
-          >
-            <Play className="w-4 h-4 mr-2" />
-            Start Quiz
-          </Button>
-        </div>
+            <X className="w-4 h-4" />
+          </button>
+
+          <div className="p-8">
+            {/* Icon */}
+            <div className="flex justify-center mb-6">
+              <div className="relative">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255,107,53,0.2), rgba(13,155,150,0.12))',
+                    border: '1px solid rgba(255,107,53,0.2)',
+                    boxShadow: '0 8px 30px rgba(255,107,53,0.15)',
+                  }}>
+                  <Brain className="w-8 h-8 text-[#FF8C5A]" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center bg-emerald-400"
+                  style={{ boxShadow: '0 0 12px rgba(52,211,153,0.5)' }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Title */}
+            <div className="text-center mb-6">
+              <h2 className="text-xl font-bold text-white mb-2">Deep Mastery Quiz</h2>
+              <p className="text-sm text-white/40">
+                Test your understanding of{' '}
+                <span className="text-[#FF8C5A]/80 font-medium">{topicName}</span>
+              </p>
+              {chapterName && (
+                <p className="text-xs text-white/25 mt-1">{chapterName}</p>
+              )}
+            </div>
+
+            {/* Features */}
+            <div className="space-y-2.5 mb-7">
+              {[
+                { icon: Brain, text: 'Tests logic and derivations, not just answers' },
+                { icon: CheckCircle, text: 'Instant explanatory feedback on each question' },
+                { icon: Clock, text: 'Adaptive pacing to your understanding' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
+                  style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(255,107,53,0.12)' }}>
+                    <item.icon className="w-3 h-3 text-[#FF8C5A]/70" />
+                  </div>
+                  <span className="text-xs text-white/45">{item.text}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-3">
+              <button
+                onClick={onClose}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium text-white/35 transition-all hover:text-white/55"
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                Cancel
+              </button>
+              <button
+                onClick={handleStartQuiz}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
+                style={{
+                  background: 'linear-gradient(135deg, #FF6B35, #0D9B96)',
+                  boxShadow: '0 8px 25px rgba(255,107,53,0.3)',
+                }}
+              >
+                <Play className="w-3.5 h-3.5" />
+                Start Quiz
+              </button>
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </AnimatePresence>
   );
 };
 

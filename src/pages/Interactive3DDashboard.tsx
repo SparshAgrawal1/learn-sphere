@@ -1,289 +1,125 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  ChevronRight,
-  ArrowLeft,
-  GraduationCap
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import EnhancedBackground from '@/components/landing/EnhancedBackground';
-import Enhanced3DFloor from '@/components/landing/Enhanced3DFloor';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import Header from '@/components/ui/Header';
-import SubjectBackgroundElements from '@/components/dashboard/SubjectBackgroundElements';
 import curriculum, { getClassCurriculum } from '@/data/curriculum';
 
 const Interactive3DDashboard: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [activeSubject, setActiveSubject] = useState('default');
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [selectedClass, setSelectedClass] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [classCurriculum, setClassCurriculum] = useState(curriculum['9th']);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  
-  // Refs for animation
-  const splineContainerRef = useRef<HTMLDivElement>(null);
-  
-  // Parse query params to set initial subject and get selected class from session storage
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const subjectParam = params.get('subject');
-    if (subjectParam) {
-      handleSubjectHover(subjectParam);
-    }
-    
-    // Get selected class from session storage
-    const classFromStorage = sessionStorage.getItem('selectedClass');
-    if (classFromStorage) {
-      setSelectedClass(classFromStorage);
-      // Update curriculum based on selected class
-      const classSpecificCurriculum = getClassCurriculum(classFromStorage);
-      setClassCurriculum(classSpecificCurriculum);
-    } else {
-      // If no class is selected, redirect to class selection page
-      navigate('/class-selection');
-    }
-  }, [location, navigate]);
-  
-  useEffect(() => {
-    // Set a timeout as fallback in case onLoad doesn't fire
-    const timer = setTimeout(() => {
-      if (!isLoaded) setIsLoaded(true);
-    }, 2000);
-    
-    // Listen for the spline viewer load event
-    const handleSplineLoad = () => {
-      setIsLoaded(true);
-    };
 
-    const splineViewer = document.querySelector('spline-viewer');
-    if (splineViewer) {
-      splineViewer.addEventListener('load', handleSplineLoad);
-    }
-    
-    return () => {
-      clearTimeout(timer);
-      if (splineViewer) {
-        splineViewer.removeEventListener('load', handleSplineLoad);
-      }
-    };
-  }, [isLoaded]);
-
-  // Handle window resize for responsive positioning
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const cls = sessionStorage.getItem('selectedClass');
+    if (!cls) sessionStorage.setItem('selectedClass', '9th');
+    setClassCurriculum(getClassCurriculum(cls || '9th'));
   }, []);
 
-  const handleSubjectHover = (subjectId: string) => {
-    if (activeSubject !== subjectId) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setActiveSubject(subjectId);
-        setIsTransitioning(false);
-      }, 300);
-    }
-  };
-  
   const handleSubjectSelect = (subjectId: string) => {
-    // Navigate to subject dashboard
-    navigate(`/subject/${subjectId}`);
+    navigate(`/learn/${encodeURIComponent(subjectId)}`);
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden relative">
-      {/* Enhanced Background */}
-      <EnhancedBackground 
-        theme={activeSubject}
-        isTransitioning={isTransitioning}
-      />
-      
-      {/* Subject-specific Background Elements */}
-      {activeSubject !== 'default' && (
-        <SubjectBackgroundElements subjectId={activeSubject} />
-      )}
+    <div className="h-screen w-screen overflow-hidden relative" style={{ background: '#0F0D08' }}>
+      {/* Grid */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundSize: '60px 60px',
+        backgroundImage: `linear-gradient(to right, rgba(255,107,53,0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,107,53,0.5) 1px, transparent 1px)`
+      }} />
 
-      {/* Enhanced 3D Floor */}
-      <Enhanced3DFloor activeSubject={activeSubject} />
+      {/* Orange orb top-left */}
+      <div className="absolute -top-20 -left-10 w-[500px] h-[500px] rounded-full opacity-10 blur-[150px]"
+        style={{ background: 'radial-gradient(circle, #FF6B35 0%, transparent 65%)' }} />
+      {/* Teal orb bottom-right */}
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full opacity-8 blur-[130px]"
+        style={{ background: 'radial-gradient(circle, #0D9B96 0%, transparent 65%)' }} />
 
-      {/* Consistent Header with Class Selector */}
-      <Header 
-        currentPage="dashboard" 
-        selectedClass={selectedClass}
-        showClassSelector={true}
-      />
+      <Header currentPage="dashboard" />
 
-      {/* Spline 3D Model - Centered and Unobstructed */}
-      <div 
-        ref={splineContainerRef}
-        className="absolute inset-0 w-full h-full z-0 flex items-center justify-center"
-      >
-        {!isLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-10">
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 border-4 border-t-purple-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-              <p className="mt-4 text-white/70 text-lg">Loading 3D Experience...</p>
-            </div>
+      <main className="relative z-10 h-full flex flex-col items-center justify-center px-6 pt-16">
+        {/* Title */}
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+          className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-5"
+            style={{ background: 'rgba(255,107,53,0.1)', border: '1px solid rgba(255,107,53,0.18)', color: 'rgba(255,107,53,0.85)' }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#FF6B35' }} />
+            9th Grade · 5 Subjects
           </div>
-        )}
-        <div className="w-full h-full spline-container">
-          <spline-viewer 
-            url="https://prod.spline.design/87yqiB5Y1Aeo7AL2/scene.splinecode"
-            events-target="global"
-            class="spline-viewer"
-          ></spline-viewer>
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 tracking-tight" style={{ color: 'rgba(255,255,255,0.92)' }}>
+            What would you like to{' '}
+            <span className="svg-gradient-text">learn today?</span>
+          </h1>
+          <p className="text-sm max-w-md mx-auto" style={{ color: 'rgba(255,255,255,0.3)' }}>
+            Each subject is powered by AI simulations, voice tutoring, and deep mastery quizzes.
+          </p>
+        </motion.div>
+
+        {/* Subject grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 max-w-6xl w-full">
+          {classCurriculum.map((subject, index) => {
+            const Icon = subject.icon;
+            const isHovered = hoveredId === subject.id;
+
+            return (
+              <motion.div key={subject.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.07 }}
+                onMouseEnter={() => setHoveredId(subject.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                onClick={() => handleSubjectSelect(subject.id)}
+                className="group cursor-pointer">
+                <div className="relative p-6 rounded-2xl border transition-all duration-300 h-full overflow-hidden"
+                  style={{
+                    background: isHovered ? `${subject.color}08` : '#191510',
+                    borderColor: isHovered ? `${subject.color}25` : 'rgba(255,107,53,0.08)',
+                    boxShadow: isHovered ? `0 20px 50px ${subject.color}0F` : 'none',
+                  }}>
+                  {/* Top line glow on hover */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[1px] transition-all duration-400"
+                    style={{ width: isHovered ? '70%' : '0%', background: `linear-gradient(90deg, transparent, ${subject.color}80, transparent)` }} />
+
+                  {/* Icon */}
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-all duration-300"
+                    style={{ background: `${subject.color}15`, boxShadow: isHovered ? `0 4px 20px ${subject.color}18` : 'none' }}>
+                    <Icon size={19} style={{ color: subject.color }} />
+                  </div>
+
+                  <h3 className="text-[15px] font-semibold mb-1.5" style={{ color: 'rgba(255,255,255,0.88)' }}>{subject.name}</h3>
+                  <p className="text-xs leading-relaxed mb-5 line-clamp-2" style={{ color: 'rgba(255,255,255,0.28)' }}>{subject.description}</p>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-medium" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                      {subject.chapters.length} {subject.chapters.length === 1 ? 'chapter' : 'chapters'}
+                    </span>
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300"
+                      style={{ background: isHovered ? `${subject.color}18` : 'rgba(255,255,255,0.03)' }}>
+                      <ChevronRight size={13}
+                        style={{ color: isHovered ? subject.color : 'rgba(255,255,255,0.18)' }}
+                        className="transition-all duration-300 group-hover:translate-x-0.5"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-      </div>
 
-        {/* Main Content */}
-        <main className="relative z-10 w-full h-full pt-20">
-          <AnimatePresence mode="wait">
-            <motion.div 
-              key="overview"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="w-full h-full"
-            >
-              {/* Subject Cards - Larger and Further from Center */}
-              <div className="absolute inset-0">
-                {classCurriculum.map((subject, index) => {
-                  // Calculate position to form a circle around the center
-                  const angle = (index * (360 / classCurriculum.length)) * (Math.PI / 180);
-                  
-                  // Use responsive radius that maintains 1860px alignment for wider screens
-                  const getResponsiveRadius = () => {
-                    if (windowWidth <= 1200) return 280; // Smaller screens
-                    if (windowWidth <= 1600) return 320; // Medium screens
-                    if (windowWidth <= 1860) return 360; // Large screens up to 1860px
-                    // For screens wider than 1860px, maintain the same radius as 1860px
-                    return 360; // Fixed radius to maintain 1860px alignment
-                  };
-                  
-                  const radius = getResponsiveRadius();
-                  const xPos = Math.cos(angle) * radius;
-                  const yPos = Math.sin(angle) * radius;
-                  
-                  return (
-                    <motion.div
-                      key={subject.id}
-                      className="absolute"
-                      style={{
-                        left: `calc(50% + ${xPos}px)`,
-                        top: `calc(50% + ${yPos}px)`,
-                        transform: `translate(-50%, -50%)`,
-                      }}
-                    >
-                      <div 
-                        className={`
-                          w-40 h-28 rounded-3xl backdrop-blur-xl
-                          flex flex-col items-start justify-between
-                          cursor-pointer subject-card
-                          transition-all duration-500 ease-out
-                          p-4 relative overflow-hidden
-                          ${activeSubject === subject.id ? 'scale-110' : 'scale-100 hover:scale-105'}
-                        `}
-                        style={{
-                          background: activeSubject === subject.id 
-                            ? `linear-gradient(135deg, ${subject.color}20, ${subject.color}08, transparent)`
-                            : `linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06), transparent)`,
-                          border: activeSubject === subject.id 
-                            ? `1px solid ${subject.color}40` 
-                            : '1px solid rgba(255, 255, 255, 0.25)',
-                          boxShadow: activeSubject === subject.id 
-                            ? `0 12px 40px ${subject.color}25, 0 0 0 1px ${subject.color}15 inset` 
-                            : `0 12px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.15) inset`,
-                        }}
-                        onMouseEnter={() => handleSubjectHover(subject.id)}
-                        onClick={() => handleSubjectSelect(subject.id)}
-                      >
-                        {/* Enhanced Background Gradient Orbs */}
-                        <div 
-                          className="absolute -top-6 -right-6 w-16 h-16 rounded-full opacity-20"
-                          style={{ 
-                            background: `radial-gradient(circle, ${subject.color}, transparent 70%)`
-                          }}
-                        />
-                        <div 
-                          className="absolute -bottom-4 -left-4 w-12 h-12 rounded-full opacity-15"
-                          style={{ 
-                            background: `radial-gradient(circle, ${subject.color}, transparent 70%)`
-                          }}
-                        />
-                        
-                        {/* Header with Icon and Progress */}
-                        <div className="flex items-center justify-between w-full">
-                          <div 
-                            className="w-8 h-8 rounded-2xl flex items-center justify-center"
-                            style={{ 
-                              background: `linear-gradient(135deg, ${subject.color}80, ${subject.color}60)`,
-                              boxShadow: `0 4px 12px ${subject.color}30, 0 0 0 1px ${subject.color}20 inset`
-                            }}
-                          >
-                            <subject.icon size={16} className="text-white" />
-                          </div>
-                          
-                          <div className="text-right">
-                            <div 
-                              className="text-base font-bold"
-                              style={{ color: subject.color }}
-                            >
-                              {subject.progress}%
-                            </div>
-                            <div className="w-12 h-1 bg-white/25 rounded-full mt-1">
-                              <div 
-                                className="h-full rounded-full transition-all duration-700" 
-                                style={{ 
-                                  width: `${subject.progress}%`,
-                                  background: `linear-gradient(90deg, ${subject.color}, ${subject.color}80)`,
-                                  boxShadow: `0 0 8px ${subject.color}40`
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Subject Name and Details */}
-                        <div>
-                          <h3 className="text-base font-bold text-white leading-tight mb-1">
-                            {subject.name}
-                          </h3>
-                          <p className="text-sm text-white/70 leading-tight">
-                            {subject.chapters.length} chapters
-                          </p>
-                        </div>
-                        
-                        {/* Enhanced Decorative Elements */}
-                        <div className="absolute bottom-2 right-2 opacity-40">
-                          <div className="flex items-center gap-1">
-                            {Array.from({ length: 3 }).map((_, i) => (
-                              <div 
-                                key={i}
-                                className="w-1.5 h-1.5 rounded-full"
-                                style={{ backgroundColor: subject.color }}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </main>
+        {/* Footer tag */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="mt-12 flex items-center gap-3">
+          <div className="h-[1px] w-8" style={{ background: 'rgba(255,107,53,0.15)' }} />
+          <span className="text-[10px] font-semibold tracking-[0.25em] uppercase" style={{ color: 'rgba(255,255,255,0.12)' }}>
+            Multimodal · Simulation-Driven · Adaptive AI
+          </span>
+          <div className="h-[1px] w-8" style={{ background: 'rgba(255,107,53,0.15)' }} />
+        </motion.div>
+      </main>
 
-      {/* Footer */}
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10">
-        <p className="text-sm text-white/40">
-          © {new Date().getFullYear()} Learn with AI by Calance. All rights reserved.
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
+        <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.12)' }}>
+          © {new Date().getFullYear()} SVG Ai — Visualize · Interact · Master
         </p>
       </div>
     </div>
