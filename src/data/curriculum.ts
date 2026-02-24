@@ -388,10 +388,27 @@ export const curriculum: ClassContent = {
       position: { x: -15, y: 15, z: 0 },
       chapters: [
         {
+          id: 'Economics',
+          name: 'Economics',
+          icon: Globe,
+          color: '#059669',
+          topics: [
+            {
+              id: 'Village-Palampur',
+              name: 'The Story of Village Palampur',
+              progress: 0,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Social Science/Economics/The Story of Village Palampur/index.html',
+              pdfPath: '/FinalContent/Class 9th/Social Science/Economics/The Story of Village Palampur/The Story of Village Palampur.pdf',
+              subtopics: []
+            }
+          ]
+        },
+        {
           id: 'Democratic-Politics',
           name: 'Democratic Politics',
           icon: Globe,
-          color: '#F97316',
+          color: '#1E3A5F',
           topics: [
             {
               id: 'What-is-Democracy',
