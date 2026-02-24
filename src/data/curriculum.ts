@@ -120,6 +120,140 @@ export const curriculum: ClassContent = {
               ]
             }
           ]
+        },
+        {
+          id: 'Biology',
+          name: 'Biology',
+          icon: Microscope,
+          color: '#059669',
+          topics: [
+            {
+              id: 'Fundamental-Unit-of-Life',
+              name: 'Fundamental Unit of Life',
+              progress: 0,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/cell_discovery_interactive.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/The fundamental unit of life.pdf',
+              subtopics: [
+                {
+                  id: 'cell-discovery',
+                  name: 'Cell Discovery',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/cell_discovery_interactive.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'cell-membrane',
+                  name: 'Cell Membrane & Transport',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/cell_membrane_transport.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'cell-wall',
+                  name: 'Cell Wall & Plasmolysis',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/cell_wall_plasmolysis.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'nucleus-genetics',
+                  name: 'Nucleus & Genetics',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/nucleus_genetic_exhibit.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'energy-organelles',
+                  name: 'Energy Organelles',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/energy_organelles_exhibit.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'organelle-systems',
+                  name: 'Organelle Systems',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/organelle_systems_exhibit.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'cell-division',
+                  name: 'Cell Division',
+                  contentPath: '/FinalContent/Class 9th/Science/Biology/Fundamental Unit of Life/cell_division_exhibit.html',
+                  progress: 0,
+                  completed: false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'Chemistry',
+          name: 'Chemistry',
+          icon: Flame,
+          color: '#0891B2',
+          topics: [
+            {
+              id: 'Atoms-and-Molecules',
+              name: 'Atoms and Molecules',
+              progress: 0,
+              completed: false,
+              contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.2 What is an Atom.html',
+              pdfPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/Atoms and Molecules.pdf',
+              subtopics: [
+                {
+                  id: 'laws-chemical-combination',
+                  name: 'Laws of Chemical Combination',
+                  contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.1 Laws of Chemical Combination.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'law-constant-proportions',
+                  name: 'Law of Constant Proportions',
+                  contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.1.2 Law of Constant Proportions.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'what-is-atom',
+                  name: 'What is an Atom?',
+                  contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.2 What is an Atom.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'modern-symbols-atoms',
+                  name: 'Modern Symbols of Atoms',
+                  contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.2.1 Modern Symbols of Atoms.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'what-is-molecule',
+                  name: 'What is a Molecule?',
+                  contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.3 What is a Molecule.html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'chemical-formulae',
+                  name: 'Writing Chemical Formulae',
+                  contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.4 Writing Chemical Formulae .html',
+                  progress: 0,
+                  completed: false
+                },
+                {
+                  id: 'molecular-mass',
+                  name: 'Molecular Mass',
+                  contentPath: '/FinalContent/Class 9th/Science/Chemistry/ATOMS AND MOLECULES/3.5 Molecular Mass .html',
+                  progress: 0,
+                  completed: false
+                }
+              ]
+            }
+          ]
         }
       ]
     },
